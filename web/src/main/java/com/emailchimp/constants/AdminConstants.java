@@ -27,4 +27,7 @@ public interface AdminConstants {
      */
     String URL_GET_USER_BY_MOBILE="/admin/getUserByMobile/{mobileNumber}";
     String URL_GET_ALL_USERS="/admin/getAllUsers";
+    
+    String DOMAIN="http://localhost:8080";
 }
+

@@ -119,6 +119,6 @@ public class Consumer implements Serializable {
 
     @Override
     public String toString() {
-        return "Consumer{" + "id=" + id + ", name=" + name + ", email=" + email + ", contact=" + contact + ", isActive=" + isActive + ", activationDate=" + activationDate + ", signUpDate=" + signUpDate + ", password=" + password + '}';
+        return "id=" + id + "&name=" + name + "&email=" + email + "&contact=" + contact + "&isActive=" + isActive + "&activationDate=" + activationDate + "&signUpDate=" + signUpDate + "&password=" + password;
     }
 }

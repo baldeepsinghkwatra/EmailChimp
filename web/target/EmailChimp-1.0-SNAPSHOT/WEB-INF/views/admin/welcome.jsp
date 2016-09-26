@@ -44,6 +44,7 @@
                                     test = $('#myForm').w2form({
                                         name: 'myForm',
                                         header: 'Auto-Generated Form',
+                                        url: 'test',
                                         fields: [
                                             {name: 'first_name', id: 'st', type: 'text', required: true, options: {maxlength: 2}, html: {caption: 'First Name', attr: 'style="width: 300px"'}},
                                             {name: 'last_name', type: 'text', required: true},

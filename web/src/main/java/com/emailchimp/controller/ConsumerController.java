@@ -16,6 +16,7 @@
  */
 package com.emailchimp.controller;
 
+import com.emailchimp.constants.AdminConstants;
 import com.emailchimp.constants.ConsumerConstants;
 import com.emailchimp.constants.UserConstants;
 import com.emailchimp.model.Consumer;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import com.emailchimp.core.service.Email;
+import com.emailchimp.util.CustomHttpURLConnection;
 
 /**
  *
@@ -43,9 +45,11 @@ public class ConsumerController {
     UserService userService;
     @Autowired
     Email email;
+    @Autowired
+    CustomHttpURLConnection customHttpURLConnection;
 
     @RequestMapping(value = ConsumerConstants.URL_REGISTER_CONSUMER, method = RequestMethod.POST)
-    public ModelAndView registerUser(Consumer emailChimpUser) {
+    public ModelAndView registerUserOld(Consumer emailChimpUser) {
         emailChimpUser.setPassword(BCrypt.hashpw(emailChimpUser.getPassword(), UserConstants.SALT));
         try {
             consumerService.save(emailChimpUser);
@@ -56,13 +60,14 @@ public class ConsumerController {
             users.setUserPassword(emailChimpUser.getPassword());
             users.setUserRole(UserConstants.ROLE_CONSUMER);
             userService.save(users);
-            email.sendMail(emailChimpUser.getEmail(), "Welcoem Mail", "Hello Ji");
+            email.sendMail(emailChimpUser.getEmail(), "Welcoem Mail", "Hello ");
         } catch (Exception e) {
             return new ModelAndView(UserConstants.LOGIN_PAGE, UserConstants.RESPONSE_DATA, UserConstants.MESSAGE_REGISTRATION_FAILURE);
         }
         return new ModelAndView(UserConstants.LOGIN_PAGE, UserConstants.RESPONSE_DATA, UserConstants.MESSAGE_REGISTRATION_SUCCESS);
     }
 
+ 
     @RequestMapping(ConsumerConstants.URL_UPLOAD_LIST)
     public String uploadListPage() {
         return ConsumerConstants.PATH_UPLOAD_LIST;

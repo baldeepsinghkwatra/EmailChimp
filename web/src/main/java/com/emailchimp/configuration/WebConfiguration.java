@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -37,6 +38,7 @@ import org.springframework.web.servlet.view.JstlView;
  */
 @Configuration
 @EnableWebMvc
+@EnableScheduling
 @ComponentScan(basePackages = "com.emailchimp")
 @PropertySource("classpath:MySQLConfig.properties")
 public class WebConfiguration extends WebMvcConfigurerAdapter {
@@ -49,7 +51,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     private String jdbcPassword;
     @Value("${db.driverClassName}")
     private String driverClassName;
-
+    
     /**
      * Resolver method which adds suffix to the URI and according finds the correct views.
      * @return object of viewResolver
@@ -104,4 +106,5 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SessionHandler());
     }
+
 }

@@ -46,7 +46,7 @@ public class UserController {
     @RequestMapping(value = UserConstants.DEFAULT_URL, method = RequestMethod.GET)
     public String welcomePage(ModelMap model, Principal principal) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("Principal: "+principal);
+        
         if (principal != null) {
             AbstractAuthenticationToken authToken = null;
             try {

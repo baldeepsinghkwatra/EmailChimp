@@ -5,8 +5,10 @@ com/emailchimp/service/CommonService.class
 com/emailchimp/dao/AbstractDAO.class
 com/emailchimp/controller/UserController.class
 com/emailchimp/constants/ConsumerConstants.class
+com/emailchimp/controller/TriggerReports.class
 com/emailchimp/model/Users.class
 com/emailchimp/configuration/CustomPasswordEncoder.class
+com/emailchimp/util/CustomHttpURLConnection.class
 com/emailchimp/configuration/HibernateConfiguration.class
 com/emailchimp/dao/UserDAO.class
 com/emailchimp/controller/ExceptionController.class
@@ -25,7 +27,6 @@ com/emailchimp/service/ConsumerService.class
 com/emailchimp/service/UserServiceImpl.class
 com/emailchimp/model/ExceptionJSONInfo.class
 com/emailchimp/util/GeneratePassword.class
-com/emailchimp/configuration/WebInitializer.class
 com/emailchimp/service/ConsumerServiceImpl.class
 com/emailchimp/service/CommonServiceImpl.class
 com/emailchimp/controller/AdminController.class

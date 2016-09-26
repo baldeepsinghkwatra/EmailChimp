@@ -23,7 +23,7 @@ package com.emailchimp.configuration;
 import javax.servlet.ServletRegistration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+    public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -32,7 +32,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{WebConfiguration.class};
+        return null;
     }
 
     @Override

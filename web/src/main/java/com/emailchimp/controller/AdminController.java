@@ -50,4 +50,10 @@ public class AdminController {
     public List<Users> getAllUser() {
         return userService.getAllUsers();
     }
+    @RequestMapping(value ="test", method = RequestMethod.POST)
+    @ResponseBody
+    public String hello()
+    {return "Hello";
+    
+    }
 }
