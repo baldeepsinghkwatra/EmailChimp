@@ -35,7 +35,7 @@ public class Users implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private String id;
+    private long id;
     @Column(name = "user_name", unique = false, nullable = false)
     private String userName;
     @Column(name = "user_email", unique = true, nullable = false)
@@ -72,11 +72,11 @@ public class Users implements Serializable {
         this.userMobile = userMobile;
     }
 
-    public String getUserId() {
+    public long getId() {
         return id;
     }
 
-    public void setUserId(String userId) {
+    public void setId(long userId) {
         this.id = userId;
     }
 

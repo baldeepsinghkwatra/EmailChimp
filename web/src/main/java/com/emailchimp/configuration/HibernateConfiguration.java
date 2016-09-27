@@ -53,7 +53,7 @@ public class HibernateConfiguration {
     private Properties hibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-        properties.put("hibernate.show_sql", false);
+        properties.put("hibernate.show_sql", true);
         properties.put("hibernate.format_sql", "create-drop");
         properties.put("hibernate.hbm2ddl.auto", "update");
         return properties;

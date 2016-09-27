@@ -38,7 +38,7 @@ public class Consumer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private String id;
+    private long id;
     @Column(name = "name", unique = false, nullable = false)
     private String name;
     @Column(name = "email", unique = true, nullable = false)
@@ -53,11 +53,11 @@ public class Consumer implements Serializable {
     @Column(name = "password", unique = false, nullable = false)
     private String password;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

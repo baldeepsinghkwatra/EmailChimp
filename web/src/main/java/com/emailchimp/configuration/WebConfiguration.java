@@ -16,6 +16,7 @@
  */
 package com.emailchimp.configuration;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,6 +25,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -51,9 +53,11 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     private String jdbcPassword;
     @Value("${db.driverClassName}")
     private String driverClassName;
-    
+
     /**
-     * Resolver method which adds suffix to the URI and according finds the correct views.
+     * Resolver method which adds suffix to the URI and according finds the
+     * correct views.
+     *
      * @return object of viewResolver
      */
     @Bean
@@ -67,16 +71,18 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     /**
      * Used to enable access of static resource files like css,js,images
-     * @param registry 
+     *
+     * @param registry
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/");
     }
-    
+
     /**
      * Creates a database connection
+     *
      * @return driverManagerDataSource Object
      */
     @Bean(name = "dataSource")
@@ -91,7 +97,8 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     /**
      * Created to access properties from Properties file using @PropertySource
-     * @return 
+     *
+     * @return
      */
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -100,11 +107,18 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     /**
      * Handler to make session timeout to -1
-     * @param registry 
+     *
+     * @param registry
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SessionHandler());
+    }
+    
+    
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new JsonObjectPropertyResolver());
     }
 
 }
