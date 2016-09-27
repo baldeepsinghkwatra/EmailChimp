@@ -16,7 +16,6 @@
  */
 package com.emailchimp.controller;
 
-import com.emailchimp.constants.AdminConstants;
 import com.emailchimp.constants.ConsumerConstants;
 import com.emailchimp.constants.UserConstants;
 import com.emailchimp.model.Consumer;

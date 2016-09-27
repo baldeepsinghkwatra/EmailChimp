@@ -40,25 +40,36 @@
         <script src="<%=request.getContextPath()%>/resources/js/welcome.js"></script>
         <script>
                                 var test;
+                                var record=w2ui['myForm'].request();
                                 $(function () {
-                                    test = $('#myForm').w2form({
-                                        name: 'myForm',
-                                        header: 'Auto-Generated Form',
+
+                                test = $('#myForm').w2form({
+                                name: 'myForm',
+                                        header: 'Login Form',
                                         url: 'test',
-                                        fields: [
-                                            {name: 'first_name', id: 'st', type: 'text', required: true, options: {maxlength: 2}, html: {caption: 'First Name', attr: 'style="width: 300px"'}},
-                                            {name: 'last_name', type: 'text', required: true},
-                                            {name: 'comments', type: 'text'}
-                                        ],
+                                        settings : {
+                                        data: JSON.stringify(),
+                                                contentType: 'application/json; charset=UTF-8'},
+
+                                fields: [
+                                {name: 'first_name', id: 'st', type: 'text', required: true, options: {maxlength: 2}, html: {caption: 'First Name', attr: 'style="width: 300px"'}},
+                                {name: 'last_name', type: 'text', required: true},
+                                {name: 'comments', type: 'text'}
+                                ],
+                                        record: {
+                                        first_name: 'John',
+                                                last_name: 'Doe',
+                                                email: 'jdoe@email.com'
+                                        },
                                         actions: {
-                                            reset: function () {
-                                                this.clear();
-                                            },
-                                            save: function () {
+                                        reset: function () {
+                                        this.clear();
+                                        },
+                                                save: function () {
                                                 this.save();
-                                            }
+                                                }
                                         }
-                                    });
+                                });
                                 });
         </script>
     </body>
