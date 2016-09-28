@@ -14,34 +14,15 @@
  * or reproduction of this material is strictly forbidden unless prior written
  * permission is obtained from Mindfire Solutions
  */
-package com.emailchimp.configuration;
+package com.emailchimp.conf.annotation;
 
-/**
- *
- * @author baldeep
- */
-import javax.servlet.ServletRegistration;
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-    public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
-    @Override
-    protected Class<?>[] getRootConfigClasses() {
-        return null;
-    }
-
-    @Override
-    protected Class<?>[] getServletConfigClasses() {
-        return null;
-    }
-
-    @Override
-    protected String[] getServletMappings() {
-        return new String[]{"/"};
-    }
-
-    @Override
-    public void customizeRegistration(ServletRegistration.Dynamic registration) {
-        registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
-    }
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.PARAMETER)
+public @interface JsonObjectProperty{
+    String name() default "";
 }

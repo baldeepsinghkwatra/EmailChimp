@@ -14,18 +14,34 @@
  * or reproduction of this material is strictly forbidden unless prior written
  * permission is obtained from Mindfire Solutions
  */
-package com.emailchimp.configuration;
-
-import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+package com.emailchimp.conf;
 
 /**
  *
- * @author Baldeep Singh Kwatra
+ * @author baldeep
  */
-public class WebSecurityApplicationInitializer
-        extends AbstractSecurityWebApplicationInitializer {
+import javax.servlet.ServletRegistration;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-    public WebSecurityApplicationInitializer() {
-        super(WebSecurityConfiguration.class);
+    public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+    @Override
+    protected Class<?>[] getRootConfigClasses() {
+        return null;
+    }
+
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        return null;
+    }
+
+    @Override
+    protected String[] getServletMappings() {
+        return new String[]{"/"};
+    }
+
+    @Override
+    public void customizeRegistration(ServletRegistration.Dynamic registration) {
+        registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
     }
 }

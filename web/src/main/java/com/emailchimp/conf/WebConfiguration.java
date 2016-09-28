@@ -14,7 +14,7 @@
  * or reproduction of this material is strictly forbidden unless prior written
  * permission is obtained from Mindfire Solutions
  */
-package com.emailchimp.configuration;
+package com.emailchimp.conf;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;

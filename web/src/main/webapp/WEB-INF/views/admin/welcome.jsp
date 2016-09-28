@@ -36,12 +36,10 @@
 
         <div id="myForm" style="width: 600px"></div>
         <script  src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-        <!--<script  src="<%=request.getContextPath()%>/resources/js/w2ui.min.js"></script>-->
-        <script  src="<%=request.getContextPath()%>/resources/js/w2ui-1.4.3.js"></script>
+        <script  src="<%=request.getContextPath()%>/resources/js/w2ui.min.js"></script>
         <script src="<%=request.getContextPath()%>/resources/js/welcome.js"></script>
         <script>
                                 var test;
-//                                var record=w2ui['myForm'].request();
                                 w2utils.settings.dataType = 'JSON';
                                 $(function () {
 
@@ -49,22 +47,12 @@
                                 name: 'myForm',
                                         header: 'Login Form',
                                         url: 'test',
-//                                        settings : {
-//                                        data: JSON.stringify(),
-//                                                contentType: 'application/json; charset=UTF-8'},
-
-
                                 fields: [
                                 {name: 'first_name', id: 'st', type: 'text', required: true, options: {maxlength: 2},
                                     html: {caption: 'First Name', attr: 'style="width: 300px"'}},
                                 {name: 'last_name', type: 'text', required: true},
                                 {name: 'comments', type: 'text'}
                                 ],
-//                                        record: {
-//                                        first_name: 'John',
-//                                                last_name: 'Doe',
-//                                                email: 'jdoe@email.com'
-//                                        },
                                         actions: {
                                         reset: function () {
                                         this.clear();
@@ -77,36 +65,5 @@
                                 });
                                 });
         </script>
-        
-<div class="content">
-    
-    <div id="example_title">
-        <h1>From Textarea</h1>
-        When you create the Rich Text Editor from a textarea it automatically initializes the editor with the data in textarea and sends the content
-        back to textarea when it is changed.
-        <br><br>
-        Textarea is never removed from the DOM, it is hidden. Therefore, if textarea is part of the form that you submit, the data in the textarea
-        will be submitted to the server along with the rest of form data.
-    </div>
-    <div id="example_view"></div>
-    <div id="example_code"></div>
-</div>
-    
-<!--CODE-->
-<textarea id="emailEditor" style="width: 100%; height: 250px; padding: 3px; border-radius: 3px; border: 1px solid silver;">This is a <b>text</b> area</textarea>
-<div style="height: 20px"></div>
-<input type="button" value="Convert to Editor" onclick="init()">
-<input type="button" value="Revert to Textarea" onclick="revert()">
-
-<!--CODE-->
-<script>
-function init() {
-    if ($.w2ui['#emailEditor']) $.w2ui['emailEditor'].destroy();
-        $('#emailEditor').w2editor({ name: 'emailEditor' });
-}
-function revert() {
-    $.w2ui['emailEditor'].destroy();
-}
-</script>
-    </body>
+ </body>
 </html>
