@@ -1,112 +1,30 @@
 <%-- 
-    Document   : welcome
-    Created on : 5 Sep, 2016, 1:14:32 PM
-    Author     : baldeep
+Document   : layout
+Created on : 27 Sep, 2016, 1:04:40 AM
+Author     : anshul
 --%>
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin Home</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Mail Box</title>
         <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/w2ui.min.css">
-    </head>
-    <body>
-        <div class="panel panel-primary col-lg-10" style="margin: 0 auto;float: none;">
-            <div class="panel-body">
-                <span style="text-align: center">
-                    <h3>${greeting}</h3>
-                    <a onclick="getAllUsers()" style="float: left" href="#" id="viewUsers">View All Users</a>
-                    <a style="float: right" href="logout" class="btn-sm btn-danger">Logout</a>
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/emailChimp.css">
 
-                    <form class="form-inline" id="searchForm" name="searchForm">
-                        <div class="form-group">
-                            <input id="mobileNumber" class="form-control col-lg-12" type="search" placeholder="Search by Mobile" name="mobileNumber" required="" title="Enter Mobile Number here"/>
-                        </div>
-                        <div class="form-group">
-                            <input class="btn-xs btn-primary" onclick="getUserByMobile()" type="button" value="Search" />
-                        </div>
-                    </form></span>
-                <div id="allUsersDiv"></div>
-            </div>
-        </div>
-
-        <div id="myForm" style="width: 600px"></div>
-        <script  src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-        <!--<script  src="<%=request.getContextPath()%>/resources/js/w2ui.min.js"></script>-->
+        <script  src="<%=request.getContextPath()%>/resources/js/jquery-3.1.0.min.js"></script>
         <script  src="<%=request.getContextPath()%>/resources/js/w2ui-1.4.3.js"></script>
-        <script src="<%=request.getContextPath()%>/resources/js/welcome.js"></script>
-        <script>
-                                var test;
-//                                var record=w2ui['myForm'].request();
-                                w2utils.settings.dataType = 'JSON';
-                                $(function () {
-
-                                test = $('#myForm').w2form({
-                                name: 'myForm',
-                                        header: 'Login Form',
-                                        url: 'test',
-//                                        settings : {
-//                                        data: JSON.stringify(),
-//                                                contentType: 'application/json; charset=UTF-8'},
-
-
-                                fields: [
-                                {name: 'first_name', id: 'st', type: 'text', required: true, options: {maxlength: 2},
-                                    html: {caption: 'First Name', attr: 'style="width: 300px"'}},
-                                {name: 'last_name', type: 'text', required: true},
-                                {name: 'comments', type: 'text'}
-                                ],
-//                                        record: {
-//                                        first_name: 'John',
-//                                                last_name: 'Doe',
-//                                                email: 'jdoe@email.com'
-//                                        },
-                                        actions: {
-                                        reset: function () {
-                                        this.clear();
-                                        },
-                                                save: function () {
-                                                    debugger;
-                                                this.save();
-                                                }
-                                        }
-                                });
-                                });
-        </script>
-        
-<div class="content">
-    
-    <div id="example_title">
-        <h1>From Textarea</h1>
-        When you create the Rich Text Editor from a textarea it automatically initializes the editor with the data in textarea and sends the content
-        back to textarea when it is changed.
-        <br><br>
-        Textarea is never removed from the DOM, it is hidden. Therefore, if textarea is part of the form that you submit, the data in the textarea
-        will be submitted to the server along with the rest of form data.
-    </div>
-    <div id="example_view"></div>
-    <div id="example_code"></div>
-</div>
-    
-<!--CODE-->
-<textarea id="emailEditor" style="width: 100%; height: 250px; padding: 3px; border-radius: 3px; border: 1px solid silver;">This is a <b>text</b> area</textarea>
-<div style="height: 20px"></div>
-<input type="button" value="Convert to Editor" onclick="init()">
-<input type="button" value="Revert to Textarea" onclick="revert()">
-
-<!--CODE-->
-<script>
-function init() {
-    if ($.w2ui['#emailEditor']) $.w2ui['emailEditor'].destroy();
-        $('#emailEditor').w2editor({ name: 'emailEditor' });
-}
-function revert() {
-    $.w2ui['emailEditor'].destroy();
-}
-</script>
+        <script  src="<%=request.getContextPath()%>/resources/js/app/common/StyleConstant.js"></script>
+        <script  src="<%=request.getContextPath()%>/resources/js/app/common/HeaderPanel.js"></script>
+        <script  src="<%=request.getContextPath()%>/resources/js/app/common/LeftPanel.js"></script>
+        <script  src="<%=request.getContextPath()%>/resources/js/app/common/FooterPanel.js"></script>
+        <script  src="<%=request.getContextPath()%>/resources/js/app/common/EmailChimp.js"></script>
+        <script  src="<%=request.getContextPath()%>/resources/js/app/admin/Mailbox.js"></script>
+    </head>
+    <body style="margin: 1px">
+        <div id="layout-container" style="height:700px;">
+            <div id="layout" style="width: 100%; height: 100%;"></div>
+        </div>
     </body>
 </html>
