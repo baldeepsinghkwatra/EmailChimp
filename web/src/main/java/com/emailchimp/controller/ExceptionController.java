@@ -20,6 +20,7 @@ import com.emailchimp.constants.ExceptionConstants;
 import com.emailchimp.exception.ConsumerNotFoundException;
 import com.emailchimp.model.ExceptionJSONInfo;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,6 +49,16 @@ public class ExceptionController {
         return response;
     }
    
+     @ExceptionHandler(HttpMessageNotReadableException.class)
+    public @ResponseBody
+    ExceptionJSONInfo httpMessageNotReadableException(HttpServletRequest request,
+            Exception ex) {
+        ExceptionJSONInfo response = new ExceptionJSONInfo();
+        response.setUrl(request.getRequestURL().toString());
+        response.setMessage(ex.getMessage());
+        return response;
+    }
+    
     /**
      * 
      * To be verified 

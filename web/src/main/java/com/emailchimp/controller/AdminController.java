@@ -16,7 +16,7 @@
  */
 package com.emailchimp.controller;
 
-import com.emailchimp.annotation.JsonObjectProperty;
+import com.emailchimp.conf.annotation.JsonObjectProperty;
 import com.emailchimp.constants.AdminConstants;
 import com.emailchimp.model.MyRecord;
 import com.emailchimp.model.Users;
@@ -55,9 +55,9 @@ public class AdminController {
     
     @RequestMapping(value ="test", method = RequestMethod.POST)
     @ResponseBody
-    public MyRecord hello( @JsonObjectProperty(name = "record") MyRecord record){
-        System.out.println("-------------"+record);
-        return record;
+    public MyRecord hello( @JsonObjectProperty MyRecord record1 ){
+        System.out.println(record1);
+        return record1;
     
     }
 }
