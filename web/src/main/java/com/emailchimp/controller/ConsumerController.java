@@ -23,13 +23,14 @@ import com.emailchimp.model.Users;
 import com.emailchimp.service.ConsumerService;
 import com.emailchimp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import com.emailchimp.core.service.Email;
-import com.emailchimp.util.CustomHttpURLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  *
@@ -45,11 +46,11 @@ public class ConsumerController {
     @Autowired
     Email email;
     @Autowired
-    CustomHttpURLConnection customHttpURLConnection;
+    PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = ConsumerConstants.URL_REGISTER_CONSUMER, method = RequestMethod.POST)
-    public ModelAndView registerUserOld(Consumer emailChimpUser) {
-        emailChimpUser.setPassword(BCrypt.hashpw(emailChimpUser.getPassword(), UserConstants.SALT));
+    public ModelAndView registerUser(Consumer emailChimpUser) {
+        emailChimpUser.setPassword(passwordEncoder.encode(emailChimpUser.getPassword()));
         try {
             consumerService.save(emailChimpUser);
             Users users = new Users();
@@ -59,16 +60,27 @@ public class ConsumerController {
             users.setUserPassword(emailChimpUser.getPassword());
             users.setUserRole(UserConstants.ROLE_CONSUMER);
             userService.save(users);
-            email.sendMail(emailChimpUser.getEmail(), "Welcoem Mail", "Hello ");
+            email.sendMail(emailChimpUser.getEmail(), "Welcome Mail", "Hello ");
         } catch (Exception e) {
             return new ModelAndView(UserConstants.LOGIN_PAGE, UserConstants.RESPONSE_DATA, UserConstants.MESSAGE_REGISTRATION_FAILURE);
         }
         return new ModelAndView(UserConstants.LOGIN_PAGE, UserConstants.RESPONSE_DATA, UserConstants.MESSAGE_REGISTRATION_SUCCESS);
     }
 
- 
     @RequestMapping(ConsumerConstants.URL_UPLOAD_LIST)
     public String uploadListPage() {
         return ConsumerConstants.PATH_UPLOAD_LIST;
     }
+    
+     @RequestMapping(value = ConsumerConstants.URL_SEND_MAIL, method = RequestMethod.POST)
+    public String sendMailController(String mail,String body,String subject) {
+       
+        try {
+            email.sendMail(mail,subject,body);
+            return "Sent";
+        } catch (InterruptedException ex) {
+          return "Not Sent";
+        }
+    }
+    
 }

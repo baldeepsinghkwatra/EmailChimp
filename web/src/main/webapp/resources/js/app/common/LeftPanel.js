@@ -28,7 +28,7 @@ var LeftPanel = {
                     resizable: false,
                     hidden: true,
                     style: StyleConstant.slideBar,
-                    content: '<a href="#" class=" rotate  showButton " >Menu</a>'
+                    content: '<a href="#" class="rotate  showButton">Menu<img src=""></a>'
                 },
                 {
                     type: 'main', size: 200,
