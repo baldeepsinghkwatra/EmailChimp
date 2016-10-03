@@ -97,7 +97,14 @@
             <artifactId>spring-orm</artifactId>
             <version>4.0.3.RELEASE</version>
         </dependency>
-
+        
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4-1200-jdbc41</version>
+        </dependency>
+        
         <dependency>
             <groupId>com.emailChimp.core</groupId>
             <artifactId>EmailChimpCore</artifactId>
