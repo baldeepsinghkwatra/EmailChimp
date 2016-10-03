@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TriggerReports {
-
+    
     /*
      * second, minute, hour, day of month, month, day(s) of week
      */
@@ -34,7 +34,7 @@ public class TriggerReports {
 
     }
 
-    @Scheduled(fixedDelay = 100000)
-    public void scheduleFixedDelayTask() {
+    @Scheduled(fixedDelay = 10000)
+    public void checkForTasks() {
     }
 }

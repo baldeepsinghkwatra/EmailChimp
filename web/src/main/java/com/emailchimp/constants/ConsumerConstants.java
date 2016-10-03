@@ -24,6 +24,7 @@ public interface ConsumerConstants {
 
     String URL_REGISTER_CONSUMER="/registerConsumer";
     String URL_UPLOAD_LIST="/uploadList";
+    String URL_SEND_MAIL="/sendMail";
     
     
     

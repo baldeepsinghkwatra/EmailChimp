@@ -13,7 +13,7 @@ var FooterPanel = {
         w2ui.layout.content('bottom', this.getFooter());
     },
     getFooter: function () {
-        return'<div style="padding:5px">Hello : Jaspreet</div>'
+        return'<div style="padding:5px">Hello : Jaspreet</div>';
 
     }
 }
