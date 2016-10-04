@@ -12,7 +12,6 @@ Author     : anshul
         <title>Mail Box</title>
         <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/w2ui.min.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/emailChimp.css">
-
         <script  src="<%=request.getContextPath()%>/resources/js/jquery-3.1.0.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
         <script src="http://cdn.ckeditor.com/4.5.11/standard-all/ckeditor.js"></script>
@@ -23,6 +22,7 @@ Author     : anshul
         <script  src="<%=request.getContextPath()%>/resources/js/app/common/FooterPanel.js"></script>
         <script  src="<%=request.getContextPath()%>/resources/js/app/common/EmailChimp.js"></script>
         <script  src="<%=request.getContextPath()%>/resources/js/app/admin/Mailbox.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/js/app/common/SendMail.js" type="text/javascript"></script>
     </head>
     <body style="margin: 1px">
         <div id="layout-container" style="height:700px;">
