@@ -28,9 +28,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import com.emailchimp.core.service.Email;
+import com.emailchimp.model.MailBean;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import com.emailchimp.conf.annotation.JsonObjectProperty;
 
 /**
  *
@@ -72,13 +75,13 @@ public class ConsumerController {
         return ConsumerConstants.PATH_UPLOAD_LIST;
     }
     
-     @RequestMapping(value = ConsumerConstants.URL_SEND_MAIL, method = RequestMethod.POST)
-    public String sendMailController(String mail,String body,String subject) {
-       
+    @RequestMapping(value = ConsumerConstants.URL_SEND_MAIL, method = RequestMethod.POST)
+    public String sendMailController(@JsonObjectProperty MailBean record) {
         try {
-            email.sendMail(mail,subject,body);
+            System.out.println("com.emailchimp.controller.ConsumerController.sendMailController()"+record);
+            email.sendMail(record.getTo(),record.getSubject(),record.getMessage());
             return "Sent";
-        } catch (InterruptedException ex) {
+        } catch (Exception ex) {
           return "Not Sent";
         }
     }

@@ -49,15 +49,16 @@ public final class JsonObjectPropertyResolver implements HandlerMethodArgumentRe
             NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         Class<?> parameterType=null;
         try {
-             parameterType= parameter.getParameterType();
+            parameterType= parameter.getParameterType();
             String pathVariable = parameter.getParameterName();
             HttpServletRequest servletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
             ServletServerHttpRequest inputMessage = new ServletServerHttpRequest(servletRequest);
-
+            
             // handle potential exceptions from this as well
             ObjectNode rootObject = objectMapper.readValue(inputMessage.getBody(), ObjectNode.class);
             JsonObjectProperty annotation = parameter.getParameterAnnotation(JsonObjectProperty.class);
             String jsonInString = rootObject.get(annotation.name().isEmpty() ? pathVariable : annotation.name()).toString();
+            System.out.println(jsonInString);
             return objectMapper.readValue(jsonInString, parameterType);
         } catch (NullPointerException npe) {
 

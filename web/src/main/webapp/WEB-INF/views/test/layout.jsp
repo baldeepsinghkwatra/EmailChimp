@@ -82,7 +82,6 @@
                             "reset": function () { this.clear(); }
                         },
                         onValidate: function(event) {
-                          debugger;
                             console.log(event);
                             this.record.Message=$('iframe').contents().find('body').html();
                         }

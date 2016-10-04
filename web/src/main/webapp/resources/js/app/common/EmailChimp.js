@@ -9,7 +9,7 @@ function openPopup () {
                     $().w2form({
                         name: 'foo',
                         style: 'border: 0px; background-color: transparent;',
-                        url: 'server/post',
+                        url: 'sendMail',
             //            formHTML: 
             //                '<div class="w2ui-page page-0">'+
             //                '    <div class="w2ui-field">'+
@@ -36,24 +36,25 @@ function openPopup () {
             //                '    <button class="btn" name="save">Save</button>'+
             //                '</div>',
                         fields: [
-                            { field: 'To', type: 'email', required: true },
-                            { field: 'Subject', type: 'text', required: true },
-                            { field: 'Message', type: 'textarea', html: { caption: 'Message', attr: 'style="width: 300px; height: 90px"' } },
-                            { field: 'File', type: 'file' }
+                            { field: 'to', type: 'email', required: true },
+                            { field: 'subject', type: 'text', required: true },
+                            { field: 'message', type: 'textarea', html: { caption: 'Message', attr: 'style="width: 300px; height: 90px"' } },
+                            { field: 'file', type: 'file' }
                         ],
-            //            record: { 
-            //                To    : 'jdoe@email.com',
-            //                Subject     : 'Doe',
-            //                Message : 'HI'
-            //            },
+                        record: { 
+                            to    : 'anshulgupta231193@gmail.com',
+                            subject     : 'Anshul',
+                            message : 'HI'
+                        },
                         actions: {
                             "save": function () {  this.save(); },
                             "reset": function () { this.clear(); }
                         },
                         onValidate: function(event) {
-                          debugger;
                             console.log(event);
-                            this.record.Message=$('iframe').contents().find('body').html();
+//                            this.cmd = "true";
+                            w2utils.settings.dataType = 'JSON';
+                            this.record.message=$('iframe').contents().find('body').html();
                         }
                     });
                 }
@@ -77,7 +78,7 @@ function openPopup () {
                             $('#w2ui-popup #form').w2render('foo');
                             CKEDITOR.plugins.addExternal( 'timestamp', 'http://sdk.ckeditor.com/samples/assets/plugins/timestamp/', 'plugin.js' );
 
-                            CKEDITOR.replace( 'Message', {
+                            CKEDITOR.replace( 'message', {
                                     extraPlugins: 'timestamp'
                             } );
                         };
