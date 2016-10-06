@@ -5,7 +5,7 @@
  */
 var Mailbox = {
     init: function () {
-        alert(2);
+//        alert(2);
         Object.create(EmailChimp).init();
         this.initialize();
     },

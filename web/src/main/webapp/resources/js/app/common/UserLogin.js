@@ -15,15 +15,24 @@ $(function () {
         ],
         actions: {
             'Save': function (event) {
-                console.log('save', event);
+                console.log('save');
                 this.save();
-                setTimeout(function () { 
-                    location.reload();
-                  }, 3 * 1000);
+                
+//                setTimeout(function () { 
+////                    location.reload();
+////                  }, 0 * 1000);
             },
             'Clear': function (event) {
                 console.log('clear', event);
                 this.clear();
+            }
+        },
+        onSave: function(event) {
+            console.log(event);
+            if(event.status == "success") {
+                setTimeout(function () { 
+                    location.reload();
+                  }, 0 * 1000);
             }
         },
         onSubmit: function(form, formObj){
