@@ -14,40 +14,23 @@
  * or reproduction of this material is strictly forbidden unless prior written
  * permission is obtained from Mindfire Solutions
  */
-package com.emailchimp.controller;
+package com.jwt.controller;
 
-import com.emailchimp.constants.AdminConstants;
-import com.emailchimp.model.Users;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.emailchimp.service.UserService;
 
 /**
  *
  * @author baldeep
  */
 @Controller
-public class AdminController {
+public class IndexController {
 
-    @Autowired
-    UserService userService;
-
-    @RequestMapping(value = AdminConstants.URL_GET_USER_BY_MOBILE, method = RequestMethod.GET)
-    @ResponseBody
-    public Users getUserByMobile(@PathVariable String mobileNumber, ModelMap model) {
-        return userService.getUserByMobile(mobileNumber);
-
-    }
-
-    @RequestMapping(value = AdminConstants.URL_GET_ALL_USERS, method = RequestMethod.GET)
-    @ResponseBody
-    public List<Users> getAllUser() {
-        return userService.getAllUsers();
+    
+    @GetMapping("index")
+    public String index() {
+        return "/index";
     }
 }

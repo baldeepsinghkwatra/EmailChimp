@@ -17,15 +17,12 @@
 package com.emailchimp.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -39,19 +36,18 @@ public class Consumer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-    @Column(name = "name", unique = false, nullable = false)
-    private String name;
-    @Column(name = "email", unique = true, nullable = false)
-    private String email;
-    @Column(name = "contact", unique = true, nullable = false)
-    private String contact;
-    private boolean isActive;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "activationDate", updatable = false)
-    private Date activationDate=new Date();
-    private String signUpDate;
-    @Column(name = "password", unique = false, nullable = false)
-    private String password;
+    @Column(name = "user_id", unique = false, nullable = false)
+    private String userId;
+    @Column(name = "state", unique = true, nullable = false)
+    private String state;
+    @Column(name = "city", unique = true, nullable = false)
+    private String city;
+    @Column(name = "country", unique = true, nullable = false)
+    private String country;
+    @Column(name = "zipcode", unique = true, nullable = false)
+    private String zipcode;
+    @Column(name = "address", unique = true, nullable = false)
+    private String address;
 
     public long getId() {
         return id;
@@ -61,64 +57,51 @@ public class Consumer implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getEmail() {
-        return email;
+    public String getState() {
+        return state;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public String getContact() {
-        return contact;
+    public String getCity() {
+        return city;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public boolean isIsActive() {
-        return isActive;
+    public String getCountry() {
+        return country;
     }
 
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public Date getActivationDate() {
-        return activationDate;
+    public String getZipcode() {
+        return zipcode;
     }
 
-    public void setActivationDate(Date activationDate) {
-        this.activationDate = activationDate;
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
 
-    public String getSignUpDate() {
-        return signUpDate;
+    public String getAddress() {
+        return address;
     }
 
-    public void setSignUpDate(String signUpDate) {
-        this.signUpDate = signUpDate;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "id=" + id + "&name=" + name + "&email=" + email + "&contact=" + contact + "&isActive=" + isActive + "&activationDate=" + activationDate + "&signUpDate=" + signUpDate + "&password=" + password;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

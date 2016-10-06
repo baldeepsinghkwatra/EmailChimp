@@ -14,7 +14,7 @@
  * or reproduction of this material is strictly forbidden unless prior written
  * permission is obtained from Mindfire Solutions
  */
-package com.emailchimp.conf;
+package com.jwt.conf;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +24,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver;
+import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -41,9 +43,10 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @EnableScheduling
-@ComponentScan(basePackages = "com.emailchimp")
-@PropertySource("classpath:Application.properties")
-public class WebConfiguration extends WebMvcConfigurerAdapter {
+@ComponentScan(basePackages = "com.jwt")
+@PropertySource("classpath:MySQLConfig.properties")
+@PropertySource("classpath:Common.properties")
+public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Value("${db.url.${mode}}")
     private String jdbcUrl;
@@ -105,20 +108,26 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-    /**
-     * Handler to make session timeout to -1
-     *
-     * @param registry
-     */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SessionHandler());
-    }
-    
-    
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new JsonObjectPropertyResolver());
+    @Bean
+    public DeviceResolverHandlerInterceptor
+            deviceResolverHandlerInterceptor() {
+        return new DeviceResolverHandlerInterceptor();
     }
 
+    @Bean
+    public DeviceHandlerMethodArgumentResolver
+            deviceHandlerMethodArgumentResolver() {
+        return new DeviceHandlerMethodArgumentResolver();
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(deviceResolverHandlerInterceptor());
+    }
+
+    @Override
+    public void addArgumentResolvers(
+            List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(deviceHandlerMethodArgumentResolver());
+    }
 }

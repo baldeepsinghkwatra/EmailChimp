@@ -14,30 +14,28 @@
  * or reproduction of this material is strictly forbidden unless prior written
  * permission is obtained from Mindfire Solutions
  */
-package com.emailchimp.util;
+package com.jwt.security.dao;
 
-import java.util.Random;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  *
- * @author Baldeep Singh Kwatra
+ * @author baldeep
+ * @param <PK>
+ * @param <T>
  */
-public class GeneratePassword {
+public interface AbstractDAO<PK extends Serializable, T> {
 
-    
-    private static final String RAW_CHARACTERS = "23456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz";
-    static Random rnd = new Random();
+    public T getByKey(PK key);
 
-    /**
-     * Method for generating random password
-     * @param length
-     * @return 
-     */
-    public static String randomPassword(int length) {
-        StringBuilder stringBuilder = new StringBuilder(10);
-        for (int i = 0; i < length; i++) {
-            stringBuilder.append(RAW_CHARACTERS.charAt(rnd.nextInt(RAW_CHARACTERS.length())));
-        }
-        return stringBuilder.toString();
-    }
+    public void persist(T entity);
+
+    public void delete(T entity);
+
+    public void update(T entity);
+
+    public List<T> getAll();
+
+    public Long count();
 }
