@@ -44,9 +44,13 @@ public class UserController {
     UserService userService;
 
     @RequestMapping(value = UserConstants.DEFAULT_URL, method = RequestMethod.GET)
-    public String welcomePage(ModelMap model, Principal principal) {
+    public String welcomePage(ModelMap model, Principal principal,String error) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         
+//        if(error.equals("true")) {
+//            System.out.println(error);
+//            return "redirect:/"+UserConstants.LOGIN_PAGE;
+//        }
         if (principal != null) {
             AbstractAuthenticationToken authToken = null;
             try {

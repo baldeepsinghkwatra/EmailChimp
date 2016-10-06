@@ -13,9 +13,15 @@
         <title>Login Page</title>
         <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/w2ui.min.css">
+        <script  src="<%=request.getContextPath()%>/resources/js/jquery-3.1.0.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+        <script  src="<%=request.getContextPath()%>/resources/js/w2ui-1.4.3.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/js/app/common/UserLogin.js" type="text/javascript"></script>
     </head>
     <body>
-        <div id="loginDiv" class="panel panel-primary col-lg-3" style="margin: 0 auto;float: none;">
+        <div id="form" style="width: 750px;"></div>
+<!--        <div id="loginDiv" class="panel panel-primary col-lg-3" style="margin: 0 auto;float: none;">
             <div class="panel-body">
                 <h4>Email Chimp Login</h4>
                 <form class="form-horizontal" name="loginForm" action="checkLogin" method="POST">
@@ -64,8 +70,7 @@
                     <center> <strong> Already registered? <a href="#" onclick="toggleDiv('registerDiv', 'loginDiv')">Sign In</a></strong></center>
                 </form>
             </div>
-        </div>
+        </div>-->
     </body>
-    <script  src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script  src="<%=request.getContextPath()%>/resources/js/main.js"></script>
 </html>

@@ -85,7 +85,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.formLogin().loginProcessingUrl("/checkLogin")
                 .defaultSuccessUrl("/")
                 .loginPage("/")
-                .failureUrl("/?error")
+                .failureUrl("/?error=true")
                 .usernameParameter("email").passwordParameter("password");
 
         //Remember me configuration
