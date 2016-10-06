@@ -24,14 +24,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import com.emailchimp.service.UserService;
 import java.security.Principal;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  *
@@ -43,10 +41,10 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = UserConstants.DEFAULT_URL, method = RequestMethod.GET)
+    @GetMapping(UserConstants.DEFAULT_URL)
     public String welcomePage(ModelMap model, Principal principal) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        
+
         if (principal != null) {
             AbstractAuthenticationToken authToken = null;
             try {
@@ -54,9 +52,8 @@ public class UserController {
             } catch (Exception e) {
                 authToken = (RememberMeAuthenticationToken) principal;
             }
-            LoginUser user=(LoginUser) authToken.getPrincipal();
-            System.out.println("\n\nUser:: "+user);
-            
+            LoginUser user = (LoginUser) authToken.getPrincipal();
+
             String userName = "";
 
             if (user != null) {
@@ -88,9 +85,9 @@ public class UserController {
         return UserConstants.LOGIN_PAGE;
     }
 
-    @RequestMapping(value = UserConstants.INVALID_ACCESS_PAGE)
-    public ModelAndView invalidAccess() {
-        return new ModelAndView(UserConstants.INVALID_ACCESS_PAGE);
+    @GetMapping(UserConstants.INVALID_ACCESS_PAGE)
+    public String invalidAccess() {
+        return UserConstants.INVALID_ACCESS_PAGE;
 
     }
 }

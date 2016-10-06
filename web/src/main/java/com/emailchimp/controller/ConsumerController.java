@@ -18,7 +18,6 @@ package com.emailchimp.controller;
 
 import com.emailchimp.constants.ConsumerConstants;
 import com.emailchimp.constants.UserConstants;
-import com.emailchimp.model.Consumer;
 import com.emailchimp.model.Users;
 import com.emailchimp.service.ConsumerService;
 import com.emailchimp.service.UserService;
@@ -29,11 +28,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import com.emailchimp.core.service.Email;
 import com.emailchimp.model.MailBean;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.emailchimp.conf.annotation.JsonObjectProperty;
+import com.emailchimp.constants.ApplicationConstants;
+import com.emailchimp.util.GenerateCode;
+import com.emailchimp.util.ReadFile;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
@@ -44,27 +47,48 @@ public class ConsumerController {
 
     @Autowired
     ConsumerService consumerService;
+    
     @Autowired
     UserService userService;
+    
     @Autowired
     Email email;
+    
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @RequestMapping(value = ConsumerConstants.URL_REGISTER_CONSUMER, method = RequestMethod.POST)
-    public ModelAndView registerUser(Consumer emailChimpUser) {
-        emailChimpUser.setPassword(passwordEncoder.encode(emailChimpUser.getPassword()));
+    @Autowired
+    private ResourceLoader resourceLoader;
+    @Value("${domain.${mode}}")
+    private String domain;
+
+    @PostMapping(ConsumerConstants.URL_REGISTER_CONSUMER)
+    public ModelAndView registerUser(Users user) {
+        String verificationCode = GenerateCode.random(50);
+        user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
+        user.setUserRole(UserConstants.ROLE_CONSUMER);
+        user.setVerificationCode(verificationCode);
         try {
-            consumerService.save(emailChimpUser);
-            Users users = new Users();
-            users.setUserEmail(emailChimpUser.getEmail());
-            users.setUserMobile(emailChimpUser.getContact());
-            users.setUserName(emailChimpUser.getName());
-            users.setUserPassword(emailChimpUser.getPassword());
-            users.setUserRole(UserConstants.ROLE_CONSUMER);
-            userService.save(users);
-            email.sendMail(emailChimpUser.getEmail(), "Welcome Mail", "Hello ");
+            //save user to DB
+            userService.save(user);
+
+            //Load resource of Html File
+            Resource resource = resourceLoader.getResource("classpath:VerificationMail.txt");
+            //Find Absolute Path of the file
+            String absolutePath = resource.getFile().getAbsolutePath();
+            // Get Html Content in String format by calling Utility Class read method
+            String verificationMailBody = ReadFile.read(absolutePath);
+            //Replace all the tags in the mail body
+            verificationMailBody = verificationMailBody
+                    .replaceAll(UserConstants.TAG_USER_NAME, user.getUserName())
+                    .replaceAll(UserConstants.TAG_USER_EMAIL, user.getUserEmail())
+                    .replaceAll(UserConstants.TAG_USER_VERIFICATION_CODE, verificationCode)
+                    .replaceAll(ApplicationConstants.TAG_DOMAIN, domain);
+
+            //Call Email Service
+            email.sendMail(user.getUserEmail(), "Welcome from  EmailChimp :)", verificationMailBody);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ModelAndView(UserConstants.LOGIN_PAGE, UserConstants.RESPONSE_DATA, UserConstants.MESSAGE_REGISTRATION_FAILURE);
         }
         return new ModelAndView(UserConstants.LOGIN_PAGE, UserConstants.RESPONSE_DATA, UserConstants.MESSAGE_REGISTRATION_SUCCESS);
@@ -74,16 +98,16 @@ public class ConsumerController {
     public String uploadListPage() {
         return ConsumerConstants.PATH_UPLOAD_LIST;
     }
-    
+
     @RequestMapping(value = ConsumerConstants.URL_SEND_MAIL, method = RequestMethod.POST)
     public String sendMailController(@JsonObjectProperty MailBean record) {
         try {
-            System.out.println("com.emailchimp.controller.ConsumerController.sendMailController()"+record);
-            email.sendMail(record.getTo(),record.getSubject(),record.getMessage());
+            System.out.println("com.emailchimp.controller.ConsumerController.sendMailController()" + record);
+            email.sendMail(record.getTo(), record.getSubject(), record.getMessage());
             return "Sent";
         } catch (Exception ex) {
-          return "Not Sent";
+            return "Not Sent";
         }
     }
-    
+
 }

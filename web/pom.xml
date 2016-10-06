@@ -14,10 +14,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jackson.databind-version>2.5.3</jackson.databind-version>
     </properties>
-<!--    <modules>
-    <module>EmailChimpCore</module>
-</modules>-->
+
     <dependencies>
+         
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
@@ -34,6 +33,12 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
             <version>4.0.4.RELEASE</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>4.3.2.RELEASE</version>
             <type>jar</type>
         </dependency>
         <dependency>

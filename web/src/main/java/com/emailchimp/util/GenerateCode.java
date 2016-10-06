@@ -22,7 +22,7 @@ import java.util.Random;
  *
  * @author Baldeep Singh Kwatra
  */
-public class GeneratePassword {
+public class GenerateCode {
 
     
     private static final String RAW_CHARACTERS = "23456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz";
@@ -33,7 +33,7 @@ public class GeneratePassword {
      * @param length
      * @return 
      */
-    public static String randomPassword(int length) {
+    public static String random(int length) {
         StringBuilder stringBuilder = new StringBuilder(10);
         for (int i = 0; i < length; i++) {
             stringBuilder.append(RAW_CHARACTERS.charAt(rnd.nextInt(RAW_CHARACTERS.length())));

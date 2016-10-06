@@ -43,19 +43,19 @@
                 <form class="form-horizontal left-inner-addon" name="registerForm" action="registerConsumer" method="POST">
                     <div class="form-group">
                         <i class="material-icons">email</i>
-                        <input class="form-control element-space" type="text" placeholder="Full Name" name="name" required="" title="Enter your Name here"/>
+                        <input class="form-control element-space" type="text" placeholder="Full Name" name="userName" required="" title="Enter your Name here"/>
                     </div>   
                     <div class="form-group">
                         <i class="material-icons">email</i>
-                        <input class="form-control element-space" type="email" placeholder="Email" name="email" required="" title="Enter your Email here"/>
+                        <input class="form-control element-space" type="email" placeholder="Email" name="userEmail" required="" title="Enter your Email here"/>
                     </div>
                     <div class="form-group left-inner-addon">
                         <i class="material-icons">lock_outline</i>
-                        <input class="form-control element-space" type="password" placeholder="Password" name="password" title="Enter your Password here"/>
+                        <input class="form-control element-space" type="password" placeholder="Password" name="userPassword" title="Enter your Password here"/>
                     </div>
                     <div class="form-group left-inner-addon">
                         <i class="material-icons">contact_phone</i>
-                        <input class="form-control element-space" type="text" placeholder="Contact Number" name="contact" title="Enter your Mobile Number here"/>
+                        <input class="form-control element-space" type="text" placeholder="Contact Number" name="userMobile" title="Enter your Mobile Number here"/>
                     </div>
                     <input style="display: none" type="checkbox" name="remember-me" checked="" />
                     <div class="form-group" style="text-align: center">

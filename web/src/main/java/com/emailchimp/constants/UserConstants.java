@@ -18,52 +18,56 @@
  *
  * @author baldeep
  */
-
 package com.emailchimp.constants;
+
 public interface UserConstants {
 
     /**
      * Constants for User Roles
      */
-    String ROLE_ADMIN="ROLE_ADMIN";
-    String ROLE_CONSUMER="ROLE_CONSUMER";
-    String ROLE_PROVIDER="ROLE_PROVIDER";
-    
+    String ROLE_ADMIN = "ROLE_ADMIN";
+    String ROLE_CONSUMER = "ROLE_CONSUMER";
+    String ROLE_PROVIDER = "ROLE_PROVIDER";
+
     /**
      * Constants for Welcome page User Role Wise
      */
-    String WELCOME_PAGE_ADMIN="/admin/welcome";
-    String WELCOME_PAGE_CONSUMER="/consumer/welcome";
-    String WELCOME_PAGE_PROVIDER="/provider/welcome";
-    
+    String WELCOME_PAGE_ADMIN = "/admin/welcome";
+    String WELCOME_PAGE_CONSUMER = "/consumer/welcome";
+    String WELCOME_PAGE_PROVIDER = "/provider/welcome";
+
     /**
      * Login Page Constants
      */
-    String LOGIN_PAGE="/userLogin";
+    String LOGIN_PAGE = "/userLogin";
     /**
      * Invalid Access Page
      */
-    String INVALID_ACCESS_PAGE="/invalidAccess";
-    
+    String INVALID_ACCESS_PAGE = "/invalidAccess";
+
     /**
      * Default URL
      */
-    String DEFAULT_URL="/";
-    
+    String DEFAULT_URL = "/";
+
     /**
      * Greeting Constants
      */
-    String WELCOME_GREETING_KEY="greeting";
-    String WELCOME_GREETING_ADMIN="Admin: ";
-    String WELCOME_GREETING_CONSUMER="Consumer: ";
-    String WELCOME_GREETING_PROVIDER="Provider: ";
-    
+    String WELCOME_GREETING_KEY = "greeting";
+    String WELCOME_GREETING_ADMIN = "Admin: ";
+    String WELCOME_GREETING_CONSUMER = "Consumer: ";
+    String WELCOME_GREETING_PROVIDER = "Provider: ";
+
     /**
      * SALT for HASH
      */
     public static final String SALT = "$2a$08$nv8/8OQhGiZ7wzaFB4SoSO6wQeHErBRARhicAjbv0ZMctopyB0F.W";
-    
-    String RESPONSE_DATA="data";
-    String MESSAGE_REGISTRATION_SUCCESS="Registration Successful";
-    String MESSAGE_REGISTRATION_FAILURE="User already registered";
+
+    String RESPONSE_DATA = "data";
+    String MESSAGE_REGISTRATION_SUCCESS = "Registration Successful";
+    String MESSAGE_REGISTRATION_FAILURE = "User already registered";
+
+    String TAG_USER_EMAIL = "<<userEmail>>";
+    String TAG_USER_NAME = "<<userName>>";
+    String TAG_USER_VERIFICATION_CODE = "<<verificationCode>>";
 }

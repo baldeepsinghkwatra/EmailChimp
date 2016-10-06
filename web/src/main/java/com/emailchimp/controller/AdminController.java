@@ -16,9 +16,7 @@
  */
 package com.emailchimp.controller;
 
-import com.emailchimp.conf.annotation.JsonObjectProperty;
 import com.emailchimp.constants.AdminConstants;
-import com.emailchimp.model.MyRecord;
 import com.emailchimp.model.Users;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,13 +49,5 @@ public class AdminController {
     @ResponseBody
     public List<Users> getAllUser() {
         return userService.getAllUsers();
-    }
-    
-    @RequestMapping(value ="test", method = RequestMethod.POST)
-    @ResponseBody
-    public MyRecord hello( @JsonObjectProperty MyRecord record1 ){
-        System.out.println(record1);
-        return record1;
-    
     }
 }

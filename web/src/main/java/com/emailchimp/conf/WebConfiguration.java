@@ -42,7 +42,7 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @EnableScheduling
 @ComponentScan(basePackages = "com.emailchimp")
-@PropertySource("classpath:MySQLConfig.properties")
+@PropertySource("classpath:Application.properties")
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     @Value("${db.url.${mode}}")
