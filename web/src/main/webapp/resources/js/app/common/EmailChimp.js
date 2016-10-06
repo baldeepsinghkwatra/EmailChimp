@@ -6,6 +6,7 @@
 
 var EmailChimp = {
     init: function () {
+        alert(1);
         this.setLayoutContainerHeight();
         $(window).resize(this.setLayoutContainerHeight);
         this.createLayout();

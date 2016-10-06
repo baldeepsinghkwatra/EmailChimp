@@ -15,6 +15,7 @@ Author     : anshul
         <script  src="<%=request.getContextPath()%>/resources/js/jquery-3.1.0.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
         <script src="http://cdn.ckeditor.com/4.5.11/standard-all/ckeditor.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/js/app/common/inheritance.js" type="text/javascript"></script>
         <script  src="<%=request.getContextPath()%>/resources/js/w2ui-1.4.3.js"></script>
         <script  src="<%=request.getContextPath()%>/resources/js/app/common/StyleConstant.js"></script>
         <script  src="<%=request.getContextPath()%>/resources/js/app/common/HeaderPanel.js"></script>
