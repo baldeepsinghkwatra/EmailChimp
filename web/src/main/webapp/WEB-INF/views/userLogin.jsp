@@ -20,7 +20,12 @@
         <script src="<%=request.getContextPath()%>/resources/js/app/common/UserLogin.js" type="text/javascript"></script>
     </head>
     <body>
-        <div id="form" style="width: 750px;"></div>
+        <div id="form" style="width: 450px;height:220px;position: absolute;
+left: 50%;
+top: 50%;
+-webkit-transform: translate(-50%, -50%);
+-ms-transform: translate(-50%, -50%);
+transform: translate(-50%, -50%);"></div>
 <!--        <div id="loginDiv" class="panel panel-primary col-lg-3" style="margin: 0 auto;float: none;">
             <div class="panel-body">
                 <h4>Email Chimp Login</h4>

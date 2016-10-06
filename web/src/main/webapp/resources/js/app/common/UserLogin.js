@@ -10,8 +10,8 @@ $(function () {
         header : 'Auto-Generated Form',
         url    : 'checkLogin',
         fields : [
-            { field: 'email', type: 'text', required: true, html: { caption: 'Email', attr: 'style="width: 300px"' } },
-            { field: 'password',  type: 'password', required: true, html: { caption: 'Password', attr: 'style="width: 300px"' } }           
+            { field: 'email', type: 'text', required: true, html: { caption: 'Email', attr: 'style="width: 200px"' } },
+            { field: 'password',  type: 'password', required: true, html: { caption: 'Password', attr: 'style="width: 200px"' } }           
         ],
         actions: {
             'Save': function (event) {
