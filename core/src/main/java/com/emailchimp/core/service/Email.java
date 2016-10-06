@@ -39,6 +39,7 @@ public class Email {
 
     @Autowired
     private JavaMailSender mailSender;
+    final String FROM="EmailChimp <mindfireprojects@gmail.com>";
 
     /**
      * This method triggers the email in background thread i.e. the mail is sent
@@ -57,7 +58,7 @@ public class Email {
             message.setHeader("Content-Type", "text/plain; charset=UTF-8");
             MimeMessageHelper helper;
             helper = new MimeMessageHelper(message, true);
-            helper.setFrom(username);
+            helper.setFrom(FROM);
             helper.setTo(to);
             helper.setText(msg, true);
             mailSender.send(message);
