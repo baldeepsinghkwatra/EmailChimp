@@ -63,7 +63,7 @@ public class ConsumerController {
     private String domain;
 
     @PostMapping(ConsumerConstants.URL_REGISTER_CONSUMER)
-    public ModelAndView registerUser(Users user) {
+    public ModelAndView registerUser(@JsonObjectProperty(name="record") Users user) {
         String verificationCode = GenerateCode.random(50);
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
         user.setUserRole(UserConstants.ROLE_CONSUMER);
