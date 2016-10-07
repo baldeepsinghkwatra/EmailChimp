@@ -22,8 +22,6 @@ Author     : anshul
         <script  src="<%=request.getContextPath()%>/resources/js/app/common/LeftPanel.js"></script>
         <script  src="<%=request.getContextPath()%>/resources/js/app/common/FooterPanel.js"></script>
         <script  src="<%=request.getContextPath()%>/resources/js/app/common/EmailChimp.js"></script>
-        <script  src="<%=request.getContextPath()%>/resources/js/app/admin/Mailbox.js"></script>
-        <script src="<%=request.getContextPath()%>/resources/js/app/common/SendMail.js" type="text/javascript"></script>
     </head>
     <body style="margin: 1px">
         <div id="layout-container" style="height:700px;">

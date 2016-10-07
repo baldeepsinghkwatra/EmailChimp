@@ -50,7 +50,7 @@ var HeaderPanel = {
                 {
                     type: 'button',
                     id: 'item7',
-                    caption: 'Logout'
+                    caption: '<a style="text-decoration:none" href="logout">Logout</a>'
                 }
 
             ]
@@ -78,5 +78,5 @@ var HeaderPanel = {
 
         };
     }
-}
+};
 

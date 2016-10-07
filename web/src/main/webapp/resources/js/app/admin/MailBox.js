@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var Mailbox = {
+var MailBox = {
     init: function () {
-//        alert(2);
-        Object.create(EmailChimp).init();
         this.initialize();
     },
     initialize: function () {
@@ -44,11 +42,3 @@ var Mailbox = {
         };
     }
 }
-
- $(document).ready(function () {
-//    var mailBox = Object.create(Mailbox);
-//    var emailChimp = Object.create(EmailChimp);
-//    inheritsFrom(Mailbox,EmailChimp);
-    Object.create(Mailbox).init();
-});
-
