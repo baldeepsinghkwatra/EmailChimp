@@ -67,8 +67,8 @@ var LeftPanel = {
             ],
             onClick: function(event) {
                     if(event.target == "n2"){
-                        console.log(event);
-                        openPopup();
+                        EmailChimp.loadComponent('admin','SendMail');
+                       
                     }
             }
         };
