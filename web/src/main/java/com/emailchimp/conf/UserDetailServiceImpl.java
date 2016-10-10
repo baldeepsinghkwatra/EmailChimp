@@ -34,7 +34,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("userDetailsService")
 public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
@@ -53,9 +53,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 } else {
                     auths = AuthorityUtils.NO_AUTHORITIES;
                 }
-
                 return new LoginUser(userProfile.getUserEmail(), userProfile.getUserPassword(),
-                        auths, userProfile.getUserName(), userProfile.getUserMobile());
+                        true, userProfile.isAccountNonExpired(), userProfile.isCredentialsNonExpired(),
+                        userProfile.isAccountNonLocked(), auths,
+                        userProfile.getUserName(), userProfile.getUserMobile());
             }
         }
         return null;
