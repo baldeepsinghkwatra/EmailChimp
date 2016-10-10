@@ -7,6 +7,9 @@
 var HeaderPanel = {
     init: function () {
 
+        if(!EmailChimp.conf.headerPanel){
+            return;
+        }
         this.initialize();
     },
     initialize: function () {

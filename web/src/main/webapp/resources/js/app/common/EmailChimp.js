@@ -5,6 +5,11 @@
  */
 
 var EmailChimp = {
+    conf:{
+        headerPanel : true,
+        LeftPanel : true,
+        toolbar : true
+    },
     init: function () {
         this.setLayoutContainerHeight();
         $(window).resize(this.setLayoutContainerHeight);
@@ -87,8 +92,3 @@ var EmailChimp = {
     }
 
 }
-
-$(document).ready(function () {
-    EmailChimp.init();
-    EmailChimp.loadComponent('admin','MailBox');
-});
