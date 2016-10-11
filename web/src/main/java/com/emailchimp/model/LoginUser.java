@@ -31,6 +31,17 @@ public class LoginUser extends User {
     private String userName;
 
     public LoginUser(String email, String password,
+            boolean enabled, boolean accountNonExpired,
+            boolean credentialsNonExpired, boolean accountNonLocked,
+            Collection<? extends GrantedAuthority> authorities,
+            String userName, String userMobile) {
+        super(email, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+        this.userEmail = email;
+        this.userMobile = userMobile;
+        this.userName = userName;
+    }
+
+    public LoginUser(String email, String password,
             Collection<? extends GrantedAuthority> authorities,
             String userName, String userMobile) {
         super(email, password, authorities);

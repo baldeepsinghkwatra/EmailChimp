@@ -102,7 +102,6 @@ public class ConsumerController {
     @RequestMapping(value = ConsumerConstants.URL_SEND_MAIL, method = RequestMethod.POST)
     public String sendMailController(@JsonObjectProperty MailBean record) {
         try {
-            System.out.println("com.emailchimp.controller.ConsumerController.sendMailController()" + record);
             email.sendMail(record.getTo(), record.getSubject(), record.getMessage());
             return "Sent";
         } catch (Exception ex) {

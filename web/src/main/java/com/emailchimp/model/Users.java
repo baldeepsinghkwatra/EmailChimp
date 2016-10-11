@@ -77,21 +77,28 @@ public class Users implements Serializable {
     private String verificationCode;
 
     @Column(name = "is_verified", unique = false, nullable = false)
-    private boolean isVerified=false;
+    private boolean isVerified = false;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "verification_date", updatable = false)
     private Date verificationDate;
 
     @Column(name = "is_active", unique = false, nullable = false)
-    private boolean isActive=false;
+    private boolean isActive = false;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "activation_date", updatable = false)
     private Date activationDate;
 
-    @Column(name = "activation_status", unique = false,nullable = true)
+    @Column(name = "activation_status", unique = false, nullable = true)
     private String activationStatus;
+
+    @Column(name = "accountNonExpired", unique = false, nullable = true)
+    private boolean accountNonExpired = true;
+    @Column(name = "accountNonLocked", unique = false, nullable = true)
+    private boolean accountNonLocked = true;
+    @Column(name = "credentialsNonExpired", unique = false, nullable = true)
+    private boolean credentialsNonExpired = true;
 
     public String getUserName() {
         return userName;
@@ -227,6 +234,30 @@ public class Users implements Serializable {
 
     public void setActivationStatus(String activationStatus) {
         this.activationStatus = activationStatus;
+    }
+
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
     }
 
 }
