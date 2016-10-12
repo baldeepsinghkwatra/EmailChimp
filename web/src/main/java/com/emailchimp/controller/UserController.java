@@ -66,8 +66,15 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    
+    /**
+     * Welcome page that checks if the user is already logged in and if his session
+     * is persisted route him to the role based welcome page else show login page
+     * @param principal
+     * @return 
+     */
     @GetMapping(UserConstants.DEFAULT_URL)
-    public String welcomePage(ModelMap model, Principal principal) {
+    public String welcomePage(Principal principal) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (principal != null) {
@@ -90,32 +97,35 @@ public class UserController {
                 }
                 switch (userRole) {
                     case UserConstants.ROLE_ADMIN:
-                        model.addAttribute(UserConstants.WELCOME_GREETING_KEY, UserConstants.WELCOME_GREETING_ADMIN + userName);
                         return UserConstants.WELCOME_PAGE_ADMIN;
-
                     case UserConstants.ROLE_PROVIDER:
-                        model.addAttribute(UserConstants.WELCOME_GREETING_KEY, UserConstants.WELCOME_GREETING_PROVIDER + userName);
                         return UserConstants.WELCOME_PAGE_PROVIDER;
-
                     case UserConstants.ROLE_CONSUMER:
-                        model.addAttribute(UserConstants.WELCOME_GREETING_KEY, UserConstants.WELCOME_GREETING_CONSUMER + userName);
                         return UserConstants.WELCOME_PAGE_CONSUMER;
-
                     default:
                         break;
                 }
             }
-
         }
         return UserConstants.LOGIN_PAGE;
     }
 
+    /**
+     * View to be displayed when the user does not have enough rights to view the resource
+     * @return 
+     */
     @GetMapping(UserConstants.INVALID_ACCESS_PAGE)
     public String invalidAccess() {
         return UserConstants.INVALID_ACCESS_PAGE;
 
     }
 
+    /**
+     * Trigger forgot password mail
+     * @param userEmail
+     * @param locale
+     * @return 
+     */
     @PostMapping(UserConstants.URL_FORGOT_PASSWORD)
     @ResponseBody
     public String forgotPassword(String userEmail, Locale locale) {
@@ -155,6 +165,12 @@ public class UserController {
         return messageSource.getMessage("user.forgotPassword.failure", new Object[]{userEmail}, locale);
     }
 
+    /**
+     * Verify forgot Password code and accordingly return the view to change password if the code is valid
+     * @param userEmail
+     * @param verificationCode
+     * @return 
+     */
     @GetMapping(UserConstants.URL_RESET_PASSWORD)
     public ModelAndView resetPassword(String userEmail, String verificationCode) {
         Users user = userService.getUserByEmail(userEmail);
@@ -168,6 +184,14 @@ public class UserController {
         return new ModelAndView("/changePassword", "user", null);
     }
 
+    /**
+     * Verify  the code sent on mail and change the password 
+     * @param userEmail
+     * @param userPassword
+     * @param verificationCode
+     * @param locale
+     * @return 
+     */
     @PostMapping(UserConstants.URL_CHANGE_PASSWORD)
     @ResponseBody
     public String changePassword(String userEmail, String userPassword, String verificationCode, Locale locale) {
@@ -202,6 +226,12 @@ public class UserController {
         return messageSource.getMessage("user.changePassword.failure", new Object[]{}, locale);
     }
     
+    /**
+     * Invoked when when the user clicks on the link shared to him after registration
+     * @param userEmail
+     * @param verificationCode
+     * @return 
+     */
     @GetMapping(UserConstants.URL_VERIFY_USER)
     public ModelAndView verifyUser(String userEmail, String verificationCode) {
         Users user = userService.getUserByEmail(userEmail);
