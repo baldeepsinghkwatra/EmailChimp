@@ -56,16 +56,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Qualifier("authenticationProvider")
     AuthenticationProvider authenticationProvider;
 
-    /**
-     * Invoked when user is remembered me
-     *
-     * @param auth
-     * @throws Exception
-     */
-//    @Autowired
-//    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-//    }
+
     
      @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {

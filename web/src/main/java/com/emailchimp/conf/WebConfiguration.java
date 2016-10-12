@@ -23,6 +23,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -42,7 +43,7 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @EnableScheduling
 @ComponentScan(basePackages = "com.emailchimp")
-@PropertySource("classpath:Application.properties")
+@PropertySource({"classpath:Application.properties"})//,"classpath:messages.properties","classpath:messages_fr.properties"})
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     @Value("${db.url.${mode}}")
@@ -121,4 +122,12 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         argumentResolvers.add(new JsonObjectPropertyResolver());
     }
 
+    
+     @Bean
+    public ReloadableResourceBundleMessageSource messageSource(){
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:/messages/messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
+    }
 }

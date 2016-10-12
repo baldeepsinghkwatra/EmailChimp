@@ -14,6 +14,7 @@
  * or reproduction of this material is strictly forbidden unless prior written
  * permission is obtained from Mindfire Solutions
  */
+
 /**
  *
  * @author baldeep
@@ -49,6 +50,20 @@ public interface UserConstants {
      * Default URL
      */
     String DEFAULT_URL = "/";
+    
+    /**
+     * Forgot Password
+     */
+    String URL_FORGOT_PASSWORD="/forgot-password";
+    
+    /**
+     * Reset Password
+     */
+    String URL_RESET_PASSWORD="/reset-password";
+    /**
+     * Change Password
+     */
+    String URL_CHANGE_PASSWORD="/change-password";
 
     /**
      * Greeting Constants

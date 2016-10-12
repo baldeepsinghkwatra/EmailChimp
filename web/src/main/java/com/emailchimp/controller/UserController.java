@@ -16,8 +16,11 @@
  */
 package com.emailchimp.controller;
 
+import com.emailchimp.constants.ApplicationConstants;
 import com.emailchimp.constants.UserConstants;
+import com.emailchimp.core.service.Email;
 import com.emailchimp.model.LoginUser;
+import com.emailchimp.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,11 +28,23 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import com.emailchimp.service.UserService;
+import com.emailchimp.util.GenerateCode;
+import com.emailchimp.util.ReadFile;
 import java.security.Principal;
+import java.util.Calendar;
+import java.util.Locale;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -40,6 +55,16 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    private MessageSource messageSource;
+    @Autowired
+    private ResourceLoader resourceLoader;
+    @Value("${domain.${mode}}")
+    private String domain;
+    @Autowired
+    Email email;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @GetMapping(UserConstants.DEFAULT_URL)
     public String welcomePage(ModelMap model, Principal principal) {
@@ -89,5 +114,91 @@ public class UserController {
     public String invalidAccess() {
         return UserConstants.INVALID_ACCESS_PAGE;
 
+    }
+
+    @PostMapping(UserConstants.URL_FORGOT_PASSWORD)
+    @ResponseBody
+    public String forgotPassword(String userEmail, Locale locale) {
+        Users user = userService.getUserByEmail(userEmail);
+        Calendar calendar = Calendar.getInstance(); // starts with today's date and time
+
+        try {
+            if (user.getForgotPasswordCode().isEmpty() && (user.getForgotPasswordExpiryDate() == null || user.getForgotPasswordExpiryDate().before(calendar))) {
+                String forgotPassword = GenerateCode.random(90);
+                calendar.add(Calendar.DAY_OF_YEAR, 2);  // advances day by 2
+                user.setForgotPasswordCode(forgotPassword);
+                user.setForgotPasswordExpiryDate(calendar);
+                userService.update(user);
+
+                //Load resource of Html File
+                Resource resource = resourceLoader.getResource("classpath:/mails/ForgotPasswordMail");
+                //Find Absolute Path of the file
+                String absolutePath = resource.getFile().getAbsolutePath();
+                // Get Html Content in String format by calling Utility Class read method
+                String verificationMailBody = ReadFile.read(absolutePath);
+                //Replace all the tags in the mail body
+                verificationMailBody = verificationMailBody
+                        .replaceAll(UserConstants.TAG_USER_NAME, user.getUserName())
+                        .replaceAll(UserConstants.TAG_USER_EMAIL, user.getUserEmail())
+                        .replaceAll(UserConstants.TAG_USER_VERIFICATION_CODE, forgotPassword)
+                        .replaceAll(ApplicationConstants.TAG_DOMAIN, domain);
+
+                //Call Email Service
+                email.sendMail(user.getUserEmail(), "Forgot Password | EmailChimp", verificationMailBody);
+                return messageSource.getMessage("user.forgotPassword.success", new Object[]{user.getUserName()}, locale);
+            } else if (user != null) {
+                return messageSource.getMessage("user.forgotPassword.success.already", new Object[]{user.getUserName(), user.getUserEmail()}, locale);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return messageSource.getMessage("user.forgotPassword.failure", new Object[]{userEmail}, locale);
+    }
+
+    @GetMapping(UserConstants.URL_RESET_PASSWORD)
+    public ModelAndView resetPassword(String userEmail, String verificationCode) {
+        Users user = userService.getUserByEmail(userEmail);
+        try {
+            if (user.getForgotPasswordCode().equals(verificationCode)) {
+                return new ModelAndView("/changePassword", "user", user);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return new ModelAndView("/changePassword", "user", null);
+    }
+
+    @PostMapping(UserConstants.URL_CHANGE_PASSWORD)
+    @ResponseBody
+    public String changePassword(String userEmail, String userPassword, String verificationCode, Locale locale) {
+        Users user = userService.getUserByEmail(userEmail);
+        try {
+            if (verificationCode.equals(user.getForgotPasswordCode())) {
+                Calendar calendar = Calendar.getInstance();
+                user.setUserPassword(passwordEncoder.encode(userPassword));
+                user.setLastPasswordUpdatedDate(calendar);
+                user.setForgotPasswordCode("");
+                user.setForgotPasswordExpiryDate(null);
+                userService.update(user);
+
+                //Load resource of Html File
+                Resource resource = resourceLoader.getResource("classpath:/mails/ChangePasswordMail");
+                //Find Absolute Path of the file
+                String absolutePath = resource.getFile().getAbsolutePath();
+                // Get Html Content in String format by calling Utility Class read method
+                String verificationMailBody = ReadFile.read(absolutePath);
+                //Replace all the tags in the mail body
+                verificationMailBody = verificationMailBody
+                        .replaceAll(UserConstants.TAG_USER_NAME, user.getUserName())
+                        .replaceAll(ApplicationConstants.TAG_DOMAIN, domain);
+
+                //Call Email Service
+                email.sendMail(user.getUserEmail(), "Password Reset Complete | EmailChimp", verificationMailBody);
+                return messageSource.getMessage("user.changePassword.success", new Object[]{user.getUserName()}, locale);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return messageSource.getMessage("user.changePassword.failure", new Object[]{}, locale);
     }
 }

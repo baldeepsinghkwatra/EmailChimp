@@ -76,7 +76,8 @@ $(function () {
         url    : 'checkLogin',
         fields : [
             { field: 'email', type: 'text', required: true, html: { caption: 'Email', attr: 'style="width: 200px"' } },
-            { field: 'password',  type: 'password', required: true, html: { caption: 'Password', attr: 'style="width: 200px"' } }           
+            { field: 'password',  type: 'password', required: true, html: { caption: 'Password', attr: 'style="width: 200px"' } },
+            { field: 'remember-me',  type: 'checkbox',required: true}           
         ],
         actions: {
             'Save': function (event) {

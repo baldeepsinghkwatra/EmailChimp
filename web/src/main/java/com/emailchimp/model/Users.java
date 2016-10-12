@@ -17,7 +17,7 @@
 package com.emailchimp.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -58,20 +58,20 @@ public class Users implements Serializable {
     @Column(name = "user_enabled", unique = false, nullable = false)
     private int userEnabled = 1;
 
-    @Temporal(TemporalType.DATE)
+     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date", updatable = false)
-    private Date createdDate;
+    private Calendar createdDate;
 
     @Column(name = "forgot_password_code", unique = false)
     private String forgotPasswordCode;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "forgot_password_expiry_date", updatable = false)
-    private Date forgotPasswordExpiryDate;
+     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "forgot_password_expiry_date",nullable = true, updatable = true)
+    private Calendar forgotPasswordExpiryDate;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "last_password_updated_date", updatable = false)
-    private Date lastPasswordUpdatedDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_password_updated_date", updatable = true)
+    private Calendar lastPasswordUpdatedDate;
 
     @Column(name = "verification_code", unique = false, nullable = false)
     private String verificationCode;
@@ -79,16 +79,16 @@ public class Users implements Serializable {
     @Column(name = "is_verified", unique = false, nullable = false)
     private boolean isVerified = false;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "verification_date", updatable = false)
-    private Date verificationDate;
+    private Calendar verificationDate;
 
     @Column(name = "is_active", unique = false, nullable = false)
     private boolean isActive = false;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "activation_date", updatable = false)
-    private Date activationDate;
+    private Calendar activationDate;
 
     @Column(name = "activation_status", unique = false, nullable = true)
     private String activationStatus;
@@ -156,11 +156,11 @@ public class Users implements Serializable {
         this.userEnabled = userEnabled;
     }
 
-    public Date getCreatedDate() {
+    public Calendar getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(Calendar createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -172,19 +172,19 @@ public class Users implements Serializable {
         this.forgotPasswordCode = forgotPasswordCode;
     }
 
-    public Date getForgotPasswordExpiryDate() {
+    public Calendar getForgotPasswordExpiryDate() {
         return forgotPasswordExpiryDate;
     }
 
-    public void setForgotPasswordExpiryDate(Date forgotPasswordExpiryDate) {
+    public void setForgotPasswordExpiryDate(Calendar forgotPasswordExpiryDate) {
         this.forgotPasswordExpiryDate = forgotPasswordExpiryDate;
     }
 
-    public Date getLastPasswordUpdatedDate() {
+    public Calendar getLastPasswordUpdatedDate() {
         return lastPasswordUpdatedDate;
     }
 
-    public void setLastPasswordUpdatedDate(Date lastPasswordUpdatedDate) {
+    public void setLastPasswordUpdatedDate(Calendar lastPasswordUpdatedDate) {
         this.lastPasswordUpdatedDate = lastPasswordUpdatedDate;
     }
 
@@ -204,11 +204,11 @@ public class Users implements Serializable {
         this.isVerified = isVerified;
     }
 
-    public Date getVerificationDate() {
+    public Calendar getVerificationDate() {
         return verificationDate;
     }
 
-    public void setVerificationDate(Date verificationDate) {
+    public void setVerificationDate(Calendar verificationDate) {
         this.verificationDate = verificationDate;
     }
 
@@ -220,11 +220,11 @@ public class Users implements Serializable {
         this.isActive = isActive;
     }
 
-    public Date getActivationDate() {
+    public Calendar getActivationDate() {
         return activationDate;
     }
 
-    public void setActivationDate(Date activationDate) {
+    public void setActivationDate(Calendar activationDate) {
         this.activationDate = activationDate;
     }
 
@@ -258,6 +258,11 @@ public class Users implements Serializable {
 
     public void setCredentialsNonExpired(boolean credentialsNonExpired) {
         this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" + "id=" + id + ", userName=" + userName + ", userEmail=" + userEmail + ", userMobile=" + userMobile + ", userRole=" + userRole + ", userPassword=" + userPassword + ", userEnabled=" + userEnabled + ", createdDate=" + createdDate + ", forgotPasswordCode=" + forgotPasswordCode + ", forgotPasswordExpiryDate=" + forgotPasswordExpiryDate + ", lastPasswordUpdatedDate=" + lastPasswordUpdatedDate + ", verificationCode=" + verificationCode + ", isVerified=" + isVerified + ", verificationDate=" + verificationDate + ", isActive=" + isActive + ", activationDate=" + activationDate + ", activationStatus=" + activationStatus + ", accountNonExpired=" + accountNonExpired + ", accountNonLocked=" + accountNonLocked + ", credentialsNonExpired=" + credentialsNonExpired + '}';
     }
 
 }

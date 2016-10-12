@@ -24,7 +24,6 @@ import com.emailchimp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import com.emailchimp.core.service.Email;
 import com.emailchimp.model.MailBean;
@@ -63,7 +62,7 @@ public class ConsumerController {
     private String domain;
 
     @PostMapping(ConsumerConstants.URL_REGISTER_CONSUMER)
-    public ModelAndView registerUser(@JsonObjectProperty(name="record") Users user) {
+    public ModelAndView registerConsumer(@JsonObjectProperty(name="record") Users user) {
         String verificationCode = GenerateCode.random(50);
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
         user.setUserRole(UserConstants.ROLE_CONSUMER);
@@ -73,7 +72,7 @@ public class ConsumerController {
             userService.save(user);
 
             //Load resource of Html File
-            Resource resource = resourceLoader.getResource("classpath:VerificationMail.txt");
+            Resource resource = resourceLoader.getResource("classpath:/mails/VerificationMail.txt");
             //Find Absolute Path of the file
             String absolutePath = resource.getFile().getAbsolutePath();
             // Get Html Content in String format by calling Utility Class read method
@@ -99,7 +98,7 @@ public class ConsumerController {
         return ConsumerConstants.PATH_UPLOAD_LIST;
     }
 
-    @RequestMapping(value = ConsumerConstants.URL_SEND_MAIL, method = RequestMethod.POST)
+    @PostMapping(ConsumerConstants.URL_SEND_MAIL)
     public String sendMailController(@JsonObjectProperty MailBean record) {
         try {
             email.sendMail(record.getTo(), record.getSubject(), record.getMessage());
