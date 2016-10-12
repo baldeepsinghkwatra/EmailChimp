@@ -35,12 +35,42 @@ var EmailChimp = {
                 {type: 'main', resizable: true, style: StyleConstant.layout, content: 'main', title: 'Outbox'},
                 {type: 'bottom', size: 30, resizable: false, style: StyleConstant.layout},
             ]
+//            onShow: function(event) {
+//                if(!EmailChimp.conf.headerPanel){
+//                    w2ui['layout'].content('title', 'hi');
+//                    w2ui['layout'].hide('top',true);
+//                }
+//                if(!EmailChimp.conf.LeftPanel){
+//                    w2ui['layout'].hide('left',true);
+//                }
+//                if(!EmailChimp.conf.toolbar){
+//                    w2ui['layout'].hide('bottom',true);
+//                }
+//            }
+        });
+        w2ui.layout.on('show', function(event) {
+            console.log('object '+ event.panel + ' is shown');
         });
     },
     initializePanel: function () {
-        Object.create(HeaderPanel).init();
-        Object.create(LeftPanel).init();
-        Object.create(FooterPanel).init();
+        if(!EmailChimp.conf.headerPanel){
+            w2ui['layout'].get('main').title = '';
+            w2ui['layout'].hide('top',true);
+        }
+        else{
+            Object.create(HeaderPanel).init();
+        }
+        if(!EmailChimp.conf.LeftPanel){
+            w2ui['layout'].hide('left',true);
+        }else {
+            Object.create(LeftPanel).init();
+        }
+        if(!EmailChimp.conf.toolbar){
+            w2ui['layout'].hide('bottom',true);
+        }else {
+            Object.create(FooterPanel).init();
+        }
+
     },
     openPopUp: function (conf, callback) {
         $().w2popup('open', this.getPopup(conf, callback));
@@ -81,7 +111,6 @@ var EmailChimp = {
         };
     },
     loadComponent: function (package,component) {
-
         if(window[component] == undefined){
             $.getScript('resources/js/app/'+package+'/'+component+'.js', function () {
                     window[component].init();

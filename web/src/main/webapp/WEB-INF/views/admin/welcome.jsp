@@ -24,6 +24,8 @@ Author     : anshul
         <script>
             $(document).ready(function () {
                 EmailChimp.conf.headerPanel = true;
+                EmailChimp.conf.LeftPanel = true;
+                EmailChimp.conf.toolbar = true;
                 EmailChimp.init();
                 EmailChimp.loadComponent('admin','MailBox');
             });

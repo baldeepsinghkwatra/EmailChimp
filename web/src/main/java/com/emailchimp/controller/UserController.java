@@ -201,4 +201,17 @@ public class UserController {
         }
         return messageSource.getMessage("user.changePassword.failure", new Object[]{}, locale);
     }
+    
+    @GetMapping(UserConstants.URL_VERIFY_USER)
+    public ModelAndView verifyUser(String userEmail, String verificationCode) {
+        Users user = userService.getUserByEmail(userEmail);
+        try {
+            if (user.getVerificationCode().equals(verificationCode)) {
+                return new ModelAndView("/completeSignUp", "user", user);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return new ModelAndView("/userLogin", "user", null);
+    }
 }

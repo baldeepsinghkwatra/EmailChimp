@@ -24,7 +24,6 @@ import com.emailchimp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 import com.emailchimp.core.service.Email;
 import com.emailchimp.model.MailBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,10 +31,13 @@ import com.emailchimp.conf.annotation.JsonObjectProperty;
 import com.emailchimp.constants.ApplicationConstants;
 import com.emailchimp.util.GenerateCode;
 import com.emailchimp.util.ReadFile;
+import java.util.Locale;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -46,15 +48,18 @@ public class ConsumerController {
 
     @Autowired
     ConsumerService consumerService;
-    
+
     @Autowired
     UserService userService;
-    
+
     @Autowired
     Email email;
-    
+
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Autowired
     private ResourceLoader resourceLoader;
@@ -62,7 +67,8 @@ public class ConsumerController {
     private String domain;
 
     @PostMapping(ConsumerConstants.URL_REGISTER_CONSUMER)
-    public ModelAndView registerConsumer(@JsonObjectProperty(name="record") Users user) {
+    @ResponseBody
+    public String registerConsumer(@JsonObjectProperty(name = "record") Users user, Locale locale) {
         String verificationCode = GenerateCode.random(50);
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
         user.setUserRole(UserConstants.ROLE_CONSUMER);
@@ -72,7 +78,7 @@ public class ConsumerController {
             userService.save(user);
 
             //Load resource of Html File
-            Resource resource = resourceLoader.getResource("classpath:/mails/VerificationMail.txt");
+            Resource resource = resourceLoader.getResource("classpath:/mails/VerificationMail");
             //Find Absolute Path of the file
             String absolutePath = resource.getFile().getAbsolutePath();
             // Get Html Content in String format by calling Utility Class read method
@@ -88,9 +94,9 @@ public class ConsumerController {
             email.sendMail(user.getUserEmail(), "Welcome from  EmailChimp :)", verificationMailBody);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ModelAndView(UserConstants.LOGIN_PAGE, UserConstants.RESPONSE_DATA, UserConstants.MESSAGE_REGISTRATION_FAILURE);
+            return messageSource.getMessage("user.registration.failure", new Object[]{}, locale);
         }
-        return new ModelAndView(UserConstants.LOGIN_PAGE, UserConstants.RESPONSE_DATA, UserConstants.MESSAGE_REGISTRATION_SUCCESS);
+        return messageSource.getMessage("user.registration.success", new Object[]{user.getUserName()}, locale);
     }
 
     @RequestMapping(ConsumerConstants.URL_UPLOAD_LIST)

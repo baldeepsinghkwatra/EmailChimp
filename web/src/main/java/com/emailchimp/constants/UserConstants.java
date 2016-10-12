@@ -60,6 +60,11 @@ public interface UserConstants {
      * Reset Password
      */
     String URL_RESET_PASSWORD="/reset-password";
+    
+    /**
+     * Verify Account
+     */
+    String URL_VERIFY_USER="/verify-user";
     /**
      * Change Password
      */
