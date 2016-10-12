@@ -23,9 +23,9 @@ Author     : anshul
         <script  src="<%=request.getContextPath()%>/resources/js/app/common/EmailChimp.js"></script>
         <script>
             $(document).ready(function () {
+
                 var hash = window.location.hash.replace(/^#/, '');
-                
-//                EmailChimp.conf.headerPanel = false;
+
                 EmailChimp.init();
                 
                 EmailChimp.loadComponent('admin/MailBox');

@@ -39,17 +39,54 @@ var EmailChimp = {
         $('#layout').w2layout({
             name: 'layout',
             panels: [
-                {type: 'top', size: 100, resizable: false, style: StyleConstant.layout},
-                {type: 'left', size: 200, resizable: false, style: StyleConstant.layout},
-                {type: 'main', resizable: true, style: StyleConstant.layout, content: 'main', title: 'Outbox'},
-                {type: 'bottom', size: 30, resizable: false, style: StyleConstant.layout},
+                {
+                    type: 'top', 
+                    size: 100, 
+                    resizable: false, 
+                    style: StyleConstant.layout
+                },
+                {
+                    type: 'left', 
+                    size: 200, 
+                    resizable: false, 
+                    style: StyleConstant.layout
+                },
+                {
+                    type: 'main', 
+                    resizable: true, 
+                    style: StyleConstant.layout                    
+                },
+                {
+                    type: 'bottom', 
+                    size: 30, 
+                    resizable: false, 
+                    style: StyleConstant.layout
+                }
             ]
         });
     },
     initializePanel: function () {
-        HeaderPanel.init();
-        LeftPanel.init();
-        FooterPanel.init();
+
+        if(!EmailChimp.conf.headerPanel){
+            w2ui['layout'].get('main').title = '';
+            w2ui['layout'].hide('top',true);
+        }
+        else{
+            HeaderPanel.init();
+        }
+        
+        if(!EmailChimp.conf.LeftPanel){
+            w2ui['layout'].hide('left',true);
+        }else {
+            LeftPanel.init();
+             
+        }
+        if(!EmailChimp.conf.toolbar){
+            w2ui['layout'].hide('bottom',true);
+        }else {
+            FooterPanel.init();
+        }
+
     },
     openPopUp: function (conf, callback) {
         $().w2popup('open', this.getPopup(conf, callback));
@@ -59,6 +96,7 @@ var EmailChimp = {
         var width = 700;
         var height = 610;
         var name = "form";
+        var showMax = false;
         if (conf !== undefined) {
             if (conf.title !== undefined)
                 title = conf.title;
@@ -68,6 +106,8 @@ var EmailChimp = {
                 height = conf.height;
             if (conf.name !== undefined)
                 name = conf.name;
+            if (conf.showMax !== undefined)
+                showMax = conf.showMax;
         }
         return {
             title: title,
@@ -76,7 +116,7 @@ var EmailChimp = {
             style: 'padding: 15px 0px 0px 0px',
             width: width,
             height: height,
-            showMax: true,
+            showMax: showMax, 
             onToggle: function (event) {
                 event.onComplete = function () {
                     w2ui[this.get().name].resize();
