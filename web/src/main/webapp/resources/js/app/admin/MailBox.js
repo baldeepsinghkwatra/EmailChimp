@@ -6,13 +6,21 @@
 var MailBox = {
     init: function () {
         this.initialize();
+        EmailChimp.configure({
+            popUp:false,
+            title :'Outbox Mails',
+            sideBar :'outbox'
+        });
     },
     initialize: function () {
-        w2ui.layout.content('main', $().w2grid(this.getOutboxGrid()));
+
+        w2ui.layout.content('main', w2ui.outBox == undefined
+                ? $().w2grid(this.getOutboxGrid()) : w2ui.outBox);
+
     },
     getOutboxGrid: function () {
         return {
-            name: 'grid',
+            name: 'outBox',
             msgNotJSON: 'Give me JSON!',
             url: 'resources/test/jsonMail.txt',
             method: 'GET',

@@ -50,12 +50,12 @@ var LeftPanel = {
                     expanded: true,
                     nodes: [
                         {
-                            id: 'n1',
+                            id: 'outbox',
                             text: 'Outbox',
                             selected: true
                         },
                         {
-                            id: 'n2',
+                            id: 'composeMail',
                             text: 'Compose Mail'
                         },
                         {
@@ -65,11 +65,15 @@ var LeftPanel = {
                     ]
                 }
             ],
-            onClick: function(event) {
-                    if(event.target == "n2"){
-                        EmailChimp.loadComponent('admin','SendMail');
-                       
-                    }
+            onClick: function (event) {
+                if (event.target == "outbox") {
+                    EmailChimp.loadComponent('admin/MailBox');
+
+                }
+                if (event.target == "composeMail") {
+                    EmailChimp.loadComponent('admin/SendMail');
+
+                }
             }
         };
     },

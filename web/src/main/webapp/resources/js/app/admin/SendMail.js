@@ -6,10 +6,15 @@
 
 var SendMail = {
     init: function () {
-        if (w2ui.sendMailForm == undefined) {
-            $().w2form(this.getSendMailForm());
+        if(w2ui.sendMailForm == undefined){
+             $().w2form(this.getSendMailForm());
         }
-
+        
+        EmailChimp.configure({
+            popUp:true,
+            sideBar :'composeMail'
+        });
+                    
         EmailChimp.openPopUp({
             title: 'Send Mail',
             name: 'sendMailForm'
