@@ -40,7 +40,9 @@ public class UserDAOImpl extends AbstractDAOImpl<Long, Users> implements UserDAO
     public Users getUserByEmail(String userEmail) {
         Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq("userEmail", userEmail));
-        return (Users) criteria.uniqueResult();
+        Users u= (Users) criteria.uniqueResult();
+        System.out.println(u+"---"+userEmail);
+        return u;
     }
 
     @Override
