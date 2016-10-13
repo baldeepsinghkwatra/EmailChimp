@@ -36,11 +36,6 @@ var ForgotPassword = {
             },
             onSave: function (event) {
                 console.log(event);
-//                if (event.status == "success") {
-//                    setTimeout(function () {
-//                        location.reload();
-//                    }, 0 * 1000);
-//                }
             },
             onSubmit: function (form, formObj) {
                 w2utils.settings.dataType = 'HTTP';
