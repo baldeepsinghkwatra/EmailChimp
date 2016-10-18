@@ -17,7 +17,7 @@
 package com.emailchimp.controller;
 
 import com.emailchimp.constants.AdminConstants;
-import com.emailchimp.model.Users;
+import com.emailchimp.core.model.Account;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.emailchimp.service.UserService;
+import com.emailchimp.service.AccountService;
 
 /**
  *
@@ -36,18 +36,18 @@ import com.emailchimp.service.UserService;
 public class AdminController {
 
     @Autowired
-    UserService userService;
+    AccountService accountService;
 
     @RequestMapping(value = AdminConstants.URL_GET_USER_BY_MOBILE, method = RequestMethod.GET)
     @ResponseBody
-    public Users getUserByMobile(@PathVariable String mobileNumber, ModelMap model) {
-        return userService.getUserByMobile(mobileNumber);
+    public Account getUserByMobile(@PathVariable String mobileNumber, ModelMap model) {
+        return accountService.getUserByMobile(mobileNumber);
 
     }
 
     @RequestMapping(value = AdminConstants.URL_GET_ALL_USERS, method = RequestMethod.GET)
     @ResponseBody
-    public List<Users> getAllUser() {
-        return userService.getAllUsers();
+    public List<Account> getAllUser() {
+        return accountService.getAllUsers();
     }
 }

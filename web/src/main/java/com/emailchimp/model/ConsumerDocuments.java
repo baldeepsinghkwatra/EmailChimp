@@ -25,33 +25,37 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author baldeep
  */
 @Entity
-public class Consumer implements Serializable {
+public class ConsumerDocuments implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToOne
-    @JoinColumn
+
+    @ManyToOne
     private Account account;
-    @Column(unique = true, nullable = false)
-    private String state;
-    @Column(unique = true, nullable = false)
-    private String city;
-    @Column(unique = true, nullable = false)
-    private String country;
-    @Column(unique = true, nullable = false)
-    private String zipcode;
-    @Column(unique = true, nullable = false)
-    private String address;
-     @Column(updatable = false)
-    private Calendar addedDate;
+
+    @ManyToOne
+    @JoinColumn
+    private Document document;
+
+    @Column(unique = false)
+    private String documentDescription;
+
+    @Column(unique = false)
+    private String documentFileName;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(updatable = false)
+    private Calendar uploadedDate;
 
     public long getId() {
         return id;
@@ -61,54 +65,36 @@ public class Consumer implements Serializable {
         this.id = id;
     }
 
-    public String getState() {
-        return state;
+    public Document getDocument() {
+        return document;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setDocument(Document document) {
+        this.document = document;
     }
 
-    public String getCity() {
-        return city;
+    public String getDocumentDescription() {
+        return documentDescription;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setDocumentDescription(String documentDescription) {
+        this.documentDescription = documentDescription;
     }
 
-    public String getCountry() {
-        return country;
+    public String getDocumentFileName() {
+        return documentFileName;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setDocumentFileName(String documentFileName) {
+        this.documentFileName = documentFileName;
     }
 
-    public String getZipcode() {
-        return zipcode;
+    public Calendar getUploadedDate() {
+        return uploadedDate;
     }
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-   
-
-    public Calendar getAddedDate() {
-        return addedDate;
-    }
-
-    public void setAddedDate(Calendar addedDate) {
-        this.addedDate = addedDate;
+    public void setUploadedDate(Calendar uploadedDate) {
+        this.uploadedDate = uploadedDate;
     }
 
     public Account getAccount() {
@@ -118,4 +104,5 @@ public class Consumer implements Serializable {
     public void setAccount(Account account) {
         this.account = account;
     }
+
 }

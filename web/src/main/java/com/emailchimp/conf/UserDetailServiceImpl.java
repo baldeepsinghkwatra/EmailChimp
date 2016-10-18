@@ -21,8 +21,7 @@ package com.emailchimp.conf;
  * @author baldeep
  */
 import com.emailchimp.model.LoginUser;
-import com.emailchimp.model.Users;
-import com.emailchimp.service.UserService;
+import com.emailchimp.core.model.Account;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,18 +32,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import com.emailchimp.service.AccountService;
 
 @Service("userDetailsService")
 public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
-    UserService userService;
+    AccountService accountService;
 
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException, DataAccessException {
         if (!"".equals(username)) {
-            Users userProfile = userService.getUserByEmail(username);
+            Account userProfile = accountService.getUserByEmail(username);
 
             if (null != userProfile) {
                 final List<GrantedAuthority> auths;

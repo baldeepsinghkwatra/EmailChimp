@@ -16,12 +16,11 @@
  */
 package com.emailchimp.service;
 
-import com.emailchimp.dao.UserDAO;
-import com.emailchimp.model.Users;
-import java.util.List;
+import com.emailchimp.model.LoginAttempts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.emailchimp.dao.LoginAttemptsDAO;
 
 /**
  *
@@ -29,33 +28,29 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class UserServiceImpl extends CommonServiceImpl<Users> implements UserService {
+public class LoginAttemptsServiceImpl extends CommonServiceImpl<LoginAttempts> implements LoginAttemptsService {
 
-    UserDAO userDAO;
+    LoginAttemptsDAO loginAttemptsDAO;
 
     @Autowired
-    public UserServiceImpl(UserDAO userDAO) {
-        super(userDAO);
-        this.userDAO = userDAO;
+    public LoginAttemptsServiceImpl(LoginAttemptsDAO loginAttemptsDAO) {
+        super(loginAttemptsDAO);
+        this.loginAttemptsDAO = loginAttemptsDAO;
     }
 
     @Override
-    public Users getUserByEmail(String userEmail) {
-        return userDAO.getUserByEmail(userEmail);
+    public void updateFailAttempts(String username) {
+        loginAttemptsDAO.updateFailAttempts(username);
     }
 
     @Override
-    public Users getUserByMobile(String mobileNumber) {
-        return userDAO.getUserByMobile(mobileNumber);
+    public void resetFailAttempts(String username) {
+        loginAttemptsDAO.resetFailAttempts(username);
     }
 
     @Override
-    public List<Users> getAllUsers() {
-        return userDAO.getAll();
+    public LoginAttempts getUserAttempts(String username) {
+        return loginAttemptsDAO.getUserAttempts(username);
     }
 
-    @Override
-    public Users authenticateUser(String userEmail, String userPassword) {
-        return userDAO.authenticateUser(userEmail, userPassword);
-    }
 }

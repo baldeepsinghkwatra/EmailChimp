@@ -16,7 +16,7 @@
  */
 package com.emailchimp.dao;
 
-import com.emailchimp.model.Users;
+import com.emailchimp.core.model.Account;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -26,29 +26,29 @@ import org.springframework.stereotype.Repository;
  * @author baldeep
  */
 @Repository
-public class UserDAOImpl extends AbstractDAOImpl<Long, Users> implements UserDAO {
+public class AccountDAOImpl extends AbstractDAOImpl<Long, Account> implements AccountDAO {
 
 
     @Override
-    public Users getUserByMobile(String mobileNumber) {
+    public Account getUserByMobile(String mobileNumber) {
         Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq("userMobile", mobileNumber));
-        return (Users) criteria.uniqueResult();
+        return (Account) criteria.uniqueResult();
     }
 
     @Override
-    public Users getUserByEmail(String userEmail) {
+    public Account getUserByEmail(String userEmail) {
         Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq("userEmail", userEmail));
-        return (Users) criteria.uniqueResult();
+        return (Account) criteria.uniqueResult();
     }
 
     @Override
-    public Users authenticateUser(String userEmail, String userPassword) {
+    public Account authenticateUser(String userEmail, String userPassword) {
 
         Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq("userEmail", userEmail));
         criteria.add(Restrictions.eq("userPassword", userPassword));
-        return (Users) criteria.uniqueResult();
+        return (Account) criteria.uniqueResult();
     }
 }

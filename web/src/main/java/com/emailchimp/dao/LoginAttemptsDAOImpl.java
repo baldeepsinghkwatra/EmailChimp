@@ -16,8 +16,8 @@
  */
 package com.emailchimp.dao;
 
-import com.emailchimp.model.UserAttempts;
-import com.emailchimp.model.Users;
+import com.emailchimp.model.LoginAttempts;
+import com.emailchimp.core.model.Account;
 import java.util.Date;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -29,47 +29,49 @@ import org.springframework.stereotype.Repository;
  * @author baldeep
  */
 @Repository
-public class UserAttemptsDAOImpl extends AbstractDAOImpl<Long, UserAttempts> implements UserAttemptsDAO {
+public class LoginAttemptsDAOImpl extends AbstractDAOImpl<Long, LoginAttempts> implements LoginAttemptsDAO {
 
     private final int MAX_ATTEMPTS = 3;
     @Autowired
-    UserDAO userDAO;
+    AccountDAO accountDAO;
 
     @Override
     public void updateFailAttempts(String username) {
-        UserAttempts userAttempts = getUserAttempts(username);
-        System.out.println(userAttempts);
-        if (userAttempts != null) {
-            userAttempts.setAttempts(userAttempts.getAttempts() + 1);
-            update(userAttempts);
+        LoginAttempts loginAttempts = getUserAttempts(username);
+        
+        if (loginAttempts != null) {
+            loginAttempts.setAttempts(loginAttempts.getAttempts() + 1);
+            update(loginAttempts);
         } else {
-            userAttempts = new UserAttempts();
-            userAttempts.setAttempts(1);
-            userAttempts.setUsername(username);
-            userAttempts.setLastModified(new Date());
-            persist(userAttempts);
+            loginAttempts = new LoginAttempts();
+            loginAttempts.setAttempts(1);
+            loginAttempts.setUsername(username);
+            loginAttempts.setLastModified(new Date());
+            persist(loginAttempts);
         }
-        if (userAttempts.getAttempts() >= MAX_ATTEMPTS) {
-            Users users = userDAO.getUserByEmail(username);
-            users.setAccountNonLocked(false);
-            userDAO.update(users);
+        if (loginAttempts.getAttempts() >= MAX_ATTEMPTS) {
+            Account account = accountDAO.getUserByEmail(username);
+            if (account != null) {
+                account.setAccountNonLocked(false);
+                accountDAO.update(account);
+            }
         }
     }
 
     @Override
     public void resetFailAttempts(String username) {
-        UserAttempts userAttempts = getUserAttempts(username);
-        if (userAttempts != null) {
-            userAttempts.setAttempts(0);
-            userAttempts.setLastModified(null);
-            update(userAttempts);
+        LoginAttempts loginAttempts = getUserAttempts(username);
+        if (loginAttempts != null) {
+            loginAttempts.setAttempts(0);
+            loginAttempts.setLastModified(null);
+            update(loginAttempts);
         }
     }
 
     @Override
-    public UserAttempts getUserAttempts(String username) {
+    public LoginAttempts getUserAttempts(String username) {
         Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq("username", username));
-        return (UserAttempts) criteria.uniqueResult();
+        return (LoginAttempts) criteria.uniqueResult();
     }
 }

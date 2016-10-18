@@ -16,37 +16,17 @@
  */
 package com.emailchimp.service;
 
-import com.emailchimp.model.Users;
-import java.util.List;
+import com.emailchimp.model.LoginAttempts;
 
 /**
  *
  * @author baldeep
  */
-public interface UserService extends CommonService<Users> {
+public interface LoginAttemptsService extends CommonService<LoginAttempts> {
 
-    /**
-     * Service to get Users by Email
-     *
-     * @param userEmail
-     * @return
-     */
-    public Users getUserByEmail(String userEmail);
+    void updateFailAttempts(String username);
 
-    /**
-     * Service to get Users by Mobile Number
-     *
-     * @param mobileNumber
-     * @return
-     */
-    public Users getUserByMobile(String mobileNumber);
+    void resetFailAttempts(String username);
 
-    /**
-     * Service to get All Users
-     *
-     * @return
-     */
-    public List<Users> getAllUsers();
-
-    public Users authenticateUser(String userEmail, String userPassword);
+    LoginAttempts getUserAttempts(String username);
 }

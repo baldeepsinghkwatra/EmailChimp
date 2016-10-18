@@ -16,34 +16,18 @@
  */
 package com.emailchimp.dao;
 
-import com.emailchimp.model.Users;
+import com.emailchimp.model.LoginAttempts;
 
 /**
  *
  * @author baldeep
  */
-public interface UserDAO extends AbstractDAO<Long, Users>{
+public interface LoginAttemptsDAO extends AbstractDAO<Long, LoginAttempts>{
 
-    /**
-     * Finds user based on matching mobile number
-     * @param mobileNumber of Users
-     * @return 
-     */
-    public Users getUserByMobile(String mobileNumber);
+    void updateFailAttempts(String username);
 
-    /**
-     * Finds user based on matching email
-     * @param userEmail
-     * @return 
-     */
-    public Users getUserByEmail(String userEmail);
-    
-    /**
-     * Authenticate user based on email and password
-     * @param userEmail
-     * @param userPassword
-     * @return 
-     */
-    public Users authenticateUser(String userEmail,String userPassword);
+    void resetFailAttempts(String username);
+
+    LoginAttempts getUserAttempts(String username);
 
 }

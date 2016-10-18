@@ -14,19 +14,36 @@
  * or reproduction of this material is strictly forbidden unless prior written
  * permission is obtained from Mindfire Solutions
  */
-package com.emailchimp.service;
+package com.emailchimp.dao;
 
-import com.emailchimp.model.UserAttempts;
+import com.emailchimp.core.model.Account;
 
 /**
  *
  * @author baldeep
  */
-public interface UserAttemptsService extends CommonService<UserAttempts> {
+public interface AccountDAO extends AbstractDAO<Long, Account>{
 
-    void updateFailAttempts(String username);
+    /**
+     * Finds user based on matching mobile number
+     * @param mobileNumber of Account
+     * @return 
+     */
+    public Account getUserByMobile(String mobileNumber);
 
-    void resetFailAttempts(String username);
+    /**
+     * Finds user based on matching email
+     * @param userEmail
+     * @return 
+     */
+    public Account getUserByEmail(String userEmail);
+    
+    /**
+     * Authenticate user based on email and password
+     * @param userEmail
+     * @param userPassword
+     * @return 
+     */
+    public Account authenticateUser(String userEmail,String userPassword);
 
-    UserAttempts getUserAttempts(String username);
 }

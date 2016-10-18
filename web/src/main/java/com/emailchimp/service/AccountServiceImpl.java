@@ -16,12 +16,12 @@
  */
 package com.emailchimp.service;
 
-import com.emailchimp.dao.AbstractDAO;
-import com.emailchimp.dao.UserAttemptsDAO;
-import com.emailchimp.model.UserAttempts;
+import com.emailchimp.core.model.Account;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.emailchimp.dao.AccountDAO;
 
 /**
  *
@@ -29,29 +29,33 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class UserAttemptsServiceImpl extends CommonServiceImpl<UserAttempts> implements UserAttemptsService {
+public class AccountServiceImpl extends CommonServiceImpl<Account> implements AccountService {
 
-    UserAttemptsDAO userAttemptsDAO;
+    AccountDAO accountDAO;
 
     @Autowired
-    public UserAttemptsServiceImpl(UserAttemptsDAO userAttemptsDAO) {
-        super(userAttemptsDAO);
-        this.userAttemptsDAO = userAttemptsDAO;
+    public AccountServiceImpl(AccountDAO accountDAO) {
+        super(accountDAO);
+        this.accountDAO = accountDAO;
     }
 
     @Override
-    public void updateFailAttempts(String username) {
-        userAttemptsDAO.updateFailAttempts(username);
+    public Account getUserByEmail(String userEmail) {
+        return accountDAO.getUserByEmail(userEmail);
     }
 
     @Override
-    public void resetFailAttempts(String username) {
-        userAttemptsDAO.resetFailAttempts(username);
+    public Account getUserByMobile(String mobileNumber) {
+        return accountDAO.getUserByMobile(mobileNumber);
     }
 
     @Override
-    public UserAttempts getUserAttempts(String username) {
-        return userAttemptsDAO.getUserAttempts(username);
+    public List<Account> getAllUsers() {
+        return accountDAO.getAll();
     }
 
+    @Override
+    public Account authenticateUser(String userEmail, String userPassword) {
+        return accountDAO.authenticateUser(userEmail, userPassword);
+    }
 }

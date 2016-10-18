@@ -17,9 +17,11 @@
 package com.emailchimp.model;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,26 +31,26 @@ import javax.persistence.TemporalType;
  * @author baldeep
  */
 @Entity
-public class PersistentLogins implements Serializable {
+public class LoginAttempts implements Serializable {
 
     @Id
-    private String series;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    @Column(nullable = false)
+    @Column(unique = false, nullable = false)
     private String username;
+    @Column(unique = false, nullable = false)
+    private int attempts;
+    @Temporal(TemporalType.DATE)
+    @Column(updatable = false)
+    private Date lastModified;
 
-    @Column(nullable = false)
-    private String token;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Calendar lastUsed;
-
-    public String getSeries() {
-        return series;
+    public long getId() {
+        return id;
     }
 
-    public void setSeries(String series) {
-        this.series = series;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -59,19 +61,26 @@ public class PersistentLogins implements Serializable {
         this.username = username;
     }
 
-    public String getToken() {
-        return token;
+    public int getAttempts() {
+        return attempts;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setAttempts(int attempts) {
+        this.attempts = attempts;
     }
 
-    public Calendar getLastUsed() {
-        return lastUsed;
+    public Date getLastModified() {
+        return lastModified;
     }
 
-    public void setLastUsed(Calendar lastUsed) {
-        this.lastUsed = lastUsed;
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
     }
+
+    @Override
+    public String toString() {
+        return "UserAttempts{" + "id=" + id + ", username=" + username + ", attempts=" + attempts + ", lastModified=" + lastModified + '}';
+    }
+    
+
 }

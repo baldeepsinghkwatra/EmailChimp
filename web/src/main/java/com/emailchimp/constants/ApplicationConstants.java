@@ -23,4 +23,8 @@ package com.emailchimp.constants;
 public interface ApplicationConstants {
 
      String TAG_DOMAIN="<<domain>>";
+     
+     String MESSAGE_DEFAULT="messageDefault";
+     String MESSAGE_ERROR="messageError";
+     String MESSAGE_SUCCESS="messageSuccess";
 }

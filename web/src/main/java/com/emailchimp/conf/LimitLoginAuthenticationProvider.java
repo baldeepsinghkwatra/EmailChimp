@@ -20,10 +20,7 @@ package com.emailchimp.conf;
  *
  * @author baldeep
  */
-import com.emailchimp.model.UserAttempts;
-import com.emailchimp.service.UserAttemptsService;
-import com.emailchimp.service.UserService;
-import java.util.Date;
+import com.emailchimp.model.LoginAttempts;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,16 +32,18 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import com.emailchimp.service.AccountService;
+import com.emailchimp.service.LoginAttemptsService;
 
 @Component("authenticationProvider")
 public class LimitLoginAuthenticationProvider extends DaoAuthenticationProvider {
 
     @Autowired
-    UserAttemptsService userAttemptsService;
+    LoginAttemptsService loginAttemptsService;
      @Autowired
     PasswordEncoder passwordEncoder;
      @Autowired
-     UserService userService;
+     AccountService userService;
 
     @Autowired
     @Qualifier("userDetailsService")
@@ -61,25 +60,23 @@ public class LimitLoginAuthenticationProvider extends DaoAuthenticationProvider 
             Authentication auth = super.authenticate(authentication);
             //if reach here, means login success, else an exception will be thrown
             //reset the user_attempts
-            userAttemptsService.resetFailAttempts(authentication.getName());
+            loginAttemptsService.resetFailAttempts(authentication.getName());
 
             return auth;
         } catch (BadCredentialsException e) {
 
             //invalid login, update to user_attempts
-            userAttemptsService.updateFailAttempts(authentication.getName());
+            loginAttemptsService.updateFailAttempts(authentication.getName());
             throw e;
         } catch (LockedException e) {
 
             //this user is locked!
             String error = "";
-            UserAttempts userAttempts
-                    = userAttemptsService.getUserAttempts(authentication.getName());
+            LoginAttempts userAttempts
+                    = loginAttemptsService.getUserAttempts(authentication.getName());
 
             if (userAttempts != null) {
-                Date lastAttempts = userAttempts.getLastModified();
-                error = "User account is locked! <br><br>Username : "
-                        + authentication.getName() + "<br>Last Attempts : " + lastAttempts;
+                error = "User account is locked!";
             } else {
                 error = e.getMessage();
             }

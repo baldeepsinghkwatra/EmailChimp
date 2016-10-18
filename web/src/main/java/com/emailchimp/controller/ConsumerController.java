@@ -18,9 +18,8 @@ package com.emailchimp.controller;
 
 import com.emailchimp.constants.ConsumerConstants;
 import com.emailchimp.constants.UserConstants;
-import com.emailchimp.model.Users;
+import com.emailchimp.core.model.Account;
 import com.emailchimp.service.ConsumerService;
-import com.emailchimp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +37,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import com.emailchimp.service.AccountService;
 
 /**
  *
@@ -50,7 +50,7 @@ public class ConsumerController {
     ConsumerService consumerService;
 
     @Autowired
-    UserService userService;
+    AccountService accountService;
 
     @Autowired
     Email email;
@@ -68,14 +68,14 @@ public class ConsumerController {
 
     @PostMapping(ConsumerConstants.URL_REGISTER_CONSUMER)
     @ResponseBody
-    public String registerConsumer(@JsonObjectProperty(name = "record") Users user, Locale locale) {
+    public String registerConsumer(@JsonObjectProperty(name = "record") Account user, Locale locale) {
         String verificationCode = GenerateCode.random(50);
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
         user.setUserRole(UserConstants.ROLE_CONSUMER);
         user.setVerificationCode(verificationCode);
         try {
             //save user to DB
-            userService.save(user);
+            accountService.save(user);
 
             //Load resource of Html File
             Resource resource = resourceLoader.getResource("classpath:/mails/VerificationMail");
