@@ -16,6 +16,7 @@
  */
 package com.emailchimp.controller;
 
+import com.emailchimp.conf.annotation.JsonObjectProperty;
 import com.emailchimp.constants.ApplicationConstants;
 import com.emailchimp.constants.UserConstants;
 import com.emailchimp.core.service.Email;
@@ -147,7 +148,6 @@ public class UserController {
     public String forgotPassword(String userEmail, Locale locale) {
         Account account = accountService.getUserByEmail(userEmail);
         Calendar calendar = Calendar.getInstance(); // starts with today's date and time
-
         try {
             if (account.getForgotPasswordCode()==null && (account.getForgotPasswordExpiryDate() == null || account.getForgotPasswordExpiryDate().before(calendar))) {
                 String forgotPassword = GenerateCode.random(90);

@@ -5,10 +5,10 @@
  */
 
 var EmailChimp = {
-    conf:{
-        headerPanel : true,
-        LeftPanel : true,
-        toolbar : true
+    conf: {
+        headerPanel: true,
+        LeftPanel: true,
+        toolbar: true
     },
     init: function () {
         this.setLayoutContainerHeight();
@@ -16,6 +16,15 @@ var EmailChimp = {
         this.w2uiConf();
         this.createLayout();
         this.initializePanel();
+        this.registerHashChange();
+    },
+    configure: function (conf) {
+        if (!conf.popUp) {
+            w2popup.close();
+        } else {
+            w2ui.layout.get('main').title = conf.title;
+        }
+        w2ui.sidebar.select(conf.sideBar);
     },
     w2uiConf: function () {
         w2utils.settings.dataType = 'JSON';
@@ -30,45 +39,52 @@ var EmailChimp = {
         $('#layout').w2layout({
             name: 'layout',
             panels: [
-                {type: 'top', size: 100, resizable: false, style: StyleConstant.layout},
-                {type: 'left', size: 200, resizable: false, style: StyleConstant.layout},
-                {type: 'main', resizable: true, style: StyleConstant.layout, content: 'main', title: 'Outbox'},
-                {type: 'bottom', size: 30, resizable: false, style: StyleConstant.layout},
+                {
+                    type: 'top', 
+                    size: 100, 
+                    resizable: false, 
+                    style: StyleConstant.layout
+                },
+                {
+                    type: 'left', 
+                    size: 200, 
+                    resizable: false, 
+                    style: StyleConstant.layout
+                },
+                {
+                    type: 'main', 
+                    resizable: true, 
+                    style: StyleConstant.layout                    
+                },
+                {
+                    type: 'bottom', 
+                    size: 30, 
+                    resizable: false, 
+                    style: StyleConstant.layout
+                }
             ]
-//            onShow: function(event) {
-//                if(!EmailChimp.conf.headerPanel){
-//                    w2ui['layout'].content('title', 'hi');
-//                    w2ui['layout'].hide('top',true);
-//                }
-//                if(!EmailChimp.conf.LeftPanel){
-//                    w2ui['layout'].hide('left',true);
-//                }
-//                if(!EmailChimp.conf.toolbar){
-//                    w2ui['layout'].hide('bottom',true);
-//                }
-//            }
-        });
-        w2ui.layout.on('show', function(event) {
-            console.log('object '+ event.panel + ' is shown');
         });
     },
     initializePanel: function () {
+
         if(!EmailChimp.conf.headerPanel){
             w2ui['layout'].get('main').title = '';
             w2ui['layout'].hide('top',true);
         }
         else{
-            Object.create(HeaderPanel).init();
+            HeaderPanel.init();
         }
+        
         if(!EmailChimp.conf.LeftPanel){
             w2ui['layout'].hide('left',true);
         }else {
-            Object.create(LeftPanel).init();
+            LeftPanel.init();
+             
         }
         if(!EmailChimp.conf.toolbar){
             w2ui['layout'].hide('bottom',true);
         }else {
-            Object.create(FooterPanel).init();
+            FooterPanel.init();
         }
 
     },
@@ -80,15 +96,18 @@ var EmailChimp = {
         var width = 700;
         var height = 610;
         var name = "form";
-        if (conf != undefined) {
-            if (conf.title != undefined)
+        var showMax = false;
+        if (conf !== undefined) {
+            if (conf.title !== undefined)
                 title = conf.title;
-            if (conf.width != undefined)
+            if (conf.width !== undefined)
                 width = conf.width;
-            if (conf.height != undefined)
+            if (conf.height !== undefined)
                 height = conf.height;
-            if (conf.name != undefined)
+            if (conf.name !== undefined)
                 name = conf.name;
+            if (conf.showMax !== undefined)
+                showMax = conf.showMax;
         }
         return {
             title: title,
@@ -97,10 +116,10 @@ var EmailChimp = {
             style: 'padding: 15px 0px 0px 0px',
             width: width,
             height: height,
-            showMax: true,
+            showMax: showMax, 
             onToggle: function (event) {
                 event.onComplete = function () {
-                    w2ui[this.get().name ].resize();
+                    w2ui[this.get().name].resize();
                 };
             },
             onOpen: function (event) {
@@ -110,14 +129,41 @@ var EmailChimp = {
             }
         };
     },
-    loadComponent: function (package,component) {
-        if(window[component] == undefined){
-            $.getScript('resources/js/app/'+package+'/'+component+'.js', function () {
-                    window[component].init();
-                });
-        }else{
-             window[component].init();
+    loadComponent: function (component) {
+        
+        window.location.hash = component;
+
+        var package = component.substr(0, component.lastIndexOf("/"));
+        component = component.substr(component.lastIndexOf("/") + 1, component.length);
+
+        if (window[component] === undefined) {
+            $.getScript('resources/js/app/' + package + '/' + component + '.js', function () {
+                window[component].init();
+            });
+        } else {
+            window[component].init();
+        }
+    },
+    registerHashChange: function () {
+        if (("onhashchange" in window)) {
+
+            //modern browsers 
+            $(window).bind('hashchange', function () {
+                var hash = window.location.hash.replace(/^#/, '');
+                EmailChimp.loadComponent(hash);
+
+            });
+
+        } else {
+
+            //IE and browsers that don't support hashchange
+            $('a.hash-changer').bind('click', function () {
+                var hash = $(this).attr('href').replace(/^#/, '');
+                EmailChimp.loadComponent(hash);
+            });
+
         }
     }
+
 
 }

@@ -23,15 +23,19 @@ Author     : anshul
         <script  src="<%=request.getContextPath()%>/resources/js/app/common/EmailChimp.js"></script>
         <script>
             $(document).ready(function () {
-                EmailChimp.conf.headerPanel = true;
-                EmailChimp.conf.LeftPanel = true;
-                EmailChimp.conf.toolbar = true;
+
+                var hash = window.location.hash.replace(/^#/, '');
+
                 EmailChimp.init();
-                EmailChimp.loadComponent('admin','MailBox');
+                
+                EmailChimp.loadComponent('admin/MailBox');
+                
+                if (hash != '' && hash != 'admin/MailBox')
+                    EmailChimp.loadComponent(hash);
             });
         </script>
     </head>
-    
+
     <body style="margin: 1px">
         <div id="layout-container" style="height:700px;">
             <div id="layout" style="width: 100%; height: 100%;"></div>

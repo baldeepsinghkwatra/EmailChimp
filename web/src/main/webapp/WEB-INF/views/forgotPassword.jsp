@@ -30,7 +30,7 @@
                     {cols: [
                             {view: "button",id:"submitButton", value: "Send Email", click: "submitForm"}
                         ]},
-                    {view: "label",height:40, id: 'responseMessage', align: "center"}
+                    {view: "label",height:50, id: 'responseMessage', align: "center"}
                 ]
             });
 
