@@ -16,6 +16,7 @@
  */
 package com.emailchimp.service;
 
+import com.emailchimp.core.service.CommonServiceImpl;
 import com.emailchimp.dao.ConsumerDAO;
 import com.emailchimp.model.Consumer;
 import org.springframework.beans.factory.annotation.Autowired;

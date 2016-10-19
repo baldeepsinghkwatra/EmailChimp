@@ -16,6 +16,7 @@
  */
 package com.emailchimp.dao;
 
+import com.emailchimp.core.dao.AbstractDAOImpl;
 import com.emailchimp.model.Consumer;
 import org.springframework.stereotype.Repository;
 

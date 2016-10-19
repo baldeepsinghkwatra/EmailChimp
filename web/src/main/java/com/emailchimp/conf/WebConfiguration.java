@@ -116,13 +116,6 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new SessionHandler());
     }
     
-    
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new JsonObjectPropertyResolver());
-    }
-
-    
      @Bean
     public ReloadableResourceBundleMessageSource messageSource(){
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
