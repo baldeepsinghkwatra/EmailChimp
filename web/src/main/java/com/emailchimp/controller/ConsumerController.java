@@ -68,7 +68,7 @@ public class ConsumerController {
 
     @PostMapping(ConsumerConstants.URL_REGISTER_CONSUMER)
     @ResponseBody
-    public String registerConsumer(@JsonObjectProperty(name = "record") Account user, Locale locale) {
+    public String registerConsumer(Account user, Locale locale) {
         String verificationCode = GenerateCode.random(50);
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
         user.setUserRole(UserConstants.ROLE_CONSUMER);
