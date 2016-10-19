@@ -16,6 +16,8 @@
  */
 package com.emailchimp.dao;
 
+import com.emailchimp.core.dao.AccountDAO;
+import com.emailchimp.core.dao.AbstractDAOImpl;
 import com.emailchimp.model.LoginAttempts;
 import com.emailchimp.core.model.Account;
 import java.util.Date;

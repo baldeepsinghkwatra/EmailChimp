@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.emailchimp.core.service.Email;
 import com.emailchimp.model.MailBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import com.emailchimp.conf.annotation.JsonObjectProperty;
 import com.emailchimp.constants.ApplicationConstants;
 import com.emailchimp.util.GenerateCode;
 import com.emailchimp.util.ReadFile;
@@ -37,7 +36,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.emailchimp.service.AccountService;
+import com.emailchimp.core.service.AccountService;
 
 /**
  *
@@ -68,7 +67,7 @@ public class ConsumerController {
 
     @PostMapping(ConsumerConstants.URL_REGISTER_CONSUMER)
     @ResponseBody
-    public String registerConsumer(@JsonObjectProperty(name = "record") Account user, Locale locale) {
+    public String registerConsumer(Account user, Locale locale) {
         String verificationCode = GenerateCode.random(50);
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
         user.setUserRole(UserConstants.ROLE_CONSUMER);
@@ -105,7 +104,7 @@ public class ConsumerController {
     }
 
     @PostMapping(ConsumerConstants.URL_SEND_MAIL)
-    public String sendMailController(@JsonObjectProperty MailBean record) {
+    public String sendMailController(MailBean record) {
         try {
             email.sendMail(record.getTo(), record.getSubject(), record.getMessage());
             return "Sent";

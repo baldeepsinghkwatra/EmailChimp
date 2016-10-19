@@ -16,6 +16,7 @@
  */
 package com.emailchimp.service;
 
+import com.emailchimp.core.service.CommonService;
 import com.emailchimp.model.Consumer;
 
 /**

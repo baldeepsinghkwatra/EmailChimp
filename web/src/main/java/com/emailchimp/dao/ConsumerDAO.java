@@ -16,6 +16,7 @@
  */
 package com.emailchimp.dao;
 
+import com.emailchimp.core.dao.AbstractDAO;
 import com.emailchimp.model.Consumer;
 
 

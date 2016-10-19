@@ -16,6 +16,7 @@
  */
 package com.emailchimp.service;
 
+import com.emailchimp.core.service.CommonServiceImpl;
 import com.emailchimp.model.LoginAttempts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -32,7 +32,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import com.emailchimp.service.AccountService;
+import com.emailchimp.core.service.AccountService;
 import com.emailchimp.service.LoginAttemptsService;
 
 @Component("authenticationProvider")

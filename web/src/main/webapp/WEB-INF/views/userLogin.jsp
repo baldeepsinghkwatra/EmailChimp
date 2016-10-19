@@ -29,11 +29,12 @@
                 EmailChimp.conf.LeftPanel = false;
                 EmailChimp.conf.toolbar = false;
                 EmailChimp.init();
-                
-                EmailChimp.loadComponent('user/UserLogin');
+                             
                 
                 if (hash != '' && hash != 'user/UserLogin')
                     EmailChimp.loadComponent(hash);
+                else 
+                   EmailChimp.loadComponent('user/UserLogin'); 
                 
             });
         </script>

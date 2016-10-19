@@ -32,7 +32,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.emailchimp.service.AccountService;
+import com.emailchimp.core.service.AccountService;
 
 @Service("userDetailsService")
 public class UserDetailServiceImpl implements UserDetailsService {

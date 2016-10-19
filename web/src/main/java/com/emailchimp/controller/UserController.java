@@ -16,7 +16,6 @@
  */
 package com.emailchimp.controller;
 
-import com.emailchimp.conf.annotation.JsonObjectProperty;
 import com.emailchimp.constants.ApplicationConstants;
 import com.emailchimp.constants.UserConstants;
 import com.emailchimp.core.service.Email;
@@ -47,7 +46,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import com.emailchimp.service.AccountService;
+import com.emailchimp.core.service.AccountService;
 
 /**
  *
@@ -146,10 +145,12 @@ public class UserController {
     @PostMapping(UserConstants.URL_FORGOT_PASSWORD)
     @ResponseBody
     public String forgotPassword(String userEmail, Locale locale) {
+        
         Account account = accountService.getUserByEmail(userEmail);
+        
         Calendar calendar = Calendar.getInstance(); // starts with today's date and time
         try {
-            if (account.getForgotPasswordCode()==null && (account.getForgotPasswordExpiryDate() == null || account.getForgotPasswordExpiryDate().before(calendar))) {
+            if (account.getForgotPasswordCode()==null || (account.getForgotPasswordExpiryDate() == null || account.getForgotPasswordExpiryDate().before(calendar))) {
                 String forgotPassword = GenerateCode.random(90);
                 calendar.add(Calendar.DAY_OF_YEAR, 2);  // advances day by 2
                 account.setForgotPasswordCode(forgotPassword);
@@ -192,6 +193,7 @@ public class UserController {
     @GetMapping(UserConstants.URL_RESET_PASSWORD)
     public ModelAndView resetPassword(String userEmail, String verificationCode) {
         Account user = accountService.getUserByEmail(userEmail);
+        
         try {
             if (user.getForgotPasswordCode().equals(verificationCode)) {
                 return new ModelAndView("/changePassword", "user", user);
@@ -199,7 +201,7 @@ public class UserController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return new ModelAndView("/changePassword", "user", null);
+        return new ModelAndView("/forgotPassword", ApplicationConstants.MESSAGE_DEFAULT, "Link Expired. Please try Again!");
     }
 
     /**

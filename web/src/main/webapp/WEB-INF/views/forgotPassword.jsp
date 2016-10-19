@@ -3,7 +3,7 @@
     Created on : 18 Oct, 2016, 3:21:23 PM
     Author     : baldeep
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -30,7 +30,7 @@
                     {cols: [
                             {view: "button",id:"submitButton", value: "Send Email", click: "submitForm"}
                         ]},
-                    {view: "label",height:50, id: 'responseMessage', align: "center"}
+                    {view: "label",height:50, id: 'responseMessage',label:'<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"}
                 ]
             });
 
