@@ -20,7 +20,6 @@ package com.emailchimp.core.config.hibernate;
  *
  * @author baldeep
  */
-import com.emailchimp.core.config.hibernate.CustomNamingStrategy;
 import java.util.Properties;
 
 import javax.sql.DataSource;

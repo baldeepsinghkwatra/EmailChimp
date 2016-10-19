@@ -39,23 +39,31 @@ public class Campaign implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    
     @ManyToOne
     @JoinColumn
-    private Account user;
+    private Account account;
+    
     @Column(unique = false, nullable = true)
     private String name;
+    
     @Column(unique = false, nullable = true)
     private String emailSubject;
+    
     @OneToOne
     @JoinColumn
     private EmailConfiguration emailConfiguration;
+    
     @Column(unique = false, nullable = true)
     private String replyToName;
+    
     @Column(unique = false, nullable = true)
     private String replyToEmail;
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Calendar createdDateTime;
+    
     @OneToOne
     @JoinColumn
     private Template template;
@@ -66,14 +74,6 @@ public class Campaign implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Account getUser() {
-        return user;
-    }
-
-    public void setUser(Account user) {
-        this.user = user;
     }
 
     public String getName() {
@@ -130,6 +130,14 @@ public class Campaign implements Serializable {
 
     public void setTemplate(Template template) {
         this.template = template;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
 }
