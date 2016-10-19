@@ -25,6 +25,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -36,11 +38,15 @@ public class Template implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @ManyToOne
     @JoinColumn
-    private Account user;
+    private Account account;
+
     @Column(unique = false, nullable = true)
     private String name;
+
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Calendar createdDateTime;
 
@@ -50,14 +56,6 @@ public class Template implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Account getUser() {
-        return user;
-    }
-
-    public void setUser(Account user) {
-        this.user = user;
     }
 
     public String getName() {
@@ -74,5 +72,13 @@ public class Template implements Serializable {
 
     public void setCreatedDateTime(Calendar createdDateTime) {
         this.createdDateTime = createdDateTime;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

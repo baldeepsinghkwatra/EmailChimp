@@ -41,20 +41,27 @@ public class EmailList implements Serializable {
 
     @OneToOne
     @JoinColumn
-    private Account user;
+    private Account account;
+    
     @Column(nullable = false)
     private String firstName;
+    
     @Column(nullable = false)
     private String lastName;
+    
     @Column(nullable = false)
     private String email;
+    
     @Column(nullable = true)
     private String contact;
+    
     @OneToOne
     @JoinColumn
     private EmailCategory emailCategory;
+    
     @Column(nullable = true)
     private boolean isSubscribed;
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Calendar addedDate;
@@ -65,14 +72,6 @@ public class EmailList implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Account getUser() {
-        return user;
-    }
-
-    public void setUser(Account user) {
-        this.user = user;
     }
 
     public String getFirstName() {
@@ -129,5 +128,13 @@ public class EmailList implements Serializable {
 
     public void setAddedDate(Calendar addedDate) {
         this.addedDate = addedDate;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

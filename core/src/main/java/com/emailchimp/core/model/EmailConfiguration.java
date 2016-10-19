@@ -40,7 +40,7 @@ public class EmailConfiguration implements Serializable {
     private long id;
     @ManyToOne
     @JoinColumn
-    private Account user;
+    private Account account;
     @Column(unique = false, nullable = true)
     private String smtpHost;
     @Column(unique = false, nullable = true)
@@ -92,20 +92,20 @@ public class EmailConfiguration implements Serializable {
         this.addedDate = addedDate;
     }
 
-    public Account getUser() {
-        return user;
-    }
-
-    public void setUser(Account user) {
-        this.user = user;
-    }
-
     public String getSmptpUsername() {
         return smptpUsername;
     }
 
     public void setSmptpUsername(String smptpUsername) {
         this.smptpUsername = smptpUsername;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
 

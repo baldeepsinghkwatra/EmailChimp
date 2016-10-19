@@ -39,29 +39,39 @@ public class Scheduler implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    
     @ManyToOne
     @JoinColumn
-    private Account user;
+    private Account account;
+    
     @OneToOne
     @JoinColumn
     private Campaign campaign;
+    
     @Column(unique = false, nullable = true)
     private String taskType;
+    
     @Column(unique = false, nullable = true)
     private String taskName;
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Calendar scheduledTime;
+    
     @Column(unique = false, nullable = true)
     private String status;
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Calendar startTime;
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Calendar endTime;
+    
     @Column(unique = false, nullable = true)
     private String cronExpression;
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Calendar addedDateTime;
@@ -73,15 +83,7 @@ public class Scheduler implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
-    public Account getUser() {
-        return user;
-    }
-
-    public void setUser(Account user) {
-        this.user = user;
-    }
-
+    
     public Campaign getCampaign() {
         return campaign;
     }
@@ -152,6 +154,14 @@ public class Scheduler implements Serializable {
 
     public void setAddedDateTime(Calendar addedDateTime) {
         this.addedDateTime = addedDateTime;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
 }
