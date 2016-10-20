@@ -73,7 +73,8 @@
                         multi:false, rows:[
                                 {header:"LOGIN!!", body:{
                                         view:"form",id:"login", elements:[
-                                                {view:"template", template: "<img src='<%=request.getContextPath()%>/resources/images/freddie_wink.svg' height='130';width='130'> ", height:130},
+                                                {view:"template", template: "<div style='text-align:center;'><img src='<%=request.getContextPath()%>/resources/images/freddie_wink.svg' height='130'></div><div style='text-align:center;' onclick="">Need an account? Register</div>", height:160, align:"center", type:"clean"},
+//                                                {view:"template", template: "<div style='text-align:center;'>Need an account? Register</div>", align:"center", type:"clean"},
                                                 {view:"text", name:"email", label:"Email", placeholder:"mattclark@some.com"},
                                                 {view:"text", name:"password", label:"Password", type:"password", labelWidth:120, placeholder:"********"},
                                                 { height: 10},
