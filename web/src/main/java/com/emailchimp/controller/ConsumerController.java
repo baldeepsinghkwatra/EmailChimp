@@ -69,6 +69,7 @@ public class ConsumerController {
     @ResponseBody
     public String registerConsumer(Account user, Locale locale) {
         String verificationCode = GenerateCode.random(50);
+        System.out.println(user);
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
         user.setUserRole(UserConstants.ROLE_CONSUMER);
         user.setVerificationCode(verificationCode);
