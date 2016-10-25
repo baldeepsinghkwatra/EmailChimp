@@ -28,16 +28,17 @@
                     {view: "label", label: '<span style=font-size:25px;font-weight:bold><center>Forgot Password</center></span>', height: 30, align: "center"},
                     {view: "text", name: "userEmail", label: "<span class='webix_icon fa-user'></span>Email", placeholder: 'Tell us your Email', required: true, validate: webix.rules.isEmail, invalidMessage: "Please Enter Correct Email"},
                     {cols: [
-                            {view: "button",id:"submitButton", value: "Send Email", click: "submitForm"}
+                            {view: "button", id: "submitButton", value: "Send Email", click: "submitForm"}
                         ]},
-                    {view: "label",height:50, id: 'responseMessage',label:'<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"}
+                    {view: "label", height: 50, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"}
+
                 ]
             });
 
             form.attachEvent("onSubmit", function () {
                 if (form.validate()) {
-                    
-                     $$("submitButton").disable();
+
+                    $$("submitButton").disable();
                     webix.ajax().post("forgot-password", form.getValues(), function (text, xml, xhr) {
                         var color = 'red';
                         if (xhr.status === 200) {
@@ -47,6 +48,7 @@
                         $$('responseMessage').refresh();
                     });
                     $$("submitButton").enable();
+                    form.clear();
                 }
             });
 
