@@ -37,6 +37,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.emailchimp.core.service.AccountService;
+import java.util.Calendar;
 
 /**
  *
@@ -72,6 +73,7 @@ public class ConsumerController {
         account.setUserPassword(passwordEncoder.encode(account.getUserPassword()));
         account.setUserRole(UserConstants.ROLE_CONSUMER);
         account.setVerificationCode(verificationCode);
+        account.setCreatedDate(Calendar.getInstance());
         try {
             //save user to DB
             accountService.save(account);

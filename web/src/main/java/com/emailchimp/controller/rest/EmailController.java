@@ -17,8 +17,12 @@
 package com.emailchimp.controller.rest;
 
 import com.emailchimp.constants.EmailConstants;
+import com.emailchimp.core.model.Account;
 import com.emailchimp.core.model.EmailConfiguration;
+import com.emailchimp.core.service.AccountService;
 import com.emailchimp.core.service.EmailConfigurationService;
+import java.security.Principal;
+import java.util.Calendar;
 import java.util.Locale;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +39,18 @@ public class EmailController {
 
     @Autowired
     EmailConfigurationService emailConfigurationService;
+    @Autowired
+    AccountService accountService;
 
     @Autowired
     private MessageSource messageSource;
 
     @PostMapping(EmailConstants.URL_ADD_EMAIL_CONFIGURATION)
-    public String addEmailConfiguration(EmailConfiguration emailConfiguration, Locale locale) {
+    public String addEmailConfiguration(EmailConfiguration emailConfiguration, Principal principal,Locale locale) {
         try {
-        
+            Account account=accountService.findByUniqueField("userEmail",principal.getName());
+            emailConfiguration.setAccount(account);
+            emailConfiguration.setAddedDate(Calendar.getInstance());
             emailConfigurationService.save(emailConfiguration);
         } catch (Exception e) {
             return messageSource.getMessage("email.configuration.failure", new Object[]{}, locale);
