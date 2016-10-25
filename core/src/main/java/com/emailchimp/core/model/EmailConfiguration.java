@@ -41,13 +41,13 @@ public class EmailConfiguration implements Serializable {
     @ManyToOne
     @JoinColumn
     private Account account;
-    @Column(unique = false, nullable = true)
+    @Column(unique = false, nullable = false)
     private String smtpHost;
-    @Column(unique = false, nullable = true)
+    @Column(unique = false, nullable = false)
     private String smtpPort;
-    @Column(unique = false, nullable = true)
+    @Column(unique = false, nullable = false)
     private String smptpUsername;
-    @Column(unique = false, nullable = true)
+    @Column(unique = false, nullable = false)
     private String smtpPassword;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)

@@ -15,11 +15,11 @@
         <script src="http://cdn.webix.com/edge/webix.js" type="text/javascript" charset="utf-8"></script>
         <script src="<%=request.getContextPath()%>/resources/js/nav.js" type="text/javascript"></script>
     </head>
-    <body style="margin: 1px">
+    <body style="margin: 1px;">
         <style>
-            body{
-                    background: #F2EFEA;
-            }
+/*            .body{
+                    background: red;
+            }*/
             .transparent{
                     background-color: transparent;
             }
@@ -39,13 +39,17 @@
         
        <script type="text/javascript">
 
+                function showRegister(){
+                    $$("showReg").define("collapsed",false);
+                }
+                
                 function login() {
                     var values = $$("login").getValues();
                     webix.ajax().post("checkLogin","email="+values.email+"&password="+values.password);
                 }
                 
                 function register() {
-                    var values = $$("login").getValues();
+                    var values = $$("register").getValues();
                     webix.ajax().post("registerConsumer","userName="+values.userName+"&userEmail="+values.userEmail+"&userMobile="+values.userMobile+"&userPassword="+values.userPassword);
                 }
 
@@ -70,34 +74,43 @@
 
                 var signin = {
                         width: 360,
+                        id:'ui',
                         multi:false, rows:[
                                 {header:"LOGIN!!", body:{
                                         view:"form",id:"login", elements:[
-                                                {view:"template", template: "<div style='text-align:center;'><img src='<%=request.getContextPath()%>/resources/images/freddie_wink.svg' height='130'></div><div style='text-align:center;' onclick="">Need an account? Register</div>", height:160, align:"center", type:"clean"},
+                                                {view:"template", template: "<div style='text-align:center;'><img src='<%=request.getContextPath()%>/resources/webix/images/Gmail.png' height='130'></div>", height:160, align:"center", type:"clean"},
 //                                                {view:"template", template: "<div style='text-align:center;'>Need an account? Register</div>", align:"center", type:"clean"},
-                                                {view:"text", name:"email", label:"Email", placeholder:"mattclark@some.com"},
-                                                {view:"text", name:"password", label:"Password", type:"password", labelWidth:120, placeholder:"********"},
+                                                {view:"text", name:"email", label:"Email", placeholder:"mattclark@some.com",labelPosition:"top"},
+                                                {view:"text", name:"password", label:"Password", type:"password",labelPosition:"top", labelWidth:120, placeholder:"********"},
                                                 { height: 10},
-                                                {view:"button", type:"form", value:"Sign In", inputWidth:140, click:"login()",align: "center"}, {}
-
+                                                {view:"button", value:"Sign In", inputWidth:140, click:"login()",align: "center"},
+                                                {view:"template", template: "<div style='text-align:center;cursor:pointer;' onclick='showRegister()'>Need an account? Register</div><br><div style='text-align:center;cursor:pointer;'><a href='forgotPassword'>Forgot Password</a></div>", height:160, align:"center", type:"clean"}
                                         ],
                                         elementsConfig:{ 
                                                 labelWidth:100, labelAlign:"left"
                                         }
                                 }},
-                                {header:"Register", collapsed:true, body:{
+                                {header:"Register",id:"showReg", collapsed:true, body:{
                                         view:"form",id:"register", elements:[
-                                                {view:"text", name:"userName", label:"User Name", placeholder:"Matthew"},
-                                                {view:"text", name:"userEmail", label:"Email", placeholder:"mattclark@some.com"},
-                                                {view:"text", name:"userMobile", label:"Mobile", labelWidth:120, placeholder:"Matt"},
-                                                {view:"text", name:"userPassword", label:"Password", type:"password", labelWidth:120, placeholder:"********"},
-                                                {view:"button", value:"Sign Up", type:"form", inputWidth:100, click:"register()", align:"center"}, {}
+                                                {view:"text", name:"userName", label:"User Name", placeholder:"Matthew",labelPosition:"top"},
+                                                {view:"text", name:"userEmail", label:"Email", placeholder:"mattclark@some.com",labelPosition:"top"},
+                                                {view:"text", name:"userMobile", label:"Mobile", labelWidth:120, placeholder:"Matt",labelPosition:"top"},
+                                                {view:"text", name:"userPassword", label:"Password", type:"password", labelWidth:120, placeholder:"********",labelPosition:"top"},
+                                                {view:"button", value:"Sign Up", inputWidth:100, click:"register()", align:"center"}, {}
                                         ],
-                                        elementsConfig:{labelAlign:"left" }
+                                        elementsConfig:{labelAlign:"left" },
+                                        onClick:{
+                                            info:function(e, id){
+                                                alert(id);
+                                                webix.message(this.item(id).title);
+                                                return false; //blocks default onclick event
+                                            }
+                                        },
                                 }}
-                        ]
+                        ],
+                        
                 };
-
+              
                 var special_offers = {
                         gravity:3, rows:[
                                 {type:"header", css: "webix_header rounded_top", template:"Special offers"},
@@ -145,22 +158,23 @@
                 };
 
                 var ui = {
-
+                        css:'body',
                         rows:[
 //                                { view:"navbar", value:"booking" },
                                 {
-                                        type: "space",
-                                        rows:[{autoheight:true, type: "wide", cols:[signin]}]
+                                        rows:[{ cols:[signin]}]
                                 }
                         ]
                 };
-
-
+                
                 webix.ready(function(){
 
                         webix.ui(ui);
                         webix.ui(lang);
-
+                        
+//                        $$("ui").attachEvent("onAfterCollapse", function(id){
+//                            alert(id);
+//                        });
                         $$("radio1").attachEvent("onChange", function(newv, oldv){
                                 if(newv == 2)
                                         $$("datepicker2").show();

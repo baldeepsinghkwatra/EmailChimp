@@ -28,6 +28,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
 
@@ -60,4 +61,6 @@ public class AppConfig {
         sender.setJavaMailProperties(properties);
         return sender;
     }
+    
+ 
 }
