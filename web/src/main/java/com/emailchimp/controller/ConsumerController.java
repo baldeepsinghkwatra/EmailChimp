@@ -37,6 +37,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.emailchimp.core.service.AccountService;
+import java.util.Calendar;
 
 /**
  *
@@ -67,15 +68,15 @@ public class ConsumerController {
 
     @PostMapping(ConsumerConstants.URL_REGISTER_CONSUMER)
     @ResponseBody
-    public String registerConsumer(Account user, Locale locale) {
+    public String registerConsumer(Account account, Locale locale) {
         String verificationCode = GenerateCode.random(50);
-        System.out.println(user);
-        user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
-        user.setUserRole(UserConstants.ROLE_CONSUMER);
-        user.setVerificationCode(verificationCode);
+        account.setUserPassword(passwordEncoder.encode(account.getUserPassword()));
+        account.setUserRole(UserConstants.ROLE_CONSUMER);
+        account.setVerificationCode(verificationCode);
+        account.setCreatedDate(Calendar.getInstance());
         try {
             //save user to DB
-            accountService.save(user);
+            accountService.save(account);
 
             //Load resource of Html File
             Resource resource = resourceLoader.getResource("classpath:/mails/VerificationMail");
@@ -85,18 +86,18 @@ public class ConsumerController {
             String verificationMailBody = ReadFile.read(absolutePath);
             //Replace all the tags in the mail body
             verificationMailBody = verificationMailBody
-                    .replaceAll(UserConstants.TAG_USER_NAME, user.getUserName())
-                    .replaceAll(UserConstants.TAG_USER_EMAIL, user.getUserEmail())
+                    .replaceAll(UserConstants.TAG_USER_NAME, account.getUserName())
+                    .replaceAll(UserConstants.TAG_USER_EMAIL, account.getUserEmail())
                     .replaceAll(UserConstants.TAG_USER_VERIFICATION_CODE, verificationCode)
                     .replaceAll(ApplicationConstants.TAG_DOMAIN, domain);
 
             //Call Email Service
-            email.sendMail(user.getUserEmail(), "Welcome from  EmailChimp :)", verificationMailBody);
+            email.sendMail(account.getUserEmail(), "Welcome from  EmailChimp :)", verificationMailBody);
         } catch (Exception e) {
             e.printStackTrace();
             return messageSource.getMessage("user.registration.failure", new Object[]{}, locale);
         }
-        return messageSource.getMessage("user.registration.success", new Object[]{user.getUserName()}, locale);
+        return messageSource.getMessage("user.registration.success", new Object[]{account.getUserName()}, locale);
     }
 
     @RequestMapping(ConsumerConstants.URL_UPLOAD_LIST)
