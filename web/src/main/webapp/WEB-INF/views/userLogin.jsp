@@ -9,15 +9,9 @@ Author     : anshul
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login Page</title>
-        <link rel="stylesheet" href="http://cdn.webix.com/edge/webix.css" type="text/css" media="screen" charset="utf-8">
-        <script src="http://cdn.webix.com/edge/webix.js" type="text/javascript" charset="utf-8"></script>
-        <script src="<%=request.getContextPath()%>/resources/js/nav.js" type="text/javascript"></script>
     </head>
-    <body style="margin: 1px;">
         <style>
-/*            .body{
-                    background: red;
-            }*/
+
             .transparent{
                     background-color: transparent;
             }

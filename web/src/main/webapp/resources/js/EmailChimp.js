@@ -18,10 +18,10 @@ var EmailChimp = {
     },
     app: function (name, obj) {
 
-        this.app[name] = obj;
+        this.app = obj;
 
         this.load(obj.component, function () {
-            EmailChimp.app[name].init();
+            EmailChimp.app.init();
         });
 
     },

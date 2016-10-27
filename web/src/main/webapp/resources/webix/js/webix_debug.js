@@ -1342,7 +1342,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           ref = value && value.then
         } catch (e) {
           p.reject(e)
-          break
+          break;
         }
         
         (function(i){
@@ -10348,10 +10348,10 @@ webix.ValidateCollection = {
 	},
 	validate:function(id){
 		var result = true;
-		if (!id)
+		if (!id){
 			for (var key in this.data.pull)
 				var result = this.validate(key) && result;
-		else {
+		}else {
 			this._validate_details = {};
 			var obj = this.getItem(id);
 			result = webix.ValidateData.validate.call(this, null, obj);
