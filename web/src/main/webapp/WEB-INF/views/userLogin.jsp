@@ -35,7 +35,7 @@ Author     : anshul
         
      	<script src="<%=request.getContextPath()%>/resources/webix/js/webix_debug.js" type="text/javascript" charset="utf-8"></script>
         <script src="<%=request.getContextPath()%>/resources/js/EmailChimp.js" type="text/javascript" charset="utf-8"></script>
-
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>
     
     <body background="<%=request.getContextPath()%>/resources/images/background.jpg">

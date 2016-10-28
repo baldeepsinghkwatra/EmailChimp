@@ -9,14 +9,17 @@ EmailChimp.view('Register', {
 				id : "register",
 				elements : [ {
 					view : "text",
+                                        required:true,
 					name : "userName",
 					label : "User Name",
 					placeholder : "Matthew",
 					labelPosition : "top"
 				}, {
 					view : "text",
+                                        required:true,
 					name : "userEmail",
 					label : "Email",
+                                        type : "email",
 					placeholder : "mattclark@some.com",
 					labelPosition : "top"
 				}, {
@@ -24,13 +27,16 @@ EmailChimp.view('Register', {
 					name : "userMobile",
 					label : "Mobile",
 					labelWidth : 120,
-					placeholder : "Matt",
+                                        required : true,
+                                        type: "number",
+					placeholder : "10-digit number",
 					labelPosition : "top"
 				}, {
 					view : "text",
 					name : "userPassword",
 					label : "Password",
 					type : "password",
+                                        required : true,
 					labelWidth : 120,
 					placeholder : "********",
 					labelPosition : "top"
@@ -41,6 +47,10 @@ EmailChimp.view('Register', {
 					click : "EmailChimp.controllers.MainController.register()",
 					align : "center"
 				}, {} ],
+                                rules:{
+                                        userMobile:function(value){ return value.toString().length == 10; }
+                                    },
+
 				elementsConfig : {
 					labelAlign : "left"
 				},

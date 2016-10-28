@@ -19,6 +19,8 @@ EmailChimp
 										},
 										{
 											view : "text",
+                                                                                        required: true,
+                                                                                        type: 'email',
 											name : "email",
 											label : "Email",
 											placeholder : "mattclark@some.com",
@@ -27,6 +29,7 @@ EmailChimp
 										{
 											view : "text",
 											name : "password",
+                                                                                        required: true,
 											label : "Password",
 											type : "password",
 											labelPosition : "top",
@@ -50,6 +53,9 @@ EmailChimp
 											align : "center",
 											type : "clean"
 										} ],
+                                                                                rules:{
+                                                                                        "email":webix.rules.isEmail
+                                                                                    },
 								elementsConfig : {
 									labelWidth : 100,
 									labelAlign : "left"

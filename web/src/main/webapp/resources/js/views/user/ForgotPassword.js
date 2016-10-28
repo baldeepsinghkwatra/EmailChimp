@@ -41,8 +41,17 @@ EmailChimp.view('ForgotPassword', {
 																		// form
 									var values = $$('fgtPswd').getValues();
 									webix.ajax().post("forgot-password",
-											"userEmail=" + values.email);
-									webix.message("All is correct");
+											"userEmail=" + values.email,{
+                                                                            error:function(text, data, XmlHttpRequest){
+                                                                                alert("error");
+                                                                            },
+                                                                            success:function(text, data, XmlHttpRequest){
+                                                                                webix.message(text);
+                                                                                $$('fgtPswd').clear();
+                                                                                setTimeout(function(){ $$('forgotPassword').close(); }, 3000);
+                                                                                
+                                                                            }
+                                                                        });
 									// this.getTopParentView().hide(); //hide
 									// window
 								} else
