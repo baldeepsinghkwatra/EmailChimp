@@ -45,7 +45,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throws UsernameNotFoundException, DataAccessException {
         if (!"".equals(username)) {
             Account userProfile = accountService.getUserByEmail(username);
-
+            System.out.println("User: "+userProfile);
             if (null != userProfile) {
                 final List<GrantedAuthority> auths;
                 if (!userProfile.getUserRole().isEmpty()) {

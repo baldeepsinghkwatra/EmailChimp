@@ -3,6 +3,8 @@ Document   : layout
 Created on : 27 Sep, 2016, 1:04:40 AM
 Author     : anshul
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!doctype html>
 <html>
     <head>
@@ -36,6 +38,7 @@ Author     : anshul
 
     </head>
     <body>
+        <input type="hidden" id="msgErr" name="msgError" value="${messageDefault}"/>
         <script data-main="<%=request.getContextPath()%>/resources/js/Main" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.js"></script>
     </body>
 </html>

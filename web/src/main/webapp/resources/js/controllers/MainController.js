@@ -7,7 +7,16 @@ EmailChimp.controller('MainController',
             },
             login: function () {
                 var values = $$("login").getValues();
-                webix.ajax().post("checkLogin", "email=" + values.email + "&password=" + values.password);
+                webix.ajax().post("checkLogin", "email=" + values.email + "&password=" + values.password,{
+                    error:function(text, data, XmlHttpRequest){
+                        alert("error");
+                    },
+                    success:function(text, data, XmlHttpRequest){
+                        var x = document.getElementById("msgErr").value;
+                        alert(x+"${messageDefault}"+text);
+                    }
+                });
+//                webix.message(messageDefault);
             },
             register: function () {
                 var values = $$("register").getValues();

@@ -7,7 +7,6 @@ EmailChimp.app('Main', {
 	}],
 	defaultRoute : '#',
 	init : function() {
-
 		var layout = {
 			id : "mainLayout",
 			cols : [
