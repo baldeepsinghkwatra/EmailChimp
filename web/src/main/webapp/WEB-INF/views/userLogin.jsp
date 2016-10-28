@@ -37,7 +37,8 @@ Author     : anshul
         <script src="<%=request.getContextPath()%>/resources/js/EmailChimp.js" type="text/javascript" charset="utf-8"></script>
 
     </head>
-    <body>
+    
+    <body background="<%=request.getContextPath()%>/resources/images/background.jpg">
         <input type="hidden" id="msgErr" name="msgError" value="${messageDefault}"/>
         <script data-main="<%=request.getContextPath()%>/resources/js/Main" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.js"></script>
     </body>
