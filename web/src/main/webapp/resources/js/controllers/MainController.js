@@ -14,14 +14,26 @@ EmailChimp.controller('MainController',
                         error:function(text, data, XmlHttpRequest){
                             alert("error");
                         },
-                        success:function(text, data, XmlHttpRequest){
-                            var x = $("#msgErr").html(text);
-//                            alert(x+": "+text);
-                            webix.message(x+"${messageDefault}"+text);
+                        success:function(response){
                             $$('login').clear();
-                            setTimeout(function () {
-                                window.location.reload(1);
-                            }, 3000);  // After 5 secs
+                            var err = $('#msgErr').html(response).context.all[31].innerHTML;
+                            if(err !== "Invalid username or password!" 
+                                    && err !== "Invalid username and password!"){
+                                setTimeout(function () {
+                                    window.location.reload(1);
+                                }, 0);  // After 0 secs                                
+                            }else {
+                                webix.message(err);
+                            }
+                            
+//                            var x = $(response).filter('#msgErr');
+//                            console.log(x);
+//                            webix.message(x+"${messageDefault}");
+//                            $$('login').clear();
+                             
+//                            setTimeout(function () {
+//                                window.location.reload(1);
+//                            }, 3000);  // After 5 secs
                         }
                     });
                 }

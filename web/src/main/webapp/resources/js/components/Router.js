@@ -10,7 +10,7 @@ EmailChimp.component('Router', {
 
         var router = EmailChimp.components.Router;
         var routes = EmailChimp.app.routes;
-        if (window.location.hash != router.currentHash) {
+        if (window.location.hash !== router.currentHash) {
 
             for (var i = 0, currentRoute; currentRoute = routes[i++]; ) {
 
