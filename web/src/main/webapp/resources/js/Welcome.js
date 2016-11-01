@@ -24,6 +24,8 @@ EmailChimp.app('Welcome', {
 		};
 		webix.ui(layout).show();
 
+		
 		EmailChimp.components.Router.startRouting();
+		$$('app:menu').select(EmailChimp.components.Router.getCurrentHash());
 	}
 });

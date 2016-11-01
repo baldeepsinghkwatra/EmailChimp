@@ -19,6 +19,9 @@ EmailChimp.component('Router', {
             }
             router.currentHash = window.location.hash;
         }
+    },
+    getCurrentHash: function(){
+    	return window.location.hash.substr(1);
     }
 
 });

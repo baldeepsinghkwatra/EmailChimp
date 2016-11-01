@@ -24,7 +24,7 @@ EmailChimp.view('SideMenu',
 
                             },
                             onAfterSelect: function (id) {
-                                window.location.href = "#" + id;
+                            	window.location.href = "#" + id;
                             }
                         },
                         data: [

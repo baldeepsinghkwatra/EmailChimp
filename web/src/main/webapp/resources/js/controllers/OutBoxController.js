@@ -7,6 +7,8 @@ EmailChimp.controller('OutBoxController',
                 $$("content").removeView('main');
                 $$("content").addView(outboxGrid.getLayout(), 1);
                 $$("mainLayout").resize();
+                
+                
             }
 
         }
