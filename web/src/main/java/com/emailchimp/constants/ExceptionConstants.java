@@ -24,4 +24,7 @@ public interface ExceptionConstants {
 
     String URL_ERROR_PAGE="/errorPage";
     String ERROR_MESSAGE="errorMessage";
+    int  CONSUMER_NOT_FOUND_STATUS_CODE = 1001;
+    int INVALID_LOGIN = 101;
+    int VALID_LOGIN = 100;
 }

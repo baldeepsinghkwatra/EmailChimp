@@ -16,6 +16,7 @@
  */
 package com.emailchimp.controller;
 
+import com.emailchimp.model.LoginModel;
 import com.emailchimp.constants.ApplicationConstants;
 import com.emailchimp.constants.UserConstants;
 import com.emailchimp.core.service.Email;
@@ -47,6 +48,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.emailchimp.core.service.AccountService;
+import com.emailchimp.exception.LoginException;
 
 /**
  *
@@ -68,6 +70,66 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @GetMapping(UserConstants.WELCOME_URL)
+    public ModelAndView welcomePage(Principal principal, HttpServletRequest request)
+            throws LoginException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (principal != null) {
+            AbstractAuthenticationToken authToken = null;
+            try {
+                authToken = (UsernamePasswordAuthenticationToken) principal;
+            } catch (Exception e) {
+                authToken = (RememberMeAuthenticationToken) principal;
+            }
+            LoginUser user = (LoginUser) authToken.getPrincipal();
+
+            String userName = "";
+
+            if (user != null) {
+                userName = user.getUserName();
+                String userRole = "";
+
+                for (GrantedAuthority authority : auth.getAuthorities()) {
+                    userRole = authority.getAuthority();
+                }
+                switch (userRole) {
+                    case UserConstants.ROLE_ADMIN:
+                        return new ModelAndView(UserConstants.WELCOME_PAGE_ADMIN);
+                    case UserConstants.ROLE_PROVIDER:
+                        return new ModelAndView(UserConstants.WELCOME_PAGE_PROVIDER);
+                    case UserConstants.ROLE_CONSUMER:
+                        return new ModelAndView(UserConstants.WELCOME_PAGE_CONSUMER);
+                    default:
+                        break;
+                }
+            }
+        }
+        return new ModelAndView(UserConstants.LOGIN_PAGE); 
+    }
+    
+    @GetMapping(UserConstants.LOGIN_SUCCESS_URL)
+    public@ResponseBody 
+        LoginModel loginSucces(Principal principal, HttpServletRequest request, String error, String logout) throws LoginException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        LoginModel loginModel =  new LoginModel();
+        
+        if (principal != null) {
+            AbstractAuthenticationToken authToken = null;
+            try {
+                authToken = (UsernamePasswordAuthenticationToken) principal;
+            } catch (Exception e) {
+                authToken = (RememberMeAuthenticationToken) principal;
+            }
+            LoginUser user = (LoginUser) authToken.getPrincipal();
+
+        }
+        loginModel.setMessage("Successful Login!!");
+        loginModel.setStatus(100);
+        return loginModel;
+    }
+
     /**
      * Welcome page that checks if the user is already logged in and if his
      * session is persisted route him to the role based welcome page else show
@@ -80,51 +142,18 @@ public class UserController {
      * @return
      */
     @GetMapping(UserConstants.DEFAULT_URL)
-    public ModelAndView welcomePage(Principal principal, HttpServletRequest request, String error, String logout) {
+    public ModelAndView loginPage(Principal principal, HttpServletRequest request, String error, String logout) throws LoginException {
         System.out.println(logout);
         if (error != null) {
-            System.out.println("error:"+getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
-            return new ModelAndView(UserConstants.LOGIN_PAGE, ApplicationConstants.MESSAGE_DEFAULT, getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
+            System.out.println("error:" + getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
+            throw new LoginException(getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
         } else if (logout != null) {
             System.out.println(logout);
             return new ModelAndView(UserConstants.LOGIN_PAGE, ApplicationConstants.MESSAGE_DEFAULT, "You have been Logged out Successfully");
-        } else {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-            if (principal != null) {
-                AbstractAuthenticationToken authToken = null;
-                try {
-                    authToken = (UsernamePasswordAuthenticationToken) principal;
-                } catch (Exception e) {
-                    authToken = (RememberMeAuthenticationToken) principal;
-                }
-                LoginUser user = (LoginUser) authToken.getPrincipal();
-
-                String userName = "";
-
-                if (user != null) {
-                    userName = user.getUserName();
-                    String userRole = "";
-
-                    for (GrantedAuthority authority : auth.getAuthorities()) {
-                        userRole = authority.getAuthority();
-                    }
-                    switch (userRole) {
-                        case UserConstants.ROLE_ADMIN:
-                            return new ModelAndView(UserConstants.WELCOME_PAGE_ADMIN);
-                        case UserConstants.ROLE_PROVIDER:
-                            return new ModelAndView(UserConstants.WELCOME_PAGE_PROVIDER);
-                        case UserConstants.ROLE_CONSUMER:
-                            return new ModelAndView(UserConstants.WELCOME_PAGE_CONSUMER);
-                        default:
-                            break;
-                    }
-                }
-            }
         }
-        return new ModelAndView(UserConstants.LOGIN_PAGE);
+        
+        return welcomePage(principal, request);
     }
-
     /**
      * View to be displayed when the user does not have enough rights to view
      * the resource
@@ -147,12 +176,12 @@ public class UserController {
     @PostMapping(UserConstants.URL_FORGOT_PASSWORD)
     @ResponseBody
     public String forgotPassword(String userEmail, Locale locale) {
-        
+
         Account account = accountService.getUserByEmail(userEmail);
-        
+
         Calendar calendar = Calendar.getInstance(); // starts with today's date and time
         try {
-            if (account.getForgotPasswordCode()==null || (account.getForgotPasswordExpiryDate() == null || account.getForgotPasswordExpiryDate().before(calendar))) {
+            if (account.getForgotPasswordCode() == null || (account.getForgotPasswordExpiryDate() == null || account.getForgotPasswordExpiryDate().before(calendar))) {
                 String forgotPassword = GenerateCode.random(90);
                 calendar.add(Calendar.DAY_OF_YEAR, 2);  // advances day by 2
                 account.setForgotPasswordCode(forgotPassword);
@@ -195,7 +224,7 @@ public class UserController {
     @GetMapping(UserConstants.URL_RESET_PASSWORD)
     public ModelAndView resetPassword(String userEmail, String verificationCode) {
         Account user = accountService.getUserByEmail(userEmail);
-        
+
         try {
             if (user.getForgotPasswordCode().equals(verificationCode)) {
                 return new ModelAndView("/changePassword", "user", user);
@@ -285,8 +314,9 @@ public class UserController {
         }
         return error;
     }
-    
-    
+
     @GetMapping("forgotPassword")
-    public String forgotPassword(){return "forgotPassword";}
+    public String forgotPassword() {
+        return "forgotPassword";
+    }
 }

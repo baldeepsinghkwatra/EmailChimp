@@ -24,6 +24,15 @@ public class ExceptionJSONInfo {
 
     private String url;
     private String message;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getUrl() {
         return url;
