@@ -10,6 +10,7 @@ Author     : anshul
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/main.css" type="text/css" media="screen" charset="utf-8">
         <title>Login Page</title>
     </head>
         <style>
@@ -39,7 +40,7 @@ Author     : anshul
         <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>
     
-    <body background="<%=request.getContextPath()%>/resources/images/background.jpg">
+    <body>
         <div id="msgErr" style="display:none;">${messageDefault}</div>
         <script data-main="<%=request.getContextPath()%>/resources/js/Main" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.js"></script>
     </body>

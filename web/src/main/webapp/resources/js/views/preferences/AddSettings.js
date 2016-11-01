@@ -9,19 +9,23 @@ EmailChimp.view('AddSettings',
                         {
                             view: "text",
                             label: 'SMTP HOST :',
-                            name: "smtpHost"
+                            name: "smtpHost",
+                            required: true
                         }, {
                             view: "text",
                             label: 'SMTP PORT :',
-                            name: "smtpPort"
+                            name: "smtpPort",
+                            required: true
                         }, {
                             view: "text",
                             label: 'USERNAME :',
-                            name: "smptpUsername"
+                            name: "smptpUsername",
+                            required: true
                         }, {
                             view: "text",
                             label: 'PASSWORD :',
-                            name: "smtpPassword"
+                            name: "smtpPassword",
+                            required: true
                         },
                         {view: "label", height: 50, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
                         {
