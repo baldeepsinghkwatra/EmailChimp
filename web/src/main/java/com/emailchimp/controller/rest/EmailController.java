@@ -20,6 +20,7 @@ import com.emailchimp.constants.EmailConstants;
 import com.emailchimp.core.model.Account;
 import com.emailchimp.core.model.EmailConfiguration;
 import com.emailchimp.core.service.AccountService;
+import com.emailchimp.core.service.EmailConfigurationService;
 //import com.emailchimp.core.service.EmailConfigurationService;
 import java.security.Principal;
 import java.util.Calendar;
@@ -37,8 +38,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EmailController {
 
-//    @Autowired
-//    EmailConfigurationService emailConfigurationService;
+    @Autowired
+    EmailConfigurationService emailConfigurationService;
     @Autowired
     AccountService accountService;
 
@@ -51,7 +52,7 @@ public class EmailController {
             Account account=accountService.findByUniqueField("userEmail",principal.getName());
             emailConfiguration.setAccount(account);
             emailConfiguration.setAddedDate(Calendar.getInstance());
-//            emailConfigurationService.save(emailConfiguration);
+            emailConfigurationService.save(emailConfiguration);
         } catch (Exception e) {
             return messageSource.getMessage("email.configuration.failure", new Object[]{}, locale);
         }
