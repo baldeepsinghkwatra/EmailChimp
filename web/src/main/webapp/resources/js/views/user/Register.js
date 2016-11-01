@@ -46,7 +46,14 @@ EmailChimp.view('Register', {
 					inputWidth : 100,
 					click : "EmailChimp.controllers.MainController.register()",
 					align : "center"
-				}, {} ],
+				},
+                                {
+                                    view: "label",
+                                    height: 50, 
+                                    id: 'responseRegisterMessage', 
+                                    label: '', 
+                                    align: "center"
+                                }, {} ],
                                 rules:{
                                         userMobile:function(value){ return value.toString().length == 10; }
                                     },

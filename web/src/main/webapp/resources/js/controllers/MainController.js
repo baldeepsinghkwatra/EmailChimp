@@ -17,7 +17,7 @@ EmailChimp.controller('MainController',
                         success:function(response){
                             var obj = $.parseJSON(response);
                             if(obj.status == 100) {
-                                window.location.reload();
+                                window.location.reload(1);
                             }
                             $$("responseMessage").setHTML("<span style=color:red>*"+obj.message+"</span>");
                             $$('login').clear();
@@ -59,7 +59,7 @@ EmailChimp.controller('MainController',
                             alert("error");
                         },
                         success:function(text, data, XmlHttpRequest){
-                            webix.message(text);
+                            $$('responseRegisterMessage').setHTML("<span style=color:red>*"+text+"</span>");
                             $$('register').clear();
                         }
                     });

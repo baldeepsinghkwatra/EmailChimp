@@ -18,6 +18,7 @@ package com.emailchimp.controller;
 
 import com.emailchimp.model.LoginModel;
 import com.emailchimp.constants.ApplicationConstants;
+import com.emailchimp.constants.ExceptionConstants;
 import com.emailchimp.constants.UserConstants;
 import com.emailchimp.core.service.Email;
 import com.emailchimp.model.LoginUser;
@@ -126,7 +127,7 @@ public class UserController {
 
         }
         loginModel.setMessage("Successful Login!!");
-        loginModel.setStatus(100);
+        loginModel.setStatus(ExceptionConstants.VALID_LOGIN);
         return loginModel;
     }
 
