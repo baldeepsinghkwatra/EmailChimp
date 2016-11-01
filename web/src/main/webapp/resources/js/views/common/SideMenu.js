@@ -46,6 +46,19 @@ EmailChimp.view('SideMenu',
                                         details: "Outbox"
                                     }
                                 ]
+                            },
+                             {
+                                id: "preferences",
+                                value: "Preferences",
+                                open: true,
+                                data: [
+                                    {
+                                        id: "emailSettings",
+                                        value: "Email Settings",
+                                        icon: "wrench",
+                                        details: "Email Settings"
+                                    }
+                                ]
                             }
                         ]
                     }
