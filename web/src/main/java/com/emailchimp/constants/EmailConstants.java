@@ -22,4 +22,5 @@ package com.emailchimp.constants;
  */
 public interface EmailConstants {
 String URL_ADD_EMAIL_CONFIGURATION="/add-email-configuration";
+String URL_GET_EMAIL_CONFIGURATION="/get-email-configuration";
 }
