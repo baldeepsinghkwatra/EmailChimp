@@ -1,10 +1,13 @@
 EmailChimp.app('Main', {
 	component : [ 'views/user/Login', 'views/user/Register',
-			'components/Router', 'controllers/MainController' ],
+			'components/Router' ],
 
 	routes : [ {
+		hash : '#',
+		controller : 'MainController'
+	}, {
 		hash : '#forgotPassword',
-		controller : 'ForgotPasswordController'
+		controller : 'MainController'
 	} ],
 	defaultRoute : '#',
 	init : function() {

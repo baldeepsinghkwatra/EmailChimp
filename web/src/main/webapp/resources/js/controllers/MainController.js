@@ -1,6 +1,8 @@
 EmailChimp.controller('MainController',
         {
             init: function () {
+            	debugger;
+            	$$("needAccount").
             },
             showRegister: function () {
                 $$("showReg").define("collapsed", false);

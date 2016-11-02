@@ -9,8 +9,8 @@ EmailChimp
 							body : {
 								view : "form",
 								id : "login",
-								type:'clean',
-								padding:40,
+								type : 'clean',
+								padding : 40,
 								elements : [
 										{
 											view : "template",
@@ -47,19 +47,38 @@ EmailChimp
 											inputWidth : 140,
 											click : "EmailChimp.controllers.MainController.login()",
 											align : "center"
-										}, 
-										{ template:'Need an account ? Register', autoheight:true, border:0},
-										 { template:'Forgot Password', autoheight:true},
-											      
-//										{
-//											view : "template",
-//											template : "<div style='text-align:center;cursor:pointer;' onclick='EmailChimp.controllers.MainController.showRegister()'>Need an account? Register</div><br><div style='text-align:center;cursor:pointer;'><a href='#forgotPassword'>Forgot Password</a></div>",
-//											height : 160,
-//											align : "center",
-//											type : "clean"
-//										},
-										{} 
-										],
+										},
+										{
+											height : 10
+										},
+										{
+											template : "<div style='text-align:center;'>Need an account ? Register</div>",
+											autoheight : true,
+											border : 0,
+											align : "right",
+											id : 'needAccount'
+
+										}, {
+											template : "<div style='text-align:center;'>Forgot Password</div>",
+											autoheight : true,
+											align : "center",
+											id : 'forgotPassword'
+										},
+
+										// {
+										// view : "template",
+										// template : "<div
+										// style='text-align:center;cursor:pointer;'
+										// onclick='EmailChimp.controllers.MainController.showRegister()'>Need
+										// an account? Register</div><br><div
+										// style='text-align:center;cursor:pointer;'><a
+										// href='#forgotPassword'>Forgot
+										// Password</a></div>",
+										// height : 160,
+										// align : "center",
+										// type : "clean"
+										// },
+										{} ],
 								rules : {
 									"email" : webix.rules.isEmail
 								},
