@@ -5,10 +5,12 @@ EmailChimp
 					getLayout : function() {
 						return {
 
-							header : "LOGIN!!",
+							header : "Login!!",
 							body : {
 								view : "form",
 								id : "login",
+								type:'clean',
+								padding:40,
 								elements : [
 										{
 											view : "template",
@@ -19,8 +21,8 @@ EmailChimp
 										},
 										{
 											view : "text",
-                                                                                        required: true,
-                                                                                        type: 'email',
+											required : true,
+											type : 'email',
 											name : "email",
 											label : "Email",
 											placeholder : "mattclark@some.com",
@@ -29,7 +31,7 @@ EmailChimp
 										{
 											view : "text",
 											name : "password",
-                                                                                        required: true,
+											required : true,
 											label : "Password",
 											type : "password",
 											labelPosition : "top",
@@ -45,17 +47,22 @@ EmailChimp
 											inputWidth : 140,
 											click : "EmailChimp.controllers.MainController.login()",
 											align : "center"
-										},
-										{
-											view : "template",
-											template : "<div style='text-align:center;cursor:pointer;' onclick='EmailChimp.controllers.MainController.showRegister()'>Need an account? Register</div><br><div style='text-align:center;cursor:pointer;'><a href='#forgotPassword'>Forgot Password</a></div>",
-											height : 160,
-											align : "center",
-											type : "clean"
-										} ],
-                                                                                rules:{
-                                                                                        "email":webix.rules.isEmail
-                                                                                    },
+										}, 
+										{ template:'Need an account ? Register', autoheight:true, border:0},
+										 { template:'Forgot Password', autoheight:true},
+											      
+//										{
+//											view : "template",
+//											template : "<div style='text-align:center;cursor:pointer;' onclick='EmailChimp.controllers.MainController.showRegister()'>Need an account? Register</div><br><div style='text-align:center;cursor:pointer;'><a href='#forgotPassword'>Forgot Password</a></div>",
+//											height : 160,
+//											align : "center",
+//											type : "clean"
+//										},
+										{} 
+										],
+								rules : {
+									"email" : webix.rules.isEmail
+								},
 								elementsConfig : {
 									labelWidth : 100,
 									labelAlign : "left"

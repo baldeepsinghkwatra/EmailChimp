@@ -13,7 +13,7 @@ Author     : anshul
         <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/main.css" type="text/css" media="screen" charset="utf-8">
         <title>Login Page</title>
     </head>
-        <style>
+      <!--   <style>
 
             .transparent{
                     background-color: transparent;
@@ -30,14 +30,14 @@ Author     : anshul
             .webix_el_counter .webix_inp_counter_next {
                     line-height: 28px;
             }
-    </style>
+    </style> -->
         
         <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/webix/css/webix.css" type="text/css" media="screen" charset="utf-8">
         
      	<script src="<%=request.getContextPath()%>/resources/webix/js/webix_debug.js" type="text/javascript" charset="utf-8"></script>
         <script src="<%=request.getContextPath()%>/resources/js/EmailChimp.js" type="text/javascript" charset="utf-8"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> -->
     </head>
     
     <body>
