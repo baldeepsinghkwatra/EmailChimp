@@ -14,26 +14,22 @@ EmailChimp.view('EmailSettingsGrid',
                             template: "{common.checkbox()}",
                             width: 50
                         }, {
-                            id: "code",
-                            header: "To",
-                            minWidth: 80
+                            id: "smtpHost",
+                            header: "Host",
+                            width: 400
                         }, {
-                            id: "name",
-                            header: "Subject",
-                            minWidth: 120,
-                            fillspace: 2,
+                            id: "smtpPort",
+                            header: "Port",
+                            minWidth: 20,
                             editor: "text"
                         }, {
-                            id: "statusName",
-                            header: ["Status"],
-                            minWidth: 75,
-                            sort: "string",
-                            template: "<span class='status status#status#'>#statusName#</span>"
+                            id: "smptpUsername",
+                            header: ["Username"],
+                            width: 300
                         }, {
-                            id: "sentdate",
-                            header: "Date",
-                            minWidth: 120,
-                            format: webix.Date.dateToStr("%m/%d/%Y")
+                            id: "smtpPassword",
+                            header: "Password",
+                             width: 200
                         }, {
                             id: "delete",
                             header: "&nbsp;",
@@ -41,7 +37,7 @@ EmailChimp.view('EmailSettingsGrid',
                             template: "<span  style='cursor:pointer;' class='webix_icon fa-trash-o trash'></span>"}
                     ],
                     pager: "pagerA",
-                data: EmailChimp.models.MailModal.getAll(),
+                data:   EmailChimp.models.MailModal.getEmailConfiguration(),
                     ready: function () {
                         webix.extend(this, webix.ProgressBar);
                     }

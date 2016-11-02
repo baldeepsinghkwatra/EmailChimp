@@ -24,7 +24,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -33,25 +33,25 @@ import javax.persistence.TemporalType;
  * @author baldeep
  */
 @Entity
-public class EmailConfiguration implements Serializable {
+public class API implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @ManyToOne
+
+    @OneToOne
     @JoinColumn
-    private Account account;
+    private Account user;
+
+    @Column(unique = true, nullable = false)
+    private String apiKey;
+
     @Column(unique = false, nullable = false)
-    private String smtpHost;
-    @Column(unique = false, nullable = false)
-    private String smtpPort;
-    @Column(unique = false, nullable = false)
-    private String smtpUsername;
-    @Column(unique = false, nullable = false)
-    private String smtpPassword;
+    private boolean isActive = true;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
-    private Calendar addedDate;
+    private Calendar generatedTimestamp;
 
     public long getId() {
         return id;
@@ -61,52 +61,37 @@ public class EmailConfiguration implements Serializable {
         this.id = id;
     }
 
-    public String getSmtpHost() {
-        return smtpHost;
+ 
+    public String getApiKey() {
+        return apiKey;
     }
 
-    public void setSmtpHost(String smtpHost) {
-        this.smtpHost = smtpHost;
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 
-    public String getSmtpPort() {
-        return smtpPort;
+    public boolean isIsActive() {
+        return isActive;
     }
 
-    public void setSmtpPort(String smtpPort) {
-        this.smtpPort = smtpPort;
-    }
-    public String getSmtpPassword() {
-        return smtpPassword;
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
-    public void setSmtpPassword(String smtpPassword) {
-        this.smtpPassword = smtpPassword;
+    public Calendar getGeneratedTimestamp() {
+        return generatedTimestamp;
     }
 
-    public Calendar getAddedDate() {
-        return addedDate;
+    public void setGeneratedTimestamp(Calendar generatedTimestamp) {
+        this.generatedTimestamp = generatedTimestamp;
     }
 
-    public void setAddedDate(Calendar addedDate) {
-        this.addedDate = addedDate;
+    public Account getUser() {
+        return user;
     }
 
-    public String getSmptpUsername() {
-        return smtpUsername;
+    public void setUser(Account user) {
+        this.user = user;
     }
-
-    public void setSmptpUsername(String smptpUsername) {
-        this.smtpUsername = smptpUsername;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
 
 }
