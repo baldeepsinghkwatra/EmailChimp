@@ -54,7 +54,7 @@ EmailChimp
                                     },
                                     {
                                         view: "template",
-                                        template: "<div style='text-align:center;cursor:pointer;' onclick='EmailChimp.controllers.MainController.showRegister()'>Need an account? Register</div><br><div style='text-align:center;cursor:pointer;'><a href='#forgotPassword'>Forgot Password</a></div>",
+                                        template: "<div style='text-align:center;cursor:pointer;' onclick='EmailChimp.controllers.MainController.showRegister()'>Need an account? Register</div><br><div style='text-align:center;cursor:pointer;' onclick='EmailChimp.controllers.MainController.showPopup()'>Forgot Password</div>",
                                         height: 160,
                                         align: "center",
                                         type: "clean"
