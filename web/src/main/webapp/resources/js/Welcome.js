@@ -7,7 +7,11 @@ EmailChimp.app('Welcome', {
 	}, {
 		hash : '#outbox',
 		controller : 'OutBoxController'
-	} ],
+	},
+    {
+		hash : '#emailSettings',
+		controller : 'EmailConfigurationController'
+	}],
 	defaultRoute : '#sentMail',
 	
 	init : function() {
@@ -24,6 +28,8 @@ EmailChimp.app('Welcome', {
 		};
 		webix.ui(layout).show();
 
+		
 		EmailChimp.components.Router.startRouting();
+		$$('app:menu').select(EmailChimp.components.Router.getCurrentHash());
 	}
 });

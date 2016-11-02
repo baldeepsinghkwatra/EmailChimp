@@ -24,7 +24,7 @@ EmailChimp.view('SideMenu',
 
                             },
                             onAfterSelect: function (id) {
-                                window.location.href = "#" + id;
+                            	window.location.href = "#" + id;
                             }
                         },
                         data: [
@@ -44,6 +44,19 @@ EmailChimp.view('SideMenu',
                                         value: "Outbox",
                                         icon: "hdd-o",
                                         details: "Outbox"
+                                    }
+                                ]
+                            },
+                             {
+                                id: "preferences",
+                                value: "Preferences",
+                                open: true,
+                                data: [
+                                    {
+                                        id: "emailSettings",
+                                        value: "Email Settings",
+                                        icon: "wrench",
+                                        details: "Email Settings"
                                     }
                                 ]
                             }

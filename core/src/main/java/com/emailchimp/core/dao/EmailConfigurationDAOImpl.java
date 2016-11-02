@@ -14,13 +14,16 @@
  * or reproduction of this material is strictly forbidden unless prior written
  * permission is obtained from Mindfire Solutions
  */
-package com.emailchimp.constants;
+package com.emailchimp.core.dao;
+
+import com.emailchimp.core.model.EmailConfiguration;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author baldeep
  */
-public interface EmailConstants {
-String URL_ADD_EMAIL_CONFIGURATION="/add-email-configuration";
-String URL_GET_EMAIL_CONFIGURATION="/get-email-configuration";
+@Repository
+public class EmailConfigurationDAOImpl extends AbstractDAOImpl<Long, EmailConfiguration> implements EmailConfigurationDAO {
+
 }

@@ -14,13 +14,27 @@
  * or reproduction of this material is strictly forbidden unless prior written
  * permission is obtained from Mindfire Solutions
  */
-package com.emailchimp.constants;
+package com.emailchimp.core.service;
+
+import com.emailchimp.core.dao.EmailConfigurationDAO;
+import com.emailchimp.core.model.EmailConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author baldeep
  */
-public interface EmailConstants {
-String URL_ADD_EMAIL_CONFIGURATION="/add-email-configuration";
-String URL_GET_EMAIL_CONFIGURATION="/get-email-configuration";
+@Service
+@Transactional
+public class EmailConfigurationServiceImpl extends CommonServiceImpl<EmailConfiguration> implements EmailConfigurationService {
+
+    EmailConfigurationDAO emailConfigurationDAO;
+
+    @Autowired
+    public EmailConfigurationServiceImpl(EmailConfigurationDAO emailConfigurationDAO) {
+        super(emailConfigurationDAO);
+        this.emailConfigurationDAO = emailConfigurationDAO;
+    }
 }
