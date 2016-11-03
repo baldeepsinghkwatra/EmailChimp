@@ -21,7 +21,6 @@ import com.emailchimp.core.model.Account;
 import com.emailchimp.core.model.EmailConfiguration;
 import com.emailchimp.core.service.AccountService;
 import com.emailchimp.core.service.EmailConfigurationService;
-//import com.emailchimp.core.service.EmailConfigurationService;
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.List;
@@ -55,6 +54,7 @@ public class EmailController {
             emailConfiguration.setAddedDate(Calendar.getInstance());
             emailConfigurationService.save(emailConfiguration);
         } catch (Exception e) {
+            e.printStackTrace();
             return messageSource.getMessage("email.configuration.failure", new Object[]{}, locale);
         }
         return messageSource.getMessage("email.configuration.success", new Object[]{}, locale);
@@ -68,6 +68,34 @@ public class EmailController {
         } catch (Exception e) {
         }
         return null;
+    }
+
+    @PostMapping(EmailConstants.URL_DELETE_EMAIL_CONFIGURATION)
+    public String deleteEmailConfiguration(Long id, Principal principal, Locale locale) {
+        try {
+            EmailConfiguration emailConfiguration = emailConfigurationService.findByUniqueField("id", id);
+            Account account = accountService.findByUniqueField("userEmail", principal.getName());
+            if (emailConfiguration.getAccount().getId() == account.getId()) {
+                emailConfigurationService.delete(emailConfiguration);
+                return messageSource.getMessage("email.configuration.delete.success", new Object[]{}, locale);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return messageSource.getMessage("email.configuration.delete.failure", new Object[]{}, locale);
+        }
+        return messageSource.getMessage("email.configuration.delete.failure", new Object[]{}, locale);
+    }
+
+    @PostMapping(EmailConstants.URL_UPDATE_EMAIL_CONFIGURATION)
+    public String updateEmailConfiguration(EmailConfiguration emailConfiguration, Principal principal, Locale locale) {
+        try {
+            Account account = accountService.findByUniqueField("userEmail", principal.getName());
+            emailConfiguration.setAccount(account);
+            emailConfigurationService.update(emailConfiguration);
+        } catch (Exception e) {
+            return messageSource.getMessage("email.configuration.update.failure", new Object[]{}, locale);
+        }
+        return messageSource.getMessage("email.configuration.update.success", new Object[]{}, locale);
     }
 
 }

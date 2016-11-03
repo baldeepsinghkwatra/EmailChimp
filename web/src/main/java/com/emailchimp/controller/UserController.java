@@ -109,6 +109,7 @@ public class UserController {
 		return new ModelAndView(UserConstants.LOGIN_PAGE);
 	}
 
+
 	@GetMapping(UserConstants.LOGIN_SUCCESS_URL)
 	@ResponseBody
 	public ResponseModel loginSucces(Principal principal, HttpServletRequest request, String error, String logout,
