@@ -83,10 +83,9 @@ public class UserController {
     public ModelAndView welcomePage(Principal principal, HttpServletRequest request, String error, String logout) {
         System.out.println(logout);
         if (error != null) {
-            System.out.println("error:"+getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
             return new ModelAndView(UserConstants.LOGIN_PAGE, ApplicationConstants.MESSAGE_DEFAULT, getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
         } else if (logout != null) {
-            System.out.println(logout);
+            
             return new ModelAndView(UserConstants.LOGIN_PAGE, ApplicationConstants.MESSAGE_DEFAULT, "You have been Logged out Successfully");
         } else {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();

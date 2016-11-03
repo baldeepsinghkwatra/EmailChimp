@@ -4,69 +4,61 @@ EmailChimp.controller('EmailConfigurationController',
             init: function () {
                 controller = this;
                 emailSettingsGrid = EmailChimp.views.EmailSettingsGrid;
-                 addSettingsForm = EmailChimp.views.AddSettings;
-                mailModal = EmailChimp.models.MailModal;
-               
+                addSettingsForm = EmailChimp.views.AddSettings;
 
                 // Change main layout
                 $$("content").removeView('main');
                 $$("content").addView(emailSettingsGrid.getlayout(), 1);
                 $$("mainLayout").resize();
-
-                this.bindSentMailEvents();
-
+                this.bindEvents();
             },
-            bindSentMailEvents: function () {
-                //Bind Events
-                $$("mail_filter").attachEvent("onChange", this.filterMails);
-
+            bindEvents: function () {
                 //Event on css
-                $$("emailSettingsGrid").on_click.trash = this.deleteMail;
+                $$("emailSettingsGrid").on_click.trash = this.deleteSettings;
+                $$("emailSettingsGrid").on_click.save = this.saveSettings;
 
                 //Event on properties
                 $$("add").define({click: this.addSettings});
-                $$("delete").define({click: this.deleteSettings});
             },
-            bindComposeMailEvents: function () {
-
-            },
-            filterMails: function () {
-
-                var val = this.getValue();
-                if (val == "all")
-                    $$("emailSettingsGrid").filter("#status#", "");
-                else
-                    $$("emailSettingsGrid").filter("#status#", val);
-            },
-            deleteMail: function () {
-
+            deleteSettings: function (e, id, node) {
                 webix.confirm({
-                    text: "The mail will be deleted. <br/> Are you sure?",
+                    text: "The configuration will be deleted. <br/> Are you sure?",
                     ok: "Yes",
                     cancel: "Cancel",
                     callback: function (res) {
                         if (res) {
                             var item = webix.$$("emailSettingsGrid").getItem(id);
-                            item.status = "0";
-                            item.statusName = "Deleted";
-                            webix.$$("emailSettingsGrid").refresh(id);
+                            item = item.id;
+                            webix.ajax().post("delete-email-configuration", "id=" + item, function (text, xml, xhr) {
+                                webix.alert(text);
+                            }),
+                                    $$("emailSettingsGrid").remove(id);
                         }
                     }
                 });
             },
-            deleteSettings: function () {
+            saveSettings: function (e, id, node) {
+                var item = webix.$$("emailSettingsGrid").getItem(id);
+                console.log($$("emailSettingsGrid").validateEditor() + item.smtpPort.length);
+                debugger;
+                if (item.smtpPort.length > 1 && item.smtpHost.length > 1 && item.smtpUsername.length > 1 && item.smtpPassword.length > 1) {
+                    console.log(item.smtpPort.length +":::"+ item.smtpHost.length +":::"+ item.smtpUsername.length +"::"+item.smtpPassword.length);
+                    webix.confirm({
+                        text: "The configuration will be saved. <br/> Are you sure?",
+                        ok: "Yes",
+                        cancel: "Cancel",
+                        callback: function (res) {
+                            if (res) {
 
-                var grid = $$("emailSettingsGrid");
-                grid.clearAll();
-                grid.showProgress();
-
-                webix.delay(function () {
-                    grid.parse(mailModal.getAll);
-                    grid.hideProgress();
-                }, null, null, 300);
+                                webix.ajax().post("update-email-configuration", item, function (text, xml, xhr) {
+                                    webix.alert(text);
+                                });
+                            }
+                        }
+                    });
+                }
             },
             addSettings: function () {
-
                 webix.ui({
                     view: "window",
                     id: "win2",
@@ -78,37 +70,6 @@ EmailChimp.controller('EmailConfigurationController',
                     class="webix_icon fa-times-circle closepopup"></span>',
                     body: addSettingsForm.getLayout()
                 }).show();
-
-                controller.bindComposeMailEvents();
-
-            },
-            save_form: function () {
-
-                //send files to server side
-                $$("upl1").send(function () {
-
-                    //getting file properties
-                    $$('upl1').files.data.each(function (obj) {
-                        var status = obj.status;
-                        var name = obj.name;
-                        if (status == 'server') {
-                            var sname = obj.sname; //came from upload script
-                            webix.message("Upload: " + status + " for " + name + " stored as " + sname);
-                        } else {
-                            webix.message("Upload: " + status + " for " + name);
-                        }
-                    });
-
-                    //after that send form
-                    webix.ajax().post(
-                            "php/saveform.php",
-                            $$("myform").getValues(),
-                            function (text) {
-                                //show server side response
-                                webix.message(text);
-                            }
-                    );
-                });
             }
         }
 );
