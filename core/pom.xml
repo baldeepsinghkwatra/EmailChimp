@@ -7,6 +7,8 @@
     <packaging>jar</packaging>
     <properties>
         <spring.version>4.0.4.RELEASE</spring.version>
+	   <maven.compiler.source>1.7</maven.compiler.source>
+	   <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 
     <dependencies>

@@ -46,29 +46,29 @@ EmailChimp.view('Register', {
 				}, {
 					height : 10
 				}, {
+					view : "label",
+					id : 'responseRegisterMessage',
+					hidden : true,
+					align : "center"
+				}, {
 					view : "button",
 					value : "Sign Up",
+					id : "signUp",
 					inputWidth : 140,
-					click : "EmailChimp.controllers.MainController.register()",
 					align : "center"
+
 				}, {} ],
 				rules : {
 					userMobile : function(value) {
 						return value.toString().length == 10;
 					},
 					'userEmail' : webix.rules.isEmail
+
 				},
 
 				elementsConfig : {
 					labelAlign : "left"
-				},
-//				onClick : {
-//					info : function(e, id) {
-//						alert(id);
-//						webix.message(this.item(id).title);
-//						return false; // blocks default onclick event
-//					}
-//				},
+				}
 			}
 		}
 	}

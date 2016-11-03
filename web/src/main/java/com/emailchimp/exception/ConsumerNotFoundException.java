@@ -16,13 +16,15 @@
  */
 package com.emailchimp.exception;
 
+import com.emailchimp.constants.ExceptionConstants;
+
 /**
  *
  * @author baldeep
  */
-public class ConsumerNotFoundException extends Exception {
+public class ConsumerNotFoundException extends EmailChimpException {
 
     public ConsumerNotFoundException(String msg) {
-        super(msg);
+        super(ExceptionConstants.RES_CODE_CONSUMER_NOT_FOUND_STATUS,msg);
     }
 }

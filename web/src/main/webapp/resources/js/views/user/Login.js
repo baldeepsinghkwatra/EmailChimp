@@ -38,46 +38,39 @@ EmailChimp
 											labelWidth : 120,
 											placeholder : "********"
 										},
+
 										{
-											height : 10
+
+											view : "label",
+											height : 50,
+											id : 'responseLoginMessage',
+											label : '',
+											align : "center"
 										},
 										{
 											view : "button",
 											value : "Sign In",
+											id : 'signIn',
 											inputWidth : 140,
-											click : "EmailChimp.controllers.MainController.login()",
 											align : "center"
 										},
+
 										{
-											height : 10
-										},
-										{
-											template : "<div style='text-align:center;'>Need an account ? Register</div>",
+											view : "label",
+											label : "Need an account ? Register",
 											autoheight : true,
 											border : 0,
-											align : "right",
+											align : "center",
 											id : 'needAccount'
 
 										}, {
-											template : "<div style='text-align:center;'>Forgot Password</div>",
+											view : "label",
+											label : "Forgot Password",
 											autoheight : true,
 											align : "center",
-											id : 'forgotPassword'
+											id : 'forgotPasswordLabel'
 										},
 
-										// {
-										// view : "template",
-										// template : "<div
-										// style='text-align:center;cursor:pointer;'
-										// onclick='EmailChimp.controllers.MainController.showRegister()'>Need
-										// an account? Register</div><br><div
-										// style='text-align:center;cursor:pointer;'><a
-										// href='#forgotPassword'>Forgot
-										// Password</a></div>",
-										// height : 160,
-										// align : "center",
-										// type : "clean"
-										// },
 										{} ],
 								rules : {
 									"email" : webix.rules.isEmail
