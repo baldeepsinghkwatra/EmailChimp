@@ -14,7 +14,10 @@ import com.emailchimp.constants.ExceptionConstants;
 public class LoginException extends EmailChimpException {
     
     public LoginException(String message) {
-        super(ExceptionConstants.INVALID_LOGIN, message);
+        super(ExceptionConstants.RES_CODE_INVALID_LOGIN, message);
     }
     
+    public LoginException(int errorCode,String message) {
+        super(errorCode, message);
+    }
 }

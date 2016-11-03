@@ -25,6 +25,6 @@ import com.emailchimp.constants.ExceptionConstants;
 public class ConsumerNotFoundException extends EmailChimpException {
 
     public ConsumerNotFoundException(String msg) {
-        super(ExceptionConstants.CONSUMER_NOT_FOUND_STATUS_CODE,msg);
+        super(ExceptionConstants.RES_CODE_CONSUMER_NOT_FOUND_STATUS,msg);
     }
 }

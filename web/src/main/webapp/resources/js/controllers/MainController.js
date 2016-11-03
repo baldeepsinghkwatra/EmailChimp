@@ -1,57 +1,130 @@
-EmailChimp.controller('MainController',
-        {
-            component: ['views/user/ForgotPassword'],
-            init: function () {
-            },
-            showPopup: function () {
-                forgotPassword = EmailChimp.views.ForgotPassword;
-                webix.ui(forgotPassword.getLayout()).show();
-            },
-            showRegister: function () {
-                $$("showReg").define("collapsed", false);
-            },
-            login: function () {
-                if(!$$('login').validate()){
-                    webix.message("Invalid Details!!");
-                }else {
-                    var values = $$("login").getValues();
-                    webix.ajax().post("checkLogin", "email=" + values.email + "&password=" + values.password,{
-                        error:function(text, data, XmlHttpRequest){
-                            alert("error");
-                        },
-                        success:function(response){
-                            var obj = $.parseJSON(response);
-                            if(obj.status == 100) {
-                                window.location.reload(1);
-                            }
-                            $$("responseMessage").setHTML("<span style=color:red>*"+obj.message+"</span>");
-                            $$('login').clear();
-                        }
-                    });
-                }
-            },
-            register: function () {
-                if(!$$('register').validate()){
-                    webix.message({
-                        type:"error", 
-                        text:"Form Data is Invalid"
-                    });
-                }else {
-                    var values = $$("register").getValues();
-                    webix.ajax().post("registerConsumer", "userName=" + values.userName
-                            + "&userEmail=" + values.userEmail + "&userMobile="
-                            + values.userMobile + "&userPassword=" + values.userPassword,{
-                        error:function(text, data, XmlHttpRequest){
-                            alert("error");
-                        },
-                        success:function(text, data, XmlHttpRequest){
-                            console.log($$('responseRegisterMessage'));
-                            $$('responseRegisterMessage').setHTML("<span style=color:red>*"+text+"</span>");
-                            $$('register').clear();
-                        }
-                    });
-               }
-            }
-            
-        }
-);
+EmailChimp.controller('MainController', {
+	init : function() {
+		this.bindEvents();
+	},
+
+	bindEvents : function() {
+		var thisInstance = EmailChimp.controllers.MainController;
+
+		$$("signIn").define({
+			click : thisInstance.login
+		});
+		$$("signUp").define({
+			click : thisInstance.register
+		});
+		$$("needAccount").define({
+			click : thisInstance.showRegister
+		});
+		$$("forgotPasswordLabel").define({
+			click : thisInstance.showForgotPassword
+		});
+	},
+	bindForgotPasswordEvents : function() {
+		var thisInstance = EmailChimp.controllers.MainController;
+
+		$$("forgotPasswordButton").define({
+			click : thisInstance.forgetPassword
+		});
+
+	},
+	showForgotPassword : function() {
+		var thisInstance = EmailChimp.controllers.MainController;
+
+		webix.ui(EmailChimp.views.ForgotPassword.getLayout()).show();
+		thisInstance.bindForgotPasswordEvents();
+	},
+	showRegister : function() {
+		$$("showReg").define("collapsed", false);
+	},
+	login : function() {
+
+		var loginForm = $$('login');
+		var responseLoginMessage = $$('responseLoginMessage');
+		responseLoginMessage.hide();
+
+		if (loginForm.validate()) {
+
+			var values = loginForm.getValues();
+			values.rememberMe = 'on';
+			
+			webix.ajax().post(
+					"checkLogin",
+					values,
+					{
+						success : function(response) {
+							var obj = JSON.parse(response);
+
+							if (obj.status == 200) {
+								window.location.reload(1);
+							}
+
+							responseLoginMessage.define({
+								label : "<span style='color:red'>"
+										+ obj.message + "</span>",
+								css : "lines"
+							});
+
+							responseLoginMessage.show();
+
+							loginForm.clear();
+
+						}
+					});
+		}
+	},
+	register : function() {
+
+		var registerForm = $$('register');
+		var responseRegisterMessage = $$('responseRegisterMessage');
+		responseRegisterMessage.hide();
+
+		if (registerForm.validate()) {
+
+			webix.ajax().post("registerConsumer", registerForm.getValues(), {
+				success : function(response, data, XmlHttpRequest) {
+
+					var obj = JSON.parse(response);
+					
+					responseRegisterMessage.define({
+						label : "<span style='color:red'>" + obj.message + "</span>",
+						css : "lines"
+					});
+
+					responseRegisterMessage.show();
+
+				}
+			});
+		}
+	},
+	forgetPassword : function() {
+
+		var forgotPasswordForm = $$('forgotPasswordForm');
+
+		var forgotPasswordMessage = $$('forgotPasswordMessage');
+		forgotPasswordMessage.hide();
+
+		if (forgotPasswordForm.validate()) {
+
+			webix.ajax().post(
+					"forgot-password",
+					forgotPasswordForm.getValues(),
+					{
+						success : function(response, data, XmlHttpRequest) {
+
+							var obj = JSON.parse(response);
+
+							forgotPasswordMessage.define({
+								label : "<span style='color:red'>" + obj.message
+										+ "</span>",
+								css : "lines"
+							});
+
+							forgotPasswordMessage.show();
+							forgotPasswordForm.clear();
+
+						}
+					});
+		}
+	}
+
+});

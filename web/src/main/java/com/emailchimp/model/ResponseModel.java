@@ -5,11 +5,13 @@
  */
 package com.emailchimp.model;
 
+import com.emailchimp.constants.ExceptionConstants;
+
 /**
  *
  * @author anshul
  */
-public class LoginModel {
+public class ResponseModel {
     
     private String url;
     private String message;
@@ -39,13 +41,15 @@ public class LoginModel {
         this.status = status;
     }
 
-    public LoginModel(String url, String message, int status) {
+    public ResponseModel(String url, String message, int status) {
         this.url = url;
         this.message = message;
         this.status = status;
     }    
     
-    public LoginModel() {
+    
+    public ResponseModel() {
         
     }
+    
 }

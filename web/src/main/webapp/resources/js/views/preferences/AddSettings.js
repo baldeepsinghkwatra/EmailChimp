@@ -4,7 +4,7 @@ EmailChimp.view('AddSettings',
                 return {
                     view: "form",
                     borderless: true,
-                    id:"addSettings",
+                    id: "addSettings",
                     elements: [
                         {
                             view: "text",
@@ -19,7 +19,7 @@ EmailChimp.view('AddSettings',
                         }, {
                             view: "text",
                             label: 'USERNAME :',
-                            name: "smptpUsername",
+                            name: "smtpUsername",
                             required: true
                         }, {
                             view: "text",
@@ -33,7 +33,7 @@ EmailChimp.view('AddSettings',
                             value: "Add",
                             click: function () {
                                 if ($$('addSettings').validate()) { //validate form
-                                    
+
                                     webix.ajax().post("add-email-configuration", $$('addSettings').getValues(), function (text, xml, xhr) {
                                         var color = 'red';
                                         if (xhr.status === 200) {
@@ -43,16 +43,14 @@ EmailChimp.view('AddSettings',
                                         $$("responseMessage").define({label: "<span style=\"color:" + color + "\">" + text + "</span>", css: "lines"});
                                         $$('responseMessage').refresh();
                                     });
-                                    
-                                } else
-                                    webix.message({type: "error", text: "Form data is invalid"});
+
+                                }
                             }
                         }
                     ],
-                  
                     elementsConfig: {
-                        labelPosition: "top",
+                        labelPosition: "top"
                     }
-                }
+                };
             }
         });

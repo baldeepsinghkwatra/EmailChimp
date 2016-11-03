@@ -1,20 +1,32 @@
 EmailChimp.app('Main', {
-	component : [ 'views/user/Login', 'views/user/Register',
-			'components/Router', 'controllers/MainController' ],
+	component : [ 'views/user/Login',
+	              'views/user/Register',
+	              'views/user/ForgotPassword',
+			'components/Router' ],
+
 	routes : [ {
+		hash : '#welcome',
+		controller : 'MainController'
+	}, {
 		hash : '#forgotPassword',
-		controller : 'ForgotPasswordController'
-	}],
-	defaultRoute : '#',
+		controller : 'MainController'
+	} ],
+	defaultRoute : '#welcome',
 	init : function() {
 		var layout = {
 			id : "mainLayout",
+			type : 'clean',
 			cols : [
 					{
-						width : 360,
-						multi : false,
-						rows : [ EmailChimp.views.Login.getLayout(),
-								EmailChimp.views.Register.getLayout() ]
+						view : "scrollview",
+						body : {
+							type : 'clean',
+							width : 375,
+							multi : false,
+
+							rows : [ EmailChimp.views.Login.getLayout(),
+									EmailChimp.views.Register.getLayout() ]
+						}
 					}, {
 						id : 'main'
 					}

@@ -37,7 +37,7 @@ EmailChimp.controller('SentMailController',
                 else
                     $$("sentMailGrid").filter("#status#", val);
             },
-            deleteMail: function () {
+            deleteMail: function (e,id,node) {
 
                 webix.confirm({
                     text: "The mail will be deleted. <br/> Are you sure?",
