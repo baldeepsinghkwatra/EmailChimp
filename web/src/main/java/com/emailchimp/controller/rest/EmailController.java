@@ -125,5 +125,4 @@ public class EmailController {
         }
         return messageSource.getMessage("email.configuration.update.success", new Object[]{}, locale);
     }
-
 }
