@@ -19,8 +19,10 @@ package com.emailchimp.controller.rest;
 import com.emailchimp.constants.EmailConstants;
 import com.emailchimp.core.model.Account;
 import com.emailchimp.core.model.EmailConfiguration;
+import com.emailchimp.core.model.Template;
 import com.emailchimp.core.service.AccountService;
 import com.emailchimp.core.service.EmailConfigurationService;
+import com.emailchimp.core.service.TemplateService;
 //import com.emailchimp.core.service.EmailConfigurationService;
 import java.security.Principal;
 import java.util.Calendar;
@@ -43,6 +45,8 @@ public class EmailController {
     EmailConfigurationService emailConfigurationService;
     @Autowired
     AccountService accountService;
+    @Autowired
+    TemplateService templateService;
 
     @Autowired
     private MessageSource messageSource;
@@ -66,6 +70,29 @@ public class EmailController {
             Account account = accountService.findByUniqueField("userEmail", principal.getName());
             return emailConfigurationService.findByField("account", account);
         } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    @PostMapping(EmailConstants.URL_ADD_EMAIL_TEMPLATE)
+    public String addEmailTemplates(Template template, Principal principal, Locale locale) {
+        try {
+            Account account = accountService.findByUniqueField("userEmail",principal.getName());
+            template.setAccount(account);
+            template.setCreatedDateTime(Calendar.getInstance());
+            templateService.save(template);
+        }catch(Exception e) {
+            return messageSource.getMessage("email.template.failure", new Object[]{}, locale);
+        }
+        return messageSource.getMessage("email.template.success", new Object[]{}, locale);
+    }
+    
+    @GetMapping(EmailConstants.URL_GET_EMAIL_TEMPLATE)
+    public List<Template> getEmailTemplates(Principal principal){
+        try{
+            Account account = accountService.findByUniqueField("userEmail", principal.getName());
+            return templateService.findByField("account", account);
+        }catch(Exception e){
         }
         return null;
     }

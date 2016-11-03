@@ -7,11 +7,14 @@ EmailChimp.app('Welcome', {
 	}, {
 		hash : '#outbox',
 		controller : 'OutBoxController'
-	},
-    {
+	}, {
 		hash : '#emailSettings',
 		controller : 'EmailConfigurationController'
-	}],
+	}, {
+                hash: '#emailTemplate',
+                controller: 'EmailTemplateController'
+        }
+        ],
 	defaultRoute : '#sentMail',
 	
 	init : function() {
