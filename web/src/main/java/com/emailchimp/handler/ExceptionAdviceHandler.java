@@ -14,10 +14,12 @@
  * or reproduction of this material is strictly forbidden unless prior written
  * permission is obtained from Mindfire Solutions
  */
-package com.emailchimp.controller;
+package com.emailchimp.handler;
 
+import com.emailchimp.controller.*;
 import com.emailchimp.constants.ExceptionConstants;
 import com.emailchimp.exception.ConsumerNotFoundException;
+import com.emailchimp.exception.EmailChimpException;
 import com.emailchimp.model.ExceptionJSONInfo;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -32,20 +34,21 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  * @author baldeep
  */
 @ControllerAdvice
-public class ExceptionController {
+public class ExceptionAdviceHandler {
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public ModelAndView handle(Exception ex) {
         return new ModelAndView(ExceptionConstants.URL_ERROR_PAGE,ExceptionConstants.ERROR_MESSAGE, ex.getMessage());
     }
 
-    @ExceptionHandler(ConsumerNotFoundException.class)
+    @ExceptionHandler(EmailChimpException.class)
     public @ResponseBody
-    ExceptionJSONInfo handleUserNotFoundException(HttpServletRequest request,
-            Exception ex) {
+    ExceptionJSONInfo emailChimpException(HttpServletRequest request,
+            EmailChimpException ex) {
         ExceptionJSONInfo response = new ExceptionJSONInfo();
         response.setUrl(request.getRequestURL().toString());
         response.setMessage(ex.getMessage());
+        response.setStatus(ex.getStatusCode());
         return response;
     }
    

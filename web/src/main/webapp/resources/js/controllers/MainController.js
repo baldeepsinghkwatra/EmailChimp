@@ -1,6 +1,11 @@
 EmailChimp.controller('MainController',
         {
+            component: ['views/user/ForgotPassword'],
             init: function () {
+            },
+            showPopup: function () {
+                forgotPassword = EmailChimp.views.ForgotPassword;
+                webix.ui(forgotPassword.getLayout()).show();
             },
             showRegister: function () {
                 $$("showReg").define("collapsed", false);
@@ -15,25 +20,12 @@ EmailChimp.controller('MainController',
                             alert("error");
                         },
                         success:function(response){
-                            $$('login').clear();
-                            var err = $('#msgErr').html(response).context.all[31].innerHTML;
-                            if(err !== "Invalid username or password!" 
-                                    && err !== "Invalid username and password!"){
-                                setTimeout(function () {
-                                    window.location.reload(1);
-                                }, 0);  // After 0 secs                                
-                            }else {
-                                webix.message(err);
+                            var obj = $.parseJSON(response);
+                            if(obj.status == 100) {
+                                window.location.reload(1);
                             }
-                            
-//                            var x = $(response).filter('#msgErr');
-//                            console.log(x);
-//                            webix.message(x+"${messageDefault}");
-//                            $$('login').clear();
-                             
-//                            setTimeout(function () {
-//                                window.location.reload(1);
-//                            }, 3000);  // After 5 secs
+                            $$("responseMessage").setHTML("<span style=color:red>*"+obj.message+"</span>");
+                            $$('login').clear();
                         }
                     });
                 }
@@ -53,7 +45,8 @@ EmailChimp.controller('MainController',
                             alert("error");
                         },
                         success:function(text, data, XmlHttpRequest){
-                            webix.message(text);
+                            console.log($$('responseRegisterMessage'));
+                            $$('responseRegisterMessage').setHTML("<span style=color:red>*"+text+"</span>");
                             $$('register').clear();
                         }
                     });

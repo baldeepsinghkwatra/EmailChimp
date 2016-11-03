@@ -94,7 +94,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')");
 
         http.formLogin().loginProcessingUrl("/checkLogin")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/loginSucces")
                 .loginPage("/")
                 .failureUrl("/?error=true")
                 .usernameParameter("email").passwordParameter("password");

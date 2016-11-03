@@ -50,8 +50,9 @@ public interface UserConstants {
      * Default URL
      */
     String DEFAULT_URL = "/";
-    
-    /**
+    String LOGIN_SUCCESS_URL = "/loginSucces";
+    String WELCOME_URL="/welcome";
+    /**_
      * Forgot Password
      */
     String URL_FORGOT_PASSWORD="/forgot-password";
