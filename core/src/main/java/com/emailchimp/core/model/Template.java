@@ -43,7 +43,7 @@ public class Template implements Serializable {
     @JoinColumn
     private Account account;
 
-    @Column(unique = false, nullable = true)
+    @Column(unique = false, nullable = true,columnDefinition = "LONGTEXT")
     private String name;
 
     @Column(unique = false, nullable = true)

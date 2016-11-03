@@ -16,6 +16,7 @@
  */
 package com.emailchimp.core.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Column;
@@ -40,6 +41,7 @@ public class EmailConfiguration implements Serializable {
     private long id;
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
     private Account account;
     @Column(unique = false, nullable = false)
     private String smtpHost;
@@ -51,6 +53,7 @@ public class EmailConfiguration implements Serializable {
     private String smtpPassword;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
+     @JsonIgnore
     private Calendar addedDate;
 
     public long getId() {
@@ -92,11 +95,11 @@ public class EmailConfiguration implements Serializable {
         this.addedDate = addedDate;
     }
 
-    public String getSmptpUsername() {
+    public String getSmtpUsername() {
         return smtpUsername;
     }
 
-    public void setSmptpUsername(String smptpUsername) {
+    public void setSmtpUsername(String smptpUsername) {
         this.smtpUsername = smptpUsername;
     }
 
@@ -106,6 +109,11 @@ public class EmailConfiguration implements Serializable {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        return "EmailConfiguration{" + "id=" + id + ", account=" + account + ", smtpHost=" + smtpHost + ", smtpPort=" + smtpPort + ", smtpUsername=" + smtpUsername + ", smtpPassword=" + smtpPassword + ", addedDate=" + addedDate + '}';
     }
 
 

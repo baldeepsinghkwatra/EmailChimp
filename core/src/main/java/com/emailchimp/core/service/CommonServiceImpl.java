@@ -54,7 +54,7 @@ public abstract class CommonServiceImpl<T> implements CommonService<T> {
 
     @Override
     public void delete(T t) {
-        this.abstractDAO.persist(t);
+        this.abstractDAO.delete(t);
     }
 
     @Override
