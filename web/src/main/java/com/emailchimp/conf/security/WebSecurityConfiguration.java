@@ -102,7 +102,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         //Remember me configuration
         http.rememberMe().
                 tokenRepository(persistentTokenRepository()).
-                rememberMeParameter("remember-me").
+                rememberMeParameter("rememberMe").
                 rememberMeCookieName("email-chimp").
                 tokenValiditySeconds(2 * 365 * 24 * 60 * 60);// 2 years
 

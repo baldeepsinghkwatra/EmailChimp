@@ -44,9 +44,12 @@ EmailChimp.controller('MainController', {
 
 		if (loginForm.validate()) {
 
+			var values = loginForm.getValues();
+			values.rememberMe = 'on';
+			
 			webix.ajax().post(
 					"checkLogin",
-					loginForm.getValues(),
+					values,
 					{
 						success : function(response) {
 							var obj = JSON.parse(response);

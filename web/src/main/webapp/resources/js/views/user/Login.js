@@ -38,7 +38,6 @@ EmailChimp
 											labelWidth : 120,
 											placeholder : "********"
 										},
-
 										{
 
 											view : "label",
