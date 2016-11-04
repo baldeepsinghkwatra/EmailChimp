@@ -16,6 +16,7 @@
  */
 package com.emailchimp.core.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Column;
@@ -41,6 +42,7 @@ public class EmailList implements Serializable {
 
     @OneToOne
     @JoinColumn
+    @JsonIgnore
     private Account account;
     
     @Column(nullable = false)
@@ -64,6 +66,7 @@ public class EmailList implements Serializable {
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
+    @JsonIgnore
     private Calendar addedDate;
 
     public long getId() {
