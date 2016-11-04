@@ -1,21 +1,21 @@
-EmailChimp.controller('EmailConfigurationController',
+EmailChimp.controller('CategoryController',
         {
-            component: ['views/preferences/EmailSettingsGrid', 'views/preferences/AddSettings', 'models/MailModal'],
+            component: ['views/category/CategoryGrid', 'views/category/AddCategory', 'models/MailModal'],
             init: function () {
                 controller = this;
-                emailSettingsGrid = EmailChimp.views.EmailSettingsGrid;
-                addSettingsForm = EmailChimp.views.AddSettings;
+                categoryGrid = EmailChimp.views.CategoryGrid;
+                addCategoryForm = EmailChimp.views.AddCategory;
 
                 // Change main layout
                 $$("content").removeView('main');
-                $$("content").addView(emailSettingsGrid.getlayout(), 1);
+                $$("content").addView(categoryGrid.getlayout(), 1);
                 $$("mainLayout").resize();
                 this.bindEvents();
             },
             bindEvents: function () {
                 //Event on css
-                $$("emailSettingsGrid").on_click.trash = this.deleteSettings;
-                $$("emailSettingsGrid").on_click.save = this.saveSettings;
+                $$("categoryGrid").on_click.trash = this.deleteSettings;
+                $$("categoryGrid").on_click.save = this.saveSettings;
 
                 //Event on properties
                 $$("add").define({click: this.addSettings});
@@ -27,30 +27,29 @@ EmailChimp.controller('EmailConfigurationController',
                     cancel: "Cancel",
                     callback: function (res) {
                         if (res) {
-                            var item = webix.$$("emailSettingsGrid").getItem(id);
+                            var item = webix.$$("categoryGrid").getItem(id);
                             item = item.id;
-                            webix.ajax().post("delete-email-configuration", "id=" + item, function (text, xml, xhr) {
+                            webix.ajax().post("delete-email-category", "id=" + item, function (text, xml, xhr) {
                                 webix.alert(text);
                             }),
-                                    $$("emailSettingsGrid").remove(id);
+                                    $$("categoryGrid").remove(id);
                         }
                     }
                 });
             },
             saveSettings: function (e, id, node) {
-                var item = webix.$$("emailSettingsGrid").getItem(id);
-                console.log($$("emailSettingsGrid").validateEditor() + item.smtpPort.length);
+                var item = webix.$$("categoryGrid").getItem(id);
+                console.log($$("categoryGrid").validateEditor());
                 debugger;
-                if (item.smtpPort.length > 1 && item.smtpHost.length > 1 && item.smtpUsername.length > 1 && item.smtpPassword.length > 1) {
-                    console.log(item.smtpPort.length +":::"+ item.smtpHost.length +":::"+ item.smtpUsername.length +"::"+item.smtpPassword.length);
+                if (item.categoryName.length >1) {
                     webix.confirm({
-                        text: "The configuration will be saved. <br/> Are you sure?",
+                        text: "The category will be saved. <br/> Are you sure?",
                         ok: "Yes",
                         cancel: "Cancel",
                         callback: function (res) {
                             if (res) {
 
-                                webix.ajax().post("update-email-configuration", item, function (text, xml, xhr) {
+                                webix.ajax().post("update-email-category", item, function (text, xml, xhr) {
                                     webix.alert(text);
                                 });
                             }
@@ -63,12 +62,12 @@ EmailChimp.controller('EmailConfigurationController',
                     view: "window",
                     id: "win2",
                     width: 500,
-                    height: 600,
+                    height: 400,
                     position: "center",
                     modal: true,
-                    head: 'Add New Configuration <span style="float: right; font-size: 25px;padding: 10px;" \n\
+                    head: 'Add New Category <span style="float: right; font-size: 25px;padding: 10px;" \n\
                     class="webix_icon fa-times-circle closepopup"></span>',
-                    body: addSettingsForm.getLayout()
+                    body: addCategoryForm.getLayout()
                 }).show();
             }
         }

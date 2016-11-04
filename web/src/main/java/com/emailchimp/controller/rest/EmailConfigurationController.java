@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author baldeep
  */
 @RestController
-public class EmailController {
+public class EmailConfigurationController {
 
     @Autowired
     EmailConfigurationService emailConfigurationService;
@@ -49,10 +49,13 @@ public class EmailController {
     @PostMapping(EmailConstants.URL_ADD_EMAIL_CONFIGURATION)
     public String addEmailConfiguration(EmailConfiguration emailConfiguration, Principal principal, Locale locale) {
         try {
+
             Account account = accountService.findByUniqueField("userEmail", principal.getName());
             emailConfiguration.setAccount(account);
             emailConfiguration.setAddedDate(Calendar.getInstance());
+
             emailConfigurationService.save(emailConfiguration);
+
         } catch (Exception e) {
             e.printStackTrace();
             return messageSource.getMessage("email.configuration.failure", new Object[]{}, locale);
@@ -63,7 +66,9 @@ public class EmailController {
     @GetMapping(EmailConstants.URL_GET_EMAIL_CONFIGURATION)
     public List<EmailConfiguration> getEmailConfiguration(Principal principal) {
         try {
+
             Account account = accountService.findByUniqueField("userEmail", principal.getName());
+
             return emailConfigurationService.findByField("account", account);
         } catch (Exception e) {
         }
@@ -73,9 +78,12 @@ public class EmailController {
     @PostMapping(EmailConstants.URL_DELETE_EMAIL_CONFIGURATION)
     public String deleteEmailConfiguration(Long id, Principal principal, Locale locale) {
         try {
+
             EmailConfiguration emailConfiguration = emailConfigurationService.findByUniqueField("id", id);
             Account account = accountService.findByUniqueField("userEmail", principal.getName());
+
             if (emailConfiguration.getAccount().getId() == account.getId()) {
+
                 emailConfigurationService.delete(emailConfiguration);
                 return messageSource.getMessage("email.configuration.delete.success", new Object[]{}, locale);
             }
@@ -90,12 +98,13 @@ public class EmailController {
     public String updateEmailConfiguration(EmailConfiguration emailConfiguration, Principal principal, Locale locale) {
         try {
             Account account = accountService.findByUniqueField("userEmail", principal.getName());
+
             emailConfiguration.setAccount(account);
             emailConfigurationService.update(emailConfiguration);
+
         } catch (Exception e) {
             return messageSource.getMessage("email.configuration.update.failure", new Object[]{}, locale);
         }
         return messageSource.getMessage("email.configuration.update.success", new Object[]{}, locale);
     }
-
 }

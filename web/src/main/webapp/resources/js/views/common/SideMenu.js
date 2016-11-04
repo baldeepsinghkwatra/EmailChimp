@@ -24,7 +24,7 @@ EmailChimp.view('SideMenu',
 
                             },
                             onAfterSelect: function (id) {
-                            	window.location.href = "#" + id;
+                                window.location.href = "#" + id;
                             }
                         },
                         data: [
@@ -47,16 +47,28 @@ EmailChimp.view('SideMenu',
                                     }
                                 ]
                             },
-                             {
+                            {
                                 id: "preferences",
                                 value: "Preferences",
-                                open: true,
+                                open: false,
                                 data: [
                                     {
                                         id: "emailSettings",
-                                        value: "Email Settings",
+                                        value: "Email Configuration",
                                         icon: "wrench",
                                         details: "Email Settings"
+                                    },
+                                    {
+                                        id: "myCategory",
+                                        value: "My Category",
+                                        icon: "cubes",
+                                        details: "List of Categories"
+                                    },
+                                    {
+                                        id: "myList",
+                                        value: "My List",
+                                        icon: "navicon",
+                                        details: "List of Users"
                                     }
                                 ]
                             }

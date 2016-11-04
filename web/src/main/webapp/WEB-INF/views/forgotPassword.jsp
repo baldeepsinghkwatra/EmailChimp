@@ -12,7 +12,7 @@
         <title>Forgot Password</title>
         <link rel="stylesheet" href="http://cdn.webix.com/edge/webix.css" type="text/css" media="screen" charset="utf-8">
         <script src="http://cdn.webix.com/edge/webix.js" type="text/javascript" charset="utf-8"></script>
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/webix/css/main.css" type="text/css" media="screen" charset="utf-8">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/main.css" type="text/css" media="screen" charset="utf-8">
     </head>
     <body>
         <div id="inputForm" class="formDiv"></div>
