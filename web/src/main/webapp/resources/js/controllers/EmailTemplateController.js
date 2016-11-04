@@ -1,15 +1,16 @@
-EmailChimp.controller('SentMailController',
+EmailChimp.controller('EmailTemplateController',
         {
-            component: ['views/mail/SentGrid', 'views/mail/ComposeForm', 'models/MailModal'],
+            component: ['views/preferences/EmailTemplateGrid', 'views/preferences/AddTemplates', 'models/TemplateModal'],
             init: function () {
                 controller = this;
-                sentGrid = EmailChimp.views.SentGrid;
-                mailModal = EmailChimp.models.MailModal;
-                composeForm = EmailChimp.views.ComposeForm;
+                emailTemplateGrid = EmailChimp.views.EmailTemplateGrid;
+                addTemplatesForm = EmailChimp.views.AddTemplates;
+                templateModal = EmailChimp.models.TemplateModal;
+               
 
                 // Change main layout
                 $$("content").removeView('main');
-                $$("content").addView(sentGrid.getlayout(), 1);
+                $$("content").addView(emailTemplateGrid.getlayout(), 1);
                 $$("mainLayout").resize();
 
                 this.bindSentMailEvents();
@@ -20,11 +21,11 @@ EmailChimp.controller('SentMailController',
                 $$("mail_filter").attachEvent("onChange", this.filterMails);
 
                 //Event on css
-                $$("sentMailGrid").on_click.trash = this.deleteMail;
+                $$("emailTemplateGrid").on_click.trash = this.deleteMail;
 
                 //Event on properties
-                $$("compose").define({click: this.composeMail});
-                $$("refresh").define({click: this.refreshMail});
+                $$("add").define({click: this.addTemplates});
+                $$("delete").define({click: this.deleteSettings});
             },
             bindComposeMailEvents: function () {
 
@@ -33,11 +34,11 @@ EmailChimp.controller('SentMailController',
 
                 var val = this.getValue();
                 if (val == "all")
-                    $$("sentMailGrid").filter("#status#", "");
+                    $$("emailTemplateGrid").filter("#status#", "");
                 else
-                    $$("sentMailGrid").filter("#status#", val);
+                    $$("emailTemplateGrid").filter("#status#", val);
             },
-            deleteMail: function (e,id,node) {
+            deleteMail: function () {
 
                 webix.confirm({
                     text: "The mail will be deleted. <br/> Are you sure?",
@@ -45,37 +46,41 @@ EmailChimp.controller('SentMailController',
                     cancel: "Cancel",
                     callback: function (res) {
                         if (res) {
-                            var item = webix.$$("sentMailGrid").getItem(id);
+                            var item = webix.$$("emailTemplateGrid").getItem(id);
                             item.status = "0";
                             item.statusName = "Deleted";
-                            webix.$$("sentMailGrid").refresh(id);
+                            webix.$$("emailTemplateGrid").refresh(id);
                         }
                     }
                 });
             },
-            refreshMail: function () {
+            deleteSettings: function () {
 
-                var grid = $$("sentMailGrid");
+                var grid = $$("emailTemplateGrid");
                 grid.clearAll();
                 grid.showProgress();
 
                 webix.delay(function () {
-                    grid.parse(mailModal.getAll);
+                    grid.parse(templateModal.getAll);
                     grid.hideProgress();
                 }, null, null, 300);
             },
-            composeMail: function () {
+            addTemplates: function () {
 
                 webix.ui({
                     view: "window",
                     id: "win2",
                     width: 1000,
-                    height: 600,
+                    height: 600, 
                     position: "center",
                     modal: true,
-                    head: 'Compose <span style="float: right; font-size: 25px;padding: 10px;" \n\
-                    class="webix_icon fa-times-circle closepopup"></span>',
-                    body: composeForm.getLayout()
+                    head: {
+                        view:"toolbar", cols:[
+                            {view:"label", label: "Add New Template" },
+                            { view:"button", label: 'X', width: 50, align: 'right', click:"$$('win2').close();"}
+                        ]
+                    },
+                    body: addTemplatesForm.getLayout()
                 }).show();
 
                 controller.bindComposeMailEvents();

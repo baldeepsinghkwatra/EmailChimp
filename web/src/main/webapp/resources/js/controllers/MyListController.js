@@ -1,14 +1,14 @@
 var data = webix.ajax().sync().get("get-email-category");
 
-function changeData(){
-    data=JSON.parse(data.responseText);
-    for(var i = 0; i < data.length; i++){
-        if(data[i].hasOwnProperty("categoryName")){
+function changeData() {
+    data = JSON.parse(data.responseText);
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].hasOwnProperty("categoryName")) {
             data[i]["value"] = data[i]["categoryName"];
             delete data[i]["categoryName"];
         }
     }
-    
+
 }
 EmailChimp.controller('MyListController',
         {
@@ -71,13 +71,17 @@ EmailChimp.controller('MyListController',
                 webix.ui({
                     view: "window",
                     id: "win2",
-                    width: 1000,
-                    height: 600,
+                    width: 500,
+                    height: 800,
                     position: "center",
                     modal: true,
-                    head: 'Add New User <span style="float: right; font-size: 25px;padding: 10px;" \n\
-                    class="webix_icon fa-times-circle closepopup"></span>',
-                    body: addUserForm.getLayout() 
+                    head: {
+                        view: "toolbar", cols: [
+                            {view: "label", label: "Add New User"},
+                            {view: "button", label: 'X', width: 50, align: 'right', click: "$$('win2').close();"}
+                        ]
+                    },
+                    body: addUserForm.getLayout()
                 }).show();
             }
         }

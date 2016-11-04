@@ -41,7 +41,7 @@ EmailChimp.controller('CategoryController',
                 var item = webix.$$("categoryGrid").getItem(id);
                 console.log($$("categoryGrid").validateEditor());
                 debugger;
-                if (item.categoryName.length >1) {
+                if (item.categoryName.length > 1) {
                     webix.confirm({
                         text: "The category will be saved. <br/> Are you sure?",
                         ok: "Yes",
@@ -62,11 +62,15 @@ EmailChimp.controller('CategoryController',
                     view: "window",
                     id: "win2",
                     width: 500,
-                    height: 400,
+                    height: 500,
                     position: "center",
                     modal: true,
-                    head: 'Add New Category <span style="float: right; font-size: 25px;padding: 10px;" \n\
-                    class="webix_icon fa-times-circle closepopup"></span>',
+                    head: {
+                        view: "toolbar", cols: [
+                            {view: "label", label: "Add New Category"},
+                            {view: "button", label: 'X', width: 50, align: 'right', click: "$$('win2').close();"}
+                        ]
+                    },
                     body: addCategoryForm.getLayout()
                 }).show();
             }

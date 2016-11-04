@@ -46,10 +46,21 @@ public class Template implements Serializable {
     @Column(unique = false, nullable = true,columnDefinition = "LONGTEXT")
     private String name;
 
+    @Column(unique = false, nullable = true)
+    private String templateContent;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Calendar createdDateTime;
+    
+    public String getTemplateContent() {
+        return templateContent;
+    }
 
+    public void setTemplateContent(String templateContent) {
+        this.templateContent = templateContent;
+    }
+    
     public long getId() {
         return id;
     }

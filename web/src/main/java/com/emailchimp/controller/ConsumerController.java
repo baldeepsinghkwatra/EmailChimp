@@ -17,6 +17,7 @@
 package com.emailchimp.controller;
 
 import com.emailchimp.constants.ConsumerConstants;
+import com.emailchimp.constants.ExceptionConstants;
 import com.emailchimp.constants.UserConstants;
 import com.emailchimp.core.model.Account;
 import com.emailchimp.service.ConsumerService;
@@ -25,6 +26,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.emailchimp.core.service.Email;
 import com.emailchimp.model.MailBean;
+import com.emailchimp.model.ResponseModel;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.emailchimp.constants.ApplicationConstants;
 import com.emailchimp.util.GenerateCode;
@@ -46,73 +49,84 @@ import java.util.Calendar;
 @Controller
 public class ConsumerController {
 
-    @Autowired
-    ConsumerService consumerService;
+	@Autowired
+	ConsumerService consumerService;
 
-    @Autowired
-    AccountService accountService;
+	@Autowired
+	AccountService accountService;
 
-    @Autowired
-    Email email;
+	@Autowired
+	Email email;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private MessageSource messageSource;
+	@Autowired
+	private MessageSource messageSource;
 
-    @Autowired
-    private ResourceLoader resourceLoader;
-    @Value("${domain.${mode}}")
-    private String domain;
+	@Autowired
+	private ResourceLoader resourceLoader;
+	@Value("${domain.${mode}}")
+	private String domain;
 
-    @PostMapping(ConsumerConstants.URL_REGISTER_CONSUMER)
-    @ResponseBody
-    public String registerConsumer(Account account, Locale locale) {
-        String verificationCode = GenerateCode.random(50);
-        account.setUserPassword(passwordEncoder.encode(account.getUserPassword()));
-        account.setUserRole(UserConstants.ROLE_CONSUMER);
-        account.setVerificationCode(verificationCode);
-        account.setCreatedDate(Calendar.getInstance());
-        try {
-            //save user to DB
-            accountService.save(account);
+	@PostMapping(ConsumerConstants.URL_REGISTER_CONSUMER)
+	@ResponseBody
+	public ResponseModel registerConsumer(Account account, Locale locale) {
 
-            //Load resource of Html File
-            Resource resource = resourceLoader.getResource("classpath:/mails/VerificationMail");
-            //Find Absolute Path of the file
-            String absolutePath = resource.getFile().getAbsolutePath();
-            // Get Html Content in String format by calling Utility Class read method
-            String verificationMailBody = ReadFile.read(absolutePath);
-            //Replace all the tags in the mail body
-            verificationMailBody = verificationMailBody
-                    .replaceAll(UserConstants.TAG_USER_NAME, account.getUserName())
-                    .replaceAll(UserConstants.TAG_USER_EMAIL, account.getUserEmail())
-                    .replaceAll(UserConstants.TAG_USER_VERIFICATION_CODE, verificationCode)
-                    .replaceAll(ApplicationConstants.TAG_DOMAIN, domain);
+		String verificationCode = GenerateCode.random(50);
+		account.setUserPassword(passwordEncoder.encode(account.getUserPassword()));
+		account.setUserRole(UserConstants.ROLE_CONSUMER);
+		account.setVerificationCode(verificationCode);
+		account.setCreatedDate(Calendar.getInstance());
 
-            //Call Email Service
-            email.sendMail(account.getUserEmail(), "Welcome from  EmailChimp :)", verificationMailBody);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return messageSource.getMessage("user.registration.failure", new Object[]{}, locale);
-        }
-        return messageSource.getMessage("user.registration.success", new Object[]{account.getUserName()}, locale);
-    }
+		try {
+			// save user to DB
+			accountService.save(account);
 
-    @RequestMapping(ConsumerConstants.URL_UPLOAD_LIST)
-    public String uploadListPage() {
-        return ConsumerConstants.PATH_UPLOAD_LIST;
-    }
+			// Load resource of Html File to find Absolute Path
+			Resource resource = resourceLoader.getResource("classpath:/mails/VerificationMail");
+			String absolutePath = resource.getFile().getAbsolutePath();
 
-    @PostMapping(ConsumerConstants.URL_SEND_MAIL)
-    public String sendMailController(MailBean record) {
-        try {
-            email.sendMail(record.getTo(), record.getSubject(), record.getMessage());
-            return "Sent";
-        } catch (Exception ex) {
-            return "Not Sent";
-        }
-    }
+			// Get Html Content in String format by calling Utility Class read
+			// method
+			String verificationMailBody = ReadFile.read(absolutePath);
+
+			// Replace all the tags in the mail body
+			verificationMailBody = verificationMailBody.replaceAll(UserConstants.TAG_USER_NAME, account.getUserName())
+					.replaceAll(UserConstants.TAG_USER_EMAIL, account.getUserEmail())
+					.replaceAll(UserConstants.TAG_USER_VERIFICATION_CODE, verificationCode)
+					.replaceAll(ApplicationConstants.TAG_DOMAIN, domain);
+
+			// Call Email Service
+			email.sendMail(account.getUserEmail(), "Welcome from  EmailChimp :)", verificationMailBody);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			return new ResponseModel(ConsumerConstants.URL_REGISTER_CONSUMER, messageSource
+					.getMessage("user.registration.failure", new Object[] { account.getUserName() }, locale),
+					ExceptionConstants.RES_CODE_FAILURE);
+		}
+
+		return new ResponseModel(ConsumerConstants.URL_REGISTER_CONSUMER,
+				messageSource.getMessage("user.registration.success", new Object[] { account.getUserName() }, locale),
+				ExceptionConstants.RES_CODE_SUCCESS);
+
+	}
+
+	@RequestMapping(ConsumerConstants.URL_UPLOAD_LIST)
+	public String uploadListPage() {
+		return ConsumerConstants.PATH_UPLOAD_LIST;
+	}
+
+	@PostMapping(ConsumerConstants.URL_SEND_MAIL)
+	public String sendMailController(MailBean record) {
+		try {
+			email.sendMail(record.getTo(), record.getSubject(), record.getMessage());
+			return "Sent";
+		} catch (Exception ex) {
+			return "Not Sent";
+		}
+	}
 
 }

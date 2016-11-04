@@ -69,6 +69,12 @@ EmailChimp.view('SideMenu',
                                         value: "My List",
                                         icon: "navicon",
                                         details: "List of Users"
+                                    },
+                                    {
+                                        id: "emailTemplate",
+                                        value: "Email Templates",
+                                        icon: "file-text",
+                                        details: "Email Templates"
                                     }
                                 ]
                             }

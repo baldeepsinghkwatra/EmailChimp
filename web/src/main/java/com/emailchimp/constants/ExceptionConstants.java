@@ -22,9 +22,15 @@ package com.emailchimp.constants;
  */
 public interface ExceptionConstants {
 
-    String URL_ERROR_PAGE="/errorPage";
-    String ERROR_MESSAGE="errorMessage";
-    int  CONSUMER_NOT_FOUND_STATUS_CODE = 1001;
-    int INVALID_LOGIN = 101;
-    int VALID_LOGIN = 100;
+	String URL_ERROR_PAGE = "/errorPage";
+	String ERROR_MESSAGE = "errorMessage";
+	
+	int RES_CODE_SUCCESS = 200;
+	int RES_CODE_FAILURE = 1000;
+	int RES_CODE_INVALID_LOGIN = 1001;
+	int RES_CODE_ACCOUNT_LOCKED = 1002;
+
+	int RES_CODE_CONSUMER_NOT_FOUND_STATUS = 1101;
+
+	
 }

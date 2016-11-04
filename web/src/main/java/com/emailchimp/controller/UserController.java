@@ -16,7 +16,7 @@
  */
 package com.emailchimp.controller;
 
-import com.emailchimp.model.LoginModel;
+import com.emailchimp.model.ResponseModel;
 import com.emailchimp.constants.ApplicationConstants;
 import com.emailchimp.constants.ExceptionConstants;
 import com.emailchimp.constants.UserConstants;
@@ -58,266 +58,303 @@ import com.emailchimp.exception.LoginException;
 @Controller
 public class UserController {
 
-    @Autowired
-    AccountService accountService;
-    @Autowired
-    private MessageSource messageSource;
-    @Autowired
-    private ResourceLoader resourceLoader;
-    @Value("${domain.${mode}}")
-    private String domain;
-    @Autowired
-    Email email;
-    @Autowired
-    PasswordEncoder passwordEncoder;
+	@Autowired
+	AccountService accountService;
+	@Autowired
+	private MessageSource messageSource;
+	@Autowired
+	private ResourceLoader resourceLoader;
+	@Value("${domain.${mode}}")
+	private String domain;
+	@Autowired
+	Email email;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
-    @GetMapping(UserConstants.WELCOME_URL)
-    public ModelAndView welcomePage(Principal principal, HttpServletRequest request)
-            throws LoginException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	@GetMapping(UserConstants.WELCOME_URL)
+	public ModelAndView welcomePage(Principal principal, HttpServletRequest request) throws LoginException {
 
-        if (principal != null) {
-            AbstractAuthenticationToken authToken = null;
-            try {
-                authToken = (UsernamePasswordAuthenticationToken) principal;
-            } catch (Exception e) {
-                authToken = (RememberMeAuthenticationToken) principal;
-            }
-            LoginUser user = (LoginUser) authToken.getPrincipal();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (principal != null) {
 
-            String userName = "";
+			AbstractAuthenticationToken authToken = null;
+			try {
+				authToken = (UsernamePasswordAuthenticationToken) principal;
+			} catch (Exception e) {
+				authToken = (RememberMeAuthenticationToken) principal;
+			}
 
-            if (user != null) {
-                userName = user.getUserName();
-                String userRole = "";
+			LoginUser user = (LoginUser) authToken.getPrincipal();
+			if (user != null) {
 
-                for (GrantedAuthority authority : auth.getAuthorities()) {
-                    userRole = authority.getAuthority();
-                }
-                switch (userRole) {
-                    case UserConstants.ROLE_ADMIN:
-                        return new ModelAndView(UserConstants.WELCOME_PAGE_ADMIN);
-                    case UserConstants.ROLE_PROVIDER:
-                        return new ModelAndView(UserConstants.WELCOME_PAGE_PROVIDER);
-                    case UserConstants.ROLE_CONSUMER:
-                        return new ModelAndView(UserConstants.WELCOME_PAGE_CONSUMER);
-                    default:
-                        break;
-                }
-            }
-        }
-        return new ModelAndView(UserConstants.LOGIN_PAGE); 
-    }
-    
-    @GetMapping(UserConstants.LOGIN_SUCCESS_URL)
-    public@ResponseBody 
-        LoginModel loginSucces(Principal principal, HttpServletRequest request, String error, String logout) throws LoginException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				String userRole = "";
+				for (GrantedAuthority authority : auth.getAuthorities()) {
 
-        LoginModel loginModel =  new LoginModel();
-        
-        if (principal != null) {
-            AbstractAuthenticationToken authToken = null;
-            try {
-                authToken = (UsernamePasswordAuthenticationToken) principal;
-            } catch (Exception e) {
-                authToken = (RememberMeAuthenticationToken) principal;
-            }
-            LoginUser user = (LoginUser) authToken.getPrincipal();
+					userRole = authority.getAuthority();
+				}
 
-        }
-        loginModel.setMessage("Successful Login!!");
-        loginModel.setStatus(ExceptionConstants.VALID_LOGIN);
-        return loginModel;
-    }
+				switch (userRole) {
 
-    /**
-     * Welcome page that checks if the user is already logged in and if his
-     * session is persisted route him to the role based welcome page else show
-     * login page
-     *
-     * @param principal
-     * @param request
-     * @param error
-     * @param logout
-     * @return
-     */
-    @GetMapping(UserConstants.DEFAULT_URL)
-    public ModelAndView loginPage(Principal principal, HttpServletRequest request, String error, String logout) throws LoginException {
-        System.out.println(logout);
-        if (error != null) {
-            System.out.println("error:" + getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
-            throw new LoginException(getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
-        } else if (logout != null) {
-            
-            return new ModelAndView(UserConstants.LOGIN_PAGE, ApplicationConstants.MESSAGE_DEFAULT, "You have been Logged out Successfully");
-        }
-        
-        return welcomePage(principal, request);
-    }
-    /**
-     * View to be displayed when the user does not have enough rights to view
-     * the resource
-     *
-     * @return
-     */
-    @GetMapping(UserConstants.INVALID_ACCESS_PAGE)
-    public String invalidAccess() {
-        return UserConstants.INVALID_ACCESS_PAGE;
+				case UserConstants.ROLE_ADMIN:
+					return new ModelAndView(UserConstants.WELCOME_PAGE_ADMIN);
+				case UserConstants.ROLE_PROVIDER:
+					return new ModelAndView(UserConstants.WELCOME_PAGE_PROVIDER);
+				case UserConstants.ROLE_CONSUMER:
+					return new ModelAndView(UserConstants.WELCOME_PAGE_CONSUMER);
+				default:
+					break;
+				}
+			}
+		}
+		return new ModelAndView(UserConstants.LOGIN_PAGE);
+	}
 
-    }
 
-    /**
-     * Trigger forgot password mail
-     *
-     * @param userEmail
-     * @param locale
-     * @return
-     */
-    @PostMapping(UserConstants.URL_FORGOT_PASSWORD)
-    @ResponseBody
-    public String forgotPassword(String userEmail, Locale locale) {
+	@GetMapping(UserConstants.LOGIN_SUCCESS_URL)
+	@ResponseBody
+	public ResponseModel loginSucces(Principal principal, HttpServletRequest request, String error, String logout,
+			Locale locale) throws LoginException {
 
-        Account account = accountService.getUserByEmail(userEmail);
+		if (principal != null) {
 
-        Calendar calendar = Calendar.getInstance(); // starts with today's date and time
-        try {
-            if (account.getForgotPasswordCode() == null || (account.getForgotPasswordExpiryDate() == null || account.getForgotPasswordExpiryDate().before(calendar))) {
-                String forgotPassword = GenerateCode.random(90);
-                calendar.add(Calendar.DAY_OF_YEAR, 2);  // advances day by 2
-                account.setForgotPasswordCode(forgotPassword);
-                account.setForgotPasswordExpiryDate(calendar);
-                accountService.update(account);
+			AbstractAuthenticationToken authToken = null;
+			try {
+				authToken = (UsernamePasswordAuthenticationToken) principal;
+			} catch (Exception e) {
+				authToken = (RememberMeAuthenticationToken) principal;
+			}
 
-                //Load resource of Html File
-                Resource resource = resourceLoader.getResource("classpath:/mails/ForgotPasswordMail");
-                //Find Absolute Path of the file
-                String absolutePath = resource.getFile().getAbsolutePath();
-                // Get Html Content in String format by calling Utility Class read method
-                String verificationMailBody = ReadFile.read(absolutePath);
-                //Replace all the tags in the mail body
-                verificationMailBody = verificationMailBody
-                        .replaceAll(UserConstants.TAG_USER_NAME, account.getUserName())
-                        .replaceAll(UserConstants.TAG_USER_EMAIL, account.getUserEmail())
-                        .replaceAll(UserConstants.TAG_USER_VERIFICATION_CODE, forgotPassword)
-                        .replaceAll(ApplicationConstants.TAG_DOMAIN, domain);
+			LoginUser user = (LoginUser) authToken.getPrincipal();
+			if (user != null) {
 
-                //Call Email Service
-                email.sendMail(account.getUserEmail(), "Forgot Password | EmailChimp", verificationMailBody);
-                return messageSource.getMessage("user.forgotPassword.success", new Object[]{account.getUserName()}, locale);
-            } else if (account != null) {
-                return messageSource.getMessage("user.forgotPassword.success.already", new Object[]{account.getUserName(), account.getUserEmail()}, locale);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return messageSource.getMessage("user.forgotPassword.failure", new Object[]{userEmail}, locale);
-    }
+				return new ResponseModel(UserConstants.LOGIN_SUCCESS_URL,
+						messageSource.getMessage("user.login.success", new Object[] {}, locale),
+						ExceptionConstants.RES_CODE_SUCCESS);
+			}
+		}
 
-    /**
-     * Verify forgot Password code and accordingly return the view to change
-     * password if the code is valid
-     *
-     * @param userEmail
-     * @param verificationCode
-     * @return
-     */
-    @GetMapping(UserConstants.URL_RESET_PASSWORD)
-    public ModelAndView resetPassword(String userEmail, String verificationCode) {
-        Account user = accountService.getUserByEmail(userEmail);
+		return new ResponseModel(UserConstants.LOGIN_SUCCESS_URL,
+				messageSource.getMessage("user.login.failure", new Object[] {}, locale),
+				ExceptionConstants.RES_CODE_INVALID_LOGIN);
+	}
 
-        try {
-            if (user.getForgotPasswordCode().equals(verificationCode)) {
-                return new ModelAndView("/changePassword", "user", user);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return new ModelAndView("/forgotPassword", ApplicationConstants.MESSAGE_DEFAULT, "Link Expired. Please try Again!");
-    }
+	/**
+	 * Welcome page that checks if the user is already logged in and if his
+	 * session is persisted route him to the role based welcome page else show
+	 * login page
+	 *
+	 * @param principal
+	 * @param request
+	 * @param error
+	 * @param logout
+	 * @return
+	 */
+	@GetMapping(UserConstants.DEFAULT_URL)
+	public ModelAndView loginPage(Principal principal, HttpServletRequest request, String error, String logout,
+			Locale locale) throws LoginException {
 
-    /**
-     * Verify the code sent on mail and change the password
-     *
-     * @param userEmail
-     * @param userPassword
-     * @param verificationCode
-     * @param locale
-     * @return
-     */
-    @PostMapping(UserConstants.URL_CHANGE_PASSWORD)
-    @ResponseBody
-    public String changePassword(String userEmail, String userPassword, String verificationCode, Locale locale) {
-        Account user = accountService.getUserByEmail(userEmail);
-        try {
-            if (verificationCode.equals(user.getForgotPasswordCode())) {
-                Calendar calendar = Calendar.getInstance();
-                user.setUserPassword(passwordEncoder.encode(userPassword));
-                user.setLastPasswordUpdatedDate(calendar);
-                user.setForgotPasswordCode("");
-                user.setForgotPasswordExpiryDate(null);
-                accountService.update(user);
+		if (error != null) {
 
-                //Load resource of Html File
-                Resource resource = resourceLoader.getResource("classpath:/mails/ChangePasswordMail");
-                //Find Absolute Path of the file
-                String absolutePath = resource.getFile().getAbsolutePath();
-                // Get Html Content in String format by calling Utility Class read method
-                String verificationMailBody = ReadFile.read(absolutePath);
-                //Replace all the tags in the mail body
-                verificationMailBody = verificationMailBody
-                        .replaceAll(UserConstants.TAG_USER_NAME, user.getUserName())
-                        .replaceAll(ApplicationConstants.TAG_DOMAIN, domain);
+			throw getLoginException(request, "SPRING_SECURITY_LAST_EXCEPTION", locale);
+		} else if (logout != null) {
 
-                //Call Email Service
-                email.sendMail(user.getUserEmail(), "Password Reset Complete | EmailChimp", verificationMailBody);
-                return messageSource.getMessage("user.changePassword.success", new Object[]{user.getUserName()}, locale);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return messageSource.getMessage("user.changePassword.failure", new Object[]{}, locale);
-    }
+			return new ModelAndView(UserConstants.LOGIN_PAGE, ApplicationConstants.MESSAGE_DEFAULT,
+					"You have been Logged out Successfully");
+		}
 
-    /**
-     * Invoked when when the user clicks on the link shared to him after
-     * registration
-     *
-     * @param userEmail
-     * @param verificationCode
-     * @return
-     */
-    @GetMapping(UserConstants.URL_VERIFY_USER)
-    public ModelAndView verifyUser(String userEmail, String verificationCode) {
-        Account user = accountService.getUserByEmail(userEmail);
-        try {
-            if (user.getVerificationCode().equals(verificationCode)) {
-                return new ModelAndView("/completeSignUp", "user", user);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return new ModelAndView("/userLogin", "user", null);
-    }
+		return welcomePage(principal, request);
+	}
 
-    private String getErrorMessage(HttpServletRequest request, String key) {
+	/**
+	 * View to be displayed when the user does not have enough rights to view
+	 * the resource
+	 *
+	 * @return
+	 */
+	@GetMapping(UserConstants.INVALID_ACCESS_PAGE)
+	public String invalidAccess() {
+		return UserConstants.INVALID_ACCESS_PAGE;
 
-        Exception exception
-                = (Exception) request.getSession().getAttribute(key);
+	}
 
-        String error = "";
-        if (exception instanceof BadCredentialsException) {
-            error = "Invalid username or password!";
-        } else if (exception instanceof LockedException) {
-            error = exception.getMessage();
-        } else {
-            error = "Invalid username and password!";
-        }
-        return error;
-    }
+	/**
+	 * Trigger forgot password mail
+	 *
+	 * @param userEmail
+	 * @param locale
+	 * @return
+	 */
+	@PostMapping(UserConstants.URL_FORGOT_PASSWORD)
+	@ResponseBody
+	public ResponseModel forgotPassword(String userEmail, Locale locale) {
 
-    @GetMapping("forgotPassword")
-    public String forgotPassword() {
-        return "forgotPassword";
-    }
+		Account account = accountService.getUserByEmail(userEmail);
+
+		Calendar calendar = Calendar.getInstance(); // starts with today's date
+													// and time
+		try {
+			if (account != null) {
+
+				String forgotPassword=account.getForgotPasswordCode();
+				if ((account.getForgotPasswordCode() == null 
+						|| (account.getForgotPasswordExpiryDate() == null
+						|| account.getForgotPasswordExpiryDate().before(calendar)))) {
+
+					forgotPassword = GenerateCode.random(90);
+					
+					calendar.add(Calendar.DAY_OF_YEAR, 2); // advances day by 2
+					account.setForgotPasswordCode(forgotPassword);
+					account.setForgotPasswordExpiryDate(calendar);
+					
+					accountService.update(account);
+				}
+				
+				// Load resource of Html File to Find Absolute Path
+				Resource resource = resourceLoader.getResource("classpath:/mails/ForgotPasswordMail");
+				String absolutePath = resource.getFile().getAbsolutePath();
+
+				// Get Html Content in String format by calling Utility Class
+				String verificationMailBody = ReadFile.read(absolutePath);
+
+				// Replace all the tags in the mail body
+				verificationMailBody = verificationMailBody
+						.replaceAll(UserConstants.TAG_USER_NAME, account.getUserName())
+						.replaceAll(UserConstants.TAG_USER_EMAIL, account.getUserEmail())
+						.replaceAll(UserConstants.TAG_USER_VERIFICATION_CODE, forgotPassword)
+						.replaceAll(ApplicationConstants.TAG_DOMAIN, domain);
+
+				// Call Email Service
+				email.sendMail(account.getUserEmail(), "Forgot Password | EmailChimp", verificationMailBody);
+
+				return new ResponseModel(UserConstants.URL_FORGOT_PASSWORD, messageSource
+						.getMessage("user.forgotPassword.success", new Object[] { account.getUserName() }, locale),
+						ExceptionConstants.RES_CODE_SUCCESS);
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseModel(UserConstants.URL_FORGOT_PASSWORD,
+				messageSource.getMessage("user.forgotPassword.failure", new Object[] { userEmail }, locale),
+				ExceptionConstants.RES_CODE_FAILURE);
+	}
+
+	/**
+	 * Verify forgot Password code and accordingly return the view to change
+	 * password if the code is valid
+	 *
+	 * @param userEmail
+	 * @param verificationCode
+	 * @return
+	 */
+	@GetMapping(UserConstants.URL_RESET_PASSWORD)
+	public ModelAndView resetPassword(String userEmail, String verificationCode) {
+		Account user = accountService.getUserByEmail(userEmail);
+
+		try {
+			if (user.getForgotPasswordCode().equals(verificationCode)) {
+				return new ModelAndView("/changePassword", "user", user);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return new ModelAndView("/forgotPassword", ApplicationConstants.MESSAGE_DEFAULT,
+				"Link Expired. Please try Again!");
+	}
+
+	/**
+	 * Verify the code sent on mail and change the password
+	 *
+	 * @param userEmail
+	 * @param userPassword
+	 * @param verificationCode
+	 * @param locale
+	 * @return
+	 */
+	@PostMapping(UserConstants.URL_CHANGE_PASSWORD)
+	@ResponseBody
+	public ResponseModel changePassword(String userEmail, String userPassword, String verificationCode, Locale locale) {
+
+		Account user = accountService.getUserByEmail(userEmail);
+		try {
+
+			if (verificationCode.equals(user.getForgotPasswordCode())) {
+
+				Calendar calendar = Calendar.getInstance();
+				user.setUserPassword(passwordEncoder.encode(userPassword));
+				user.setLastPasswordUpdatedDate(calendar);
+				user.setForgotPasswordCode("");
+				user.setForgotPasswordExpiryDate(null);
+				accountService.update(user);
+
+				// Load resource of Html File to Find Absolute Path
+				Resource resource = resourceLoader.getResource("classpath:/mails/ChangePasswordMail");
+				String absolutePath = resource.getFile().getAbsolutePath();
+
+				// Get Html Content in String format by calling Utility Class
+				// read method
+				String verificationMailBody = ReadFile.read(absolutePath);
+
+				// Replace all the tags in the mail body
+				verificationMailBody = verificationMailBody.replaceAll(UserConstants.TAG_USER_NAME, user.getUserName())
+						.replaceAll(ApplicationConstants.TAG_DOMAIN, domain);
+
+				// Call Email Service
+				email.sendMail(user.getUserEmail(), "Password Reset Complete | EmailChimp", verificationMailBody);
+
+				return new ResponseModel(UserConstants.URL_CHANGE_PASSWORD, messageSource
+						.getMessage("user.changePassword.success", new Object[] { user.getUserName() }, locale),
+						ExceptionConstants.RES_CODE_SUCCESS);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return new ResponseModel(UserConstants.URL_CHANGE_PASSWORD,
+				messageSource.getMessage("user.changePassword.failure", new Object[] {}, locale),
+				ExceptionConstants.RES_CODE_FAILURE);
+	}
+
+	/**
+	 * Invoked when when the user clicks on the link shared to him after
+	 * registration
+	 *
+	 * @param userEmail
+	 * @param verificationCode
+	 * @return
+	 */
+	@GetMapping(UserConstants.URL_VERIFY_USER)
+	public ModelAndView verifyUser(String userEmail, String verificationCode) {
+		Account user = accountService.getUserByEmail(userEmail);
+		try {
+			if (user.getVerificationCode().equals(verificationCode)) {
+				return new ModelAndView("/completeSignUp", "user", user);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return new ModelAndView("/userLogin", "user", null);
+	}
+
+	private LoginException getLoginException(HttpServletRequest request, String key, Locale locale) {
+
+		Exception exception = (Exception) request.getSession().getAttribute(key);
+
+		if (exception instanceof LockedException) {
+
+			return new LoginException(ExceptionConstants.RES_CODE_ACCOUNT_LOCKED,
+					messageSource.getMessage("user.login.accountlocked", new Object[] {}, locale));
+		} else {
+			return new LoginException(ExceptionConstants.RES_CODE_INVALID_LOGIN,
+					messageSource.getMessage("user.login.failure", new Object[] {}, locale));
+
+		}
+	}
+
+	@GetMapping("forgotPassword")
+	public String forgotPassword() {
+		return "forgotPassword";
+	}
 }

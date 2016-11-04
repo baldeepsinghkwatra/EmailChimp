@@ -54,6 +54,23 @@ var EmailChimp = {
         } else {
             EmailChimp.controllers[controller].init();
         }
+    },
+    getPopupToolbar : function(label){
+    	return{
+            view: "toolbar",
+            cols: [{
+                    view: "label",
+                    label: label
+                }, {
+                    view: "button",
+                    label: 'X',
+                    width: 30,
+                    align: 'right',
+                    click: function(a, b,c){
+                    	this.getTopParentView().close();
+                    }
+                }]
+        };
     }
 
 };

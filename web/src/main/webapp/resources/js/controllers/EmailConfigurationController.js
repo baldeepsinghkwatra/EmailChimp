@@ -59,15 +59,19 @@ EmailChimp.controller('EmailConfigurationController',
                 }
             },
             addSettings: function () {
-                webix.ui({
+               webix.ui({
                     view: "window",
                     id: "win2",
                     width: 500,
-                    height: 600,
+                    height: 500, 
                     position: "center",
                     modal: true,
-                    head: 'Add New Configuration <span style="float: right; font-size: 25px;padding: 10px;" \n\
-                    class="webix_icon fa-times-circle closepopup"></span>',
+                    head: {
+                        view:"toolbar", cols:[
+                            {view:"label", label: "Add New Configuration" },
+                            { view:"button", label: 'X', width: 50, align: 'right', click:"$$('win2').close();"}
+                        ]
+                    },
                     body: addSettingsForm.getLayout()
                 }).show();
             }
