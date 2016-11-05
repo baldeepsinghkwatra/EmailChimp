@@ -25,8 +25,6 @@ public interface EmailConstants {
     
 String URL_ADD_EMAIL_CONFIGURATION="/add-email-configuration";
 String URL_GET_EMAIL_CONFIGURATION="/get-email-configuration";
-String URL_ADD_EMAIL_TEMPLATE="/add-email-template";
-String URL_GET_EMAIL_TEMPLATE="/get-email-templates";
 String URL_DELETE_EMAIL_CONFIGURATION="/delete-email-configuration";
 String URL_UPDATE_EMAIL_CONFIGURATION="/update-email-configuration";
 
@@ -41,5 +39,9 @@ String URL_ADD_EMAIL_LIST="/add-email-list";
 String URL_GET_EMAIL_LIST="/get-email-list";
 String URL_DELETE_EMAIL_LIST="/delete-email-list";
 String URL_UPDATE_EMAIL_LIST="/update-email-list";
+
+String URL_ADD_EMAIL_TEMPLATE="/add-email-template";
+String URL_GET_EMAIL_TEMPLATE="/get-email-templates";
+String URL_UPDATE_EMAIL_TEMPLATE="/update-email-template";
 
 }

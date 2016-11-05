@@ -6,17 +6,22 @@ EmailChimp.view('EmailTemplateGrid',
                     id: "emailTemplateGrid",
                     view: "datatable",
                     select: true,
+                    multiselect:true,
                     editable: false,
                     columns: [
                         {
                             id: "id",
                             header: "#",
-                            template: "{common.checkbox()}",
                             width: 50
                         }, {
                             id: "name",
                             header: "Name",
                              width: 200
+                        }, {
+                            id: "templateContent",
+                            header: "Content",
+                            height:100,
+                             width: 400
                         }, {
                             id: "delete",
                             header: "&nbsp;",

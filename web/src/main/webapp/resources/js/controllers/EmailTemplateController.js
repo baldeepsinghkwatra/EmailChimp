@@ -13,10 +13,10 @@ EmailChimp.controller('EmailTemplateController',
                 $$("content").addView(emailTemplateGrid.getlayout(), 1);
                 $$("mainLayout").resize();
 
-                this.bindSentMailEvents();
+                this.bindMailTemplateEvents();
 
             },
-            bindSentMailEvents: function () {
+            bindMailTemplateEvents: function () {
                 //Bind Events
                 $$("mail_filter").attachEvent("onChange", this.filterMails);
 
@@ -26,6 +26,17 @@ EmailChimp.controller('EmailTemplateController',
                 //Event on properties
                 $$("add").define({click: this.addTemplates});
                 $$("delete").define({click: this.deleteSettings});
+                $$("edit").define({click: this.updateTemplates});
+                $$("edit").disable();
+                //click events
+                $$("emailTemplateGrid").attachEvent("onItemClick", function(id, e, node){
+                    if(($$("emailTemplateGrid").getSelectedItem(true).length) > 1
+                            || ($$("emailTemplateGrid").getSelectedItem(true).length) == 0){
+                        $$("edit").disable();
+                    }else {
+                        $$("edit").enable();
+                    }
+                });
             },
             bindComposeMailEvents: function () {
 
@@ -81,6 +92,27 @@ EmailChimp.controller('EmailTemplateController',
                         ]
                     },
                     body: addTemplatesForm.getLayout()
+                }).show();
+
+                controller.bindComposeMailEvents();
+
+            },
+            updateTemplates: function () {
+                
+                webix.ui({
+                    view: "window",
+                    id: "win3",
+                    width: 1000,
+                    height: 600, 
+                    position: "center",
+                    modal: true,
+                    head: {
+                        view:"toolbar", cols:[
+                            {view:"label", label: "Add New Template" },
+                            { view:"button", label: 'X', width: 50, align: 'right', click:"$$('win3').close();"}
+                        ]
+                    },
+                    body: addTemplatesForm.getEditLayout()
                 }).show();
 
                 controller.bindComposeMailEvents();
