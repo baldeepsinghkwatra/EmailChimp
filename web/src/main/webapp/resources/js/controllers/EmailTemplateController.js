@@ -60,7 +60,14 @@ EmailChimp.controller('EmailTemplateController',
                             var item = webix.$$("emailTemplateGrid").getSelectedItem();
                             console.log(item);
                             webix.ajax().post("delete-email-template","id="+item.id, function (text, xml, xhr) {
-                                        
+                                    var grid = $$("emailTemplateGrid");
+                                    grid.clearAll();
+                                    grid.showProgress();
+
+                                    webix.delay(function () {
+                                        grid.parse(EmailChimp.models.MailModal.getEmailTemplates());
+                                        grid.hideProgress();
+                                    }, null, null, 300);    
                             });
                         }
                     }
