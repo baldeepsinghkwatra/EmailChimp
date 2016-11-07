@@ -29,7 +29,7 @@ EmailChimp.view('EmailTemplateGrid',
                             template: "<span  style='cursor:pointer;' class='webix_icon fa-trash-o trash'></span>"}
                     ],
                     pager: "pagerA",
-                    data:   EmailChimp.models.TemplateModal.getEmailConfiguration(),
+                    data:   EmailChimp.models.MailModal.getEmailTemplates(),
                     ready: function () {
                         webix.extend(this, webix.ProgressBar);
                     }
@@ -65,7 +65,6 @@ EmailChimp.view('EmailTemplateGrid',
                                     cols: [
                                         this.getButton('add', 'Add', 'plus-circle'),
                                         this.getButton('edit', 'Edit', 'pencil-square-o'),
-                                        this.getButton('delete', 'Delete', 'minus-circle'),
                                         {},
                                         {
                                             view: "richselect",

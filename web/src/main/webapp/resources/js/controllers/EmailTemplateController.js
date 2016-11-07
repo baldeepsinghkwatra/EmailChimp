@@ -1,11 +1,11 @@
 EmailChimp.controller('EmailTemplateController',
         {
-            component: ['views/preferences/EmailTemplateGrid', 'views/preferences/AddTemplates', 'models/TemplateModal'],
+            component: ['views/preferences/EmailTemplateGrid', 'views/preferences/AddTemplates', 'models/MailModal'],
             init: function () {
                 controller = this;
                 emailTemplateGrid = EmailChimp.views.EmailTemplateGrid;
                 addTemplatesForm = EmailChimp.views.AddTemplates;
-                templateModal = EmailChimp.models.TemplateModal;
+                mailModal = EmailChimp.models.MailModal;
                
 
                 // Change main layout
@@ -21,7 +21,7 @@ EmailChimp.controller('EmailTemplateController',
                 $$("mail_filter").attachEvent("onChange", this.filterMails);
 
                 //Event on css
-                $$("emailTemplateGrid").on_click.trash = this.deleteMail;
+                $$("emailTemplateGrid").on_click.trash = this.deleteMailTemplate;
 
                 //Event on properties
                 $$("add").define({click: this.addTemplates});
@@ -49,7 +49,7 @@ EmailChimp.controller('EmailTemplateController',
                 else
                     $$("emailTemplateGrid").filter("#status#", val);
             },
-            deleteMail: function () {
+            deleteMailTemplate: function () {
 
                 webix.confirm({
                     text: "The mail will be deleted. <br/> Are you sure?",
@@ -57,10 +57,11 @@ EmailChimp.controller('EmailTemplateController',
                     cancel: "Cancel",
                     callback: function (res) {
                         if (res) {
-                            var item = webix.$$("emailTemplateGrid").getItem(id);
-                            item.status = "0";
-                            item.statusName = "Deleted";
-                            webix.$$("emailTemplateGrid").refresh(id);
+                            var item = webix.$$("emailTemplateGrid").getSelectedItem();
+                            console.log(item);
+                            webix.ajax().post("delete-email-template","id="+item.id, function (text, xml, xhr) {
+                                        
+                            });
                         }
                     }
                 });
@@ -72,7 +73,7 @@ EmailChimp.controller('EmailTemplateController',
                 grid.showProgress();
 
                 webix.delay(function () {
-                    grid.parse(templateModal.getAll);
+                    grid.parse(EmailChimp.models.MailModal.getEmailTemplates());
                     grid.hideProgress();
                 }, null, null, 300);
             },

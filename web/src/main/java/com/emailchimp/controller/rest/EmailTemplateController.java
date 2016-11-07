@@ -7,6 +7,7 @@ package com.emailchimp.controller.rest;
 
 import com.emailchimp.constants.EmailConstants;
 import com.emailchimp.core.model.Account;
+import com.emailchimp.core.model.EmailConfiguration;
 import com.emailchimp.core.model.Template;
 import java.security.Principal;
 import java.util.Locale;
@@ -76,5 +77,24 @@ public class EmailTemplateController {
             return messageSource.getMessage("email.template.update.failure", new Object[]{}, locale);
         }
         return messageSource.getMessage("email.template.update.success", new Object[]{}, locale);
+    }
+    
+    @PostMapping(EmailConstants.URL_DELETE_EMAIL_TEMPLATE)
+    public String deleteEmailConfiguration(Long id, Principal principal, Locale locale) {
+        try {
+
+            Template template = templateService.findByUniqueField("id", id);
+            Account account = accountService.findByUniqueField("userEmail", principal.getName());
+
+            if (template.getAccount().getId() == account.getId()) {
+
+                templateService.delete(template);
+                return messageSource.getMessage("email.template.delete.success", new Object[]{}, locale);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return messageSource.getMessage("email.template.delete.failure", new Object[]{}, locale);
+        }
+        return messageSource.getMessage("email.template.delete.failure", new Object[]{}, locale);
     }
 }

@@ -43,5 +43,6 @@ String URL_UPDATE_EMAIL_LIST="/update-email-list";
 String URL_ADD_EMAIL_TEMPLATE="/add-email-template";
 String URL_GET_EMAIL_TEMPLATE="/get-email-templates";
 String URL_UPDATE_EMAIL_TEMPLATE="/update-email-template";
+String URL_DELETE_EMAIL_TEMPLATE="/delete-email-template";
 
 }

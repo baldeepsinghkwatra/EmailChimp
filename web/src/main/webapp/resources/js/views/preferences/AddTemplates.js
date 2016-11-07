@@ -30,9 +30,18 @@ EmailChimp.view('AddTemplates',
                                         if (xhr.status === 200) {
                                             color = 'green';
                                         }
+                                        var grid = $$("emailTemplateGrid");
+                                        grid.clearAll();
+                                        grid.showProgress();
+                                        $$("win2").close();
+                                        webix.delay(function () {
+                                            grid.parse(EmailChimp.models.MailModal.getEmailTemplates());
+                                            grid.hideProgress();
+                                        }, null, null, 300);
                                         $$('addTemplate').clear();
                                         $$("responseMessage").define({label: "<span style=\"color:" + color + "\">" + text + "</span>", css: "lines"});
                                         $$('responseMessage').refresh();
+                                        $$("emailTemplateGrid").refresh();
                                     });
                                     
                                 } else
@@ -85,6 +94,14 @@ EmailChimp.view('AddTemplates',
                                         if (xhr.status === 200) {
                                             color = 'green';
                                         }
+                                        var grid = $$("emailTemplateGrid");
+                                        grid.clearAll();
+                                        grid.showProgress();
+                                        $$("win3").close();
+                                        webix.delay(function () {
+                                            grid.parse(EmailChimp.models.MailModal.getEmailTemplates());
+                                            grid.hideProgress();
+                                        }, null, null, 300);
                                         $$('editTemplate').clear();
                                         $$("responseMessage").define({label: "<span style=\"color:" + color + "\">" + text + "</span>", css: "lines"});
                                         $$('responseMessage').refresh();
