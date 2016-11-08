@@ -71,6 +71,10 @@ var EmailChimp = {
                     }
                 }]
         };
+    },
+    htmlEncode : function ( html ) {
+        return document.createElement( 'a' ).appendChild( 
+            document.createTextNode( html.name ) ).parentNode.innerHTML;
     }
 
 };

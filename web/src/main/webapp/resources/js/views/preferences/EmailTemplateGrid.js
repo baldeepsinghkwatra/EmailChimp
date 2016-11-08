@@ -16,12 +16,10 @@ EmailChimp.view('EmailTemplateGrid',
                         }, {
                             id: "name",
                             header: "Name",
-                             width: 200
-                        }, {
-                            id: "templateContent",
-                            header: "Content",
-                            height:100,
-                             width: 400
+                            template:function htmlEncode( html ) {
+                                return EmailChimp.htmlEncode(html);
+                            },
+                            fillspace: 1,
                         }, {
                             id: "delete",
                             header: "&nbsp;",
@@ -65,23 +63,7 @@ EmailChimp.view('EmailTemplateGrid',
                                     cols: [
                                         this.getButton('add', 'Add', 'plus-circle'),
                                         this.getButton('edit', 'Edit', 'pencil-square-o'),
-                                        {},
-                                        {
-                                            view: "richselect",
-                                            id: "mail_filter",
-                                            value: "all",
-                                            maxWidth: 300,
-                                            minWidth: 250,
-                                            vertical: true,
-                                            labelWidth: 110,
-                                            options: [
-                                                {id: "all", value: "All"},
-                                                {id: "1", value: "Published"},
-                                                {id: "2", value: "Not published"},
-                                                {id: "0", value: "Deleted"}
-                                            ],
-                                            label: "Filter mails"
-                                        }
+                                        {}
                                     ]
                                 },
                                 {

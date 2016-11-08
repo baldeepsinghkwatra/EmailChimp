@@ -16,7 +16,9 @@ EmailChimp.view('AddTemplates',
                             view: "ckeditor",
                             name: "templateContent",
                             height: 200,
-                            label: 'editor'
+                            value: "",
+                            label: 'editor',
+                            required: true
                         },
                         {view: "label", height: 50, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
                         {
@@ -38,7 +40,7 @@ EmailChimp.view('AddTemplates',
                                             grid.parse(EmailChimp.models.MailModal.getEmailTemplates());
                                             grid.hideProgress();
                                         }, null, null, 300);
-                                        $$('addTemplate').clear();
+                                        $$("addTemplate").clear();
                                         $$("responseMessage").define({label: "<span style=\"color:" + color + "\">" + text + "</span>", css: "lines"});
                                         $$('responseMessage').refresh();
                                         $$("emailTemplateGrid").refresh();

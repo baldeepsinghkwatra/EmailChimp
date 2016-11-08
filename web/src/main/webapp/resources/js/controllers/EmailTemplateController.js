@@ -17,15 +17,12 @@ EmailChimp.controller('EmailTemplateController',
 
             },
             bindMailTemplateEvents: function () {
-                //Bind Events
-                $$("mail_filter").attachEvent("onChange", this.filterMails);
 
                 //Event on css
                 $$("emailTemplateGrid").on_click.trash = this.deleteMailTemplate;
-
+                $$('emailTemplateGrid').render();
                 //Event on properties
                 $$("add").define({click: this.addTemplates});
-                $$("delete").define({click: this.deleteSettings});
                 $$("edit").define({click: this.updateTemplates});
                 $$("edit").disable();
                 //click events
@@ -36,6 +33,10 @@ EmailChimp.controller('EmailTemplateController',
                     }else {
                         $$("edit").enable();
                     }
+                });
+                $$("emailTemplateGrid").attachEvent("onAfterRender", function(){
+                    //... some code here ... 
+                    
                 });
             },
             bindComposeMailEvents: function () {
@@ -93,12 +94,7 @@ EmailChimp.controller('EmailTemplateController',
                     height: 600, 
                     position: "center",
                     modal: true,
-                    head: {
-                        view:"toolbar", cols:[
-                            {view:"label", label: "Add New Template" },
-                            { view:"button", label: 'X', width: 50, align: 'right', click:"$$('win2').close();"}
-                        ]
-                    },
+                    head : EmailChimp.getPopupToolbar('Add New Template!!'),
                     body: addTemplatesForm.getLayout()
                 }).show();
 
@@ -114,12 +110,7 @@ EmailChimp.controller('EmailTemplateController',
                     height: 600, 
                     position: "center",
                     modal: true,
-                    head: {
-                        view:"toolbar", cols:[
-                            {view:"label", label: "Add New Template" },
-                            { view:"button", label: 'X', width: 50, align: 'right', click:"$$('win3').close();"}
-                        ]
-                    },
+                    head : EmailChimp.getPopupToolbar('Update Template!!'),
                     body: addTemplatesForm.getEditLayout()
                 }).show();
 
