@@ -8,15 +8,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/main.css" type="text/css" media="screen" charset="utf-8">
         <title>Change Password</title>
-        <link rel="stylesheet" href="http://cdn.webix.com/edge/webix.css" type="text/css" media="screen" charset="utf-8">
-        <script src="http://cdn.webix.com/edge/webix.js" type="text/javascript" charset="utf-8"></script>
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/webix/css/main.css" type="text/css" media="screen" charset="utf-8">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/webix/css/webix.css" type="text/css" media="screen" charset="utf-8">
+        
+     	<script src="<%=request.getContextPath()%>/resources/webix/js/webix_debug.js" type="text/javascript" charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/resources/js/EmailChimp.js" type="text/javascript" charset="utf-8"></script>
+        
     </head>
     <body>
-        <div id="inputForm" class="formDiv"></div>
-        <script>
+        <script data-main="<%=request.getContextPath()%>/resources/js/ResetPassword" 
+        src="<%=request.getContextPath()%>/resources/webix/js/require.js"></script>
+        <input id="username" type="hidden" value="<c:out value="${user.userName}"/>">
+        <input id="useremail" type="hidden" value="<c:out value="${user.userEmail}"/>">
+        <input id="fgtpswdcode" type="hidden" value="<c:out value="${user.forgotPasswordCode}"/>">
+<!--        <script>
             var form = webix.ui({
                 container: "inputForm",
                 view: "form",
@@ -68,6 +76,6 @@
             function submitForm() {
                 form.callEvent("onSubmit");
             }
-        </script>
+        </script>-->
     </body>
 </html>

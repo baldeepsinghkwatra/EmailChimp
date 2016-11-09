@@ -254,6 +254,7 @@ public class UserController {
 
 		try {
 			if (user.getForgotPasswordCode().equals(verificationCode)) {
+                            System.out.println(user);
 				return new ModelAndView("/changePassword", "user", user);
 			}
 		} catch (Exception e) {
