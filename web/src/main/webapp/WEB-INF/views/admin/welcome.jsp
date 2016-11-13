@@ -27,6 +27,7 @@ Author     : anshul
 
     </head>
     <body>
-        <script data-main="<%=request.getContextPath()%>/resources/js/Welcome" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.js"></script>
+        <script data-main="<%=request.getContextPath()%>/resources/js/Welcome" 
+        src="<%=request.getContextPath()%>/resources/webix/js/require.js"></script>
     </body>
 </html>

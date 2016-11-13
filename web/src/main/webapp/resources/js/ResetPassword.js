@@ -6,14 +6,12 @@ EmailChimp.app('ResetPassword', {
         this.bindEvents();
     },
     submitForm: function () {
-        alert(1);
-         $$('resetPswd').callEvent("onSubmit");
+        $$('resetPswd').callEvent("onSubmit");
     },
     bindEvents: function () {
         var form = $$('resetPswd');
         form.attachEvent("onSubmit", function () {
                 if (form.validate()) {
-                    alert(1);
                     $$("submitButton").disable();
                     webix.ajax().post("change-password", form.getValues(), function (text, xml, xhr) {
                         var color = 'red';
