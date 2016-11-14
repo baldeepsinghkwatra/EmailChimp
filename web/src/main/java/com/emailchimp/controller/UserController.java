@@ -50,6 +50,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.emailchimp.core.service.AccountService;
 import com.emailchimp.exception.LoginException;
+import java.io.IOException;
 
 /**
  *
@@ -276,41 +277,11 @@ public class UserController {
 	@PostMapping(UserConstants.URL_CHANGE_PASSWORD)
 	@ResponseBody
 	public ResponseModel changePassword(Principal principal, String currentPassword, String userEmail, String userPassword, String verificationCode, Locale locale) {
-
-           	Account user = accountService.getUserByEmail(userEmail);
+                Account user = accountService.getUserByEmail(userEmail);
 		try {
-                        if(!currentPassword.equals("")){
-                            Account account = accountService.getUserByEmail(principal.getName());
-                            if(passwordEncoder.matches(currentPassword, account.getUserPassword())){
-                                Calendar calendar = Calendar.getInstance();
-                                account.setUserPassword(passwordEncoder.encode(userPassword));
-				account.setLastPasswordUpdatedDate(calendar);
-				accountService.update(account);
-                                
-                                // Load resource of Html File to Find Absolute Path
-				Resource resource = resourceLoader.getResource("classpath:/mails/ChangePasswordMail");
-				String absolutePath = resource.getFile().getAbsolutePath();
-
-				// Get Html Content in String format by calling Utility Class
-				// read method
-				String verificationMailBody = ReadFile.read(absolutePath);
-
-				// Replace all the tags in the mail body
-				verificationMailBody = verificationMailBody.replaceAll(UserConstants.TAG_USER_NAME, user.getUserName())
-						.replaceAll(ApplicationConstants.TAG_DOMAIN, domain);
-
-				// Call Email Service
-				email.sendMail(account.getUserEmail(), "Password Reset Complete | EmailChimp", verificationMailBody);
-
-				return new ResponseModel(UserConstants.URL_CHANGE_PASSWORD, messageSource
-						.getMessage("user.changePassword.success", new Object[] { account.getUserName() }, locale),
-						ExceptionConstants.RES_CODE_SUCCESS);
-
-                            } else {
-                                return new ResponseModel(UserConstants.URL_CHANGE_PASSWORD, messageSource
-						.getMessage("user.changePassword.currentpswd", new Object[] { account.getUserName() }, locale),
-						ExceptionConstants.RES_CODE_FAILURE);
-                            }
+                    System.out.println(currentPassword);
+                        if(currentPassword != null){
+                            return changePassword(currentPassword,principal,userPassword,locale);
                         }
                         
                         else if (verificationCode.equals(user.getForgotPasswordCode())) {
@@ -391,4 +362,38 @@ public class UserController {
 	public String forgotPassword() {
 		return "forgotPassword";
 	}
+
+    private ResponseModel changePassword(String currentPassword, Principal principal, String userPassword, Locale locale) throws InterruptedException, IOException {
+        Account account = accountService.getUserByEmail(principal.getName());
+        if(passwordEncoder.matches(currentPassword, account.getUserPassword())){
+            Calendar calendar = Calendar.getInstance();
+            account.setUserPassword(passwordEncoder.encode(userPassword));
+            account.setLastPasswordUpdatedDate(calendar);
+            accountService.update(account);
+
+            // Load resource of Html File to Find Absolute Path
+            Resource resource = resourceLoader.getResource("classpath:/mails/ChangePasswordMail");
+            String absolutePath = resource.getFile().getAbsolutePath();
+
+            // Get Html Content in String format by calling Utility Class
+            // read method
+            String verificationMailBody = ReadFile.read(absolutePath);
+
+            // Replace all the tags in the mail body
+            verificationMailBody = verificationMailBody.replaceAll(UserConstants.TAG_USER_NAME, account.getUserName())
+                            .replaceAll(ApplicationConstants.TAG_DOMAIN, domain);
+
+            // Call Email Service
+            email.sendMail(account.getUserEmail(), "Password Reset Complete | EmailChimp", verificationMailBody);
+
+            return new ResponseModel(UserConstants.URL_CHANGE_PASSWORD, messageSource
+                            .getMessage("user.changePassword.success", new Object[] { account.getUserName() }, locale),
+                            ExceptionConstants.RES_CODE_SUCCESS);
+
+        } else {
+            return new ResponseModel(UserConstants.URL_CHANGE_PASSWORD, messageSource
+                            .getMessage("user.changePassword.currentpswd", new Object[] { account.getUserName() }, locale),
+                            ExceptionConstants.RES_CODE_FAILURE);
+        }
+    }
 }

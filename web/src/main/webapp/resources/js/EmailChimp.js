@@ -87,9 +87,16 @@ var EmailChimp = {
 				{
                                     id:'changePassword', 
                                     lang:"Change Password"
+                                },
+                                {
+                                    id:'logout',
+                                    lang:"logout"
                                 }
 			],
                         on:{"onItemClick":function(id, e, node){
+                                if(id === "logout") {
+                                    window.location.href = "logout";
+                                }
                                 if(EmailChimp.components.Router.currentHash === "#changePassword") {
                                     EmailChimp.controllers.ChangePasswordController.init();
                                 }

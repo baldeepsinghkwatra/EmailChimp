@@ -77,19 +77,6 @@ EmailChimp.view('SideMenu',
                                         details: "Email Templates"
                                     }
                                 ]
-                            },
-                            {
-                                id: 'myAccount',
-                                value: "My Account",
-                                open: false,
-                                data: [
-                                    {
-                                        id: 'changePassword',
-                                        value: 'Change Password',
-                                        icon: "fa fa-key",
-                                        details: "Change Password"
-                                    }
-                                ]
                             }
                         ]
                     }

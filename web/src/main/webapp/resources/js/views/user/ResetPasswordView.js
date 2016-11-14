@@ -34,8 +34,23 @@ EmailChimp.view('ResetPasswordView',
          },
 
         submitForm: function () {
-            $$('resetPswd').setValues({userEmail: useremail.value, verificationCode: fgtpswdcode.value});  
+            var form = $$('resetPswd');
+            $$('resetPswd').setValues({userPassword:form.getValues().userPassword,userPasswordConfirm: form.getValues().userPasswordConfirm, userEmail: useremail.value, verificationCode: fgtpswdcode.value});  
 
-             $$('resetPswd').callEvent("onSubmit"); 
+            console.log(form.getValues());
+            if (form.validate()) {
+                console.log(form.getValues());
+                    $$("submitButton").disable();
+                    webix.ajax().post("change-password", form.getValues(), function (text, xml, xhr) {
+                        var color = 'red';
+                        if (xhr.status === 200) {
+                            color = 'green';
+                        }
+                        $$("responseMessage").define({label: "<span style=\"color:" + color + "\">" + text + "</span>", css: "lines"});
+                        $$('responseMessage').refresh();
+                    });
+                    $$("submitButton").enable();
+                    form.clear();
+                }
         }
     });
