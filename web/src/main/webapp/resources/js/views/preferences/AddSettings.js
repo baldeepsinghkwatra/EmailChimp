@@ -39,6 +39,14 @@ EmailChimp.view('AddSettings',
                                         if (xhr.status === 200) {
                                             color = 'green';
                                         }
+                                        var grid = $$("emailSettingsGrid");
+                                        grid.clearAll();
+                                        grid.showProgress();
+                                        $$("win2").close();
+                                        webix.delay(function () {
+                                            grid.parse(EmailChimp.models.MailModal.getEmailConfiguration());
+                                            grid.hideProgress();
+                                        }, null, null, 50);
                                         $$('addSettings').clear();
                                         $$("responseMessage").define({label: "<span style=\"color:" + color + "\">" + text + "</span>", css: "lines"});
                                         $$('responseMessage').refresh();
