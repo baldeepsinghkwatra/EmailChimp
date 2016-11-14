@@ -75,6 +75,28 @@ var EmailChimp = {
     htmlEncode : function ( html ) {
         return document.createElement( 'a' ).appendChild( 
             document.createTextNode( html.name ) ).parentNode.innerHTML;
-    }
+    },
+    account: {
+		view:"popup", id:"lang",
+		head:false, width: 150,
+		body:{
+			view:"list", scroll:false, 
+			yCount:2, select:true, borderless:true,
+			template:"#lang#",
+			data:[
+				{
+                                    id:'changePassword', 
+                                    lang:"Change Password"
+                                }
+			],
+                        on:{"onItemClick":function(id, e, node){
+                                if(EmailChimp.components.Router.currentHash === "#changePassword") {
+                                    EmailChimp.controllers.ChangePasswordController.init();
+                                }
+				window.location.hash = '#'+id;
+                                $$('lang').hide();
+                        }}
+		}
+	}
 
 };

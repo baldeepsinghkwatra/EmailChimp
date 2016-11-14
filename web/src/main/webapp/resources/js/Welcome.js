@@ -21,6 +21,10 @@ EmailChimp.app('Welcome', {
      {
             hash: '#myCategory',
             controller: 'CategoryController'
+        },
+        {
+            hash: '#changePassword',
+            controller: 'ChangePasswordController'
         }
         ],
 	defaultRoute : '#sentMail',
