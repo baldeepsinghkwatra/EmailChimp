@@ -55,7 +55,7 @@ EmailChimp.controller('MainController', {
 							var obj = JSON.parse(response);
 
 							if (obj.status == 200) {
-								window.location.reload(1);
+								window.location.href ='';
 							}
 
 							responseLoginMessage.define({

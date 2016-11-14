@@ -69,12 +69,11 @@ EmailChimp.controller('SentMailController',
                 webix.ui({
                     view: "window",
                     id: "win2",
-                    width: 1000,
-                    height: 600,
-                    position: "center",
-                    modal: true,
-                    head: 'Compose <span style="float: right; font-size: 25px;padding: 10px;" \n\
-                    class="webix_icon fa-times-circle closepopup"></span>',
+                    autoheight : true,
+        			position : "center",
+        			width : 1000,
+        			head : EmailChimp.getPopupToolbar('New Mail'),
+        			modal: true,
                     body: composeForm.getLayout()
                 }).show();
 
