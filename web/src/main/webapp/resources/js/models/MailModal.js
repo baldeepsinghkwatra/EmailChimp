@@ -33,6 +33,9 @@ EmailChimp.model('MailModal',
             getEmailCategory: function () {
               return webix.ajax().get("get-email-category");
             },
+            getApi: function () {
+              return webix.ajax().get("get-api");
+            },
              getEmailList: function () {
               return webix.ajax().get("get-email-list");
             },

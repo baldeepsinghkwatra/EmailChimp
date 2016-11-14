@@ -75,6 +75,12 @@ EmailChimp.view('SideMenu',
                                         value: "Email Templates",
                                         icon: "file-text",
                                         details: "Email Templates"
+                                    },
+                                    {
+                                        id: "api",
+                                        value: "API",
+                                        icon: "key",
+                                        details: "Generate API Keys"
                                     }
                                 ]
                             }

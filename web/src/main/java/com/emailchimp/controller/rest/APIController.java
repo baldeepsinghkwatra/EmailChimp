@@ -17,10 +17,11 @@
 package com.emailchimp.controller.rest;
 
 import com.emailchimp.constants.EmailConstants;
+import com.emailchimp.core.model.API;
 import com.emailchimp.core.model.Account;
-import com.emailchimp.core.model.EmailCategory;
+import com.emailchimp.core.service.APIService;
 import com.emailchimp.core.service.AccountService;
-import com.emailchimp.core.service.EmailCategoryService;
+import com.emailchimp.core.util.GenerateAPI;
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.List;
@@ -36,75 +37,71 @@ import org.springframework.web.bind.annotation.RestController;
  * @author baldeep
  */
 @RestController
-public class EmailCategoryController {
+public class APIController {
 
     @Autowired
-    EmailCategoryService emailCategoryService;
+    private AccountService accountService;
+
     @Autowired
-    AccountService accountService;
+    private APIService apiService;
 
     @Autowired
     private MessageSource messageSource;
 
-    @PostMapping(EmailConstants.URL_ADD_EMAIL_CATEGORY)
-    public String addEmailCategory(EmailCategory emailCategory, Principal principal, Locale locale) {
+    @PostMapping(EmailConstants.URL_ADD_API)
+    public String addAPI(API api, Principal principal, Locale locale) {
         try {
-
             Account account = accountService.findByUniqueField("userEmail", principal.getName());
-            emailCategory.setAccount(account);
-            emailCategory.setAddedDate(Calendar.getInstance());
+            
+            api.setAccount(account);
+            api.setGeneratedTimestamp(Calendar.getInstance());
+            api.setApiKey(GenerateAPI.generateKey(30, String.valueOf(account.getId())));
 
-            emailCategoryService.save(emailCategory);
-
+            apiService.save(api);
         } catch (Exception e) {
-            e.printStackTrace();
-            return messageSource.getMessage("email.category.failure", new Object[]{}, locale);
+            return messageSource.getMessage("email.api.failure", new Object[]{}, locale);
         }
-        return messageSource.getMessage("email.category.success", new Object[]{}, locale);
+        return messageSource.getMessage("email.api.success", new Object[]{}, locale);
     }
 
-    @GetMapping(EmailConstants.URL_GET_EMAIL_CATEGORY)
-    public List<EmailCategory> getEmailCategory(Principal principal) {
+    @GetMapping(EmailConstants.URL_GET_API)
+    public List<API> getAPI(Principal principal) {
         try {
-
             Account account = accountService.findByUniqueField("userEmail", principal.getName());
-
-            return emailCategoryService.findByField("account", account);
+            return apiService.findByField("account", account);
         } catch (Exception e) {
         }
         return null;
     }
 
-    @PostMapping(EmailConstants.URL_DELETE_EMAIL_CATEGORY)
-    public String deleteEmailCategory(Long id, Principal principal, Locale locale) {
+    @PostMapping(EmailConstants.URL_DELETE_API)
+    public String deleteAPI(Long id, Principal principal, Locale locale) {
         try {
 
-            EmailCategory emailCategory = emailCategoryService.findByUniqueField("id", id);
+            API api = apiService.findByUniqueField("id", id);
             Account account = accountService.findByUniqueField("userEmail", principal.getName());
 
-            if (emailCategory.getAccount().getId() == account.getId()) {
-
-                emailCategoryService.delete(emailCategory);
-                return messageSource.getMessage("email.category.delete.success", new Object[]{}, locale);
+            if (api.getAccount().getId() == account.getId()) {
+                apiService.delete(api);
+                return messageSource.getMessage("email.api.delete.success", new Object[]{}, locale);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return messageSource.getMessage("email.category.delete.failure", new Object[]{}, locale);
+            return messageSource.getMessage("email.api.delete.failure", new Object[]{}, locale);
         }
-        return messageSource.getMessage("email.category.delete.failure", new Object[]{}, locale);
+        return messageSource.getMessage("email.api.delete.failure", new Object[]{}, locale);
     }
 
-    @PostMapping(EmailConstants.URL_UPDATE_EMAIL_CATEGORY)
-    public String updateEmailCategory(EmailCategory emailCategory, Principal principal, Locale locale) {
+    @PostMapping(EmailConstants.URL_UPDATE_API)
+    public String updateEmailCategory(API api, Principal principal, Locale locale) {
         try {
             Account account = accountService.findByUniqueField("userEmail", principal.getName());
-
-            emailCategory.setAccount(account);
-            emailCategoryService.update(emailCategory);
+            api.setAccount(account);
+            apiService.update(api);
 
         } catch (Exception e) {
-            return messageSource.getMessage("email.category.update.failure", new Object[]{}, locale);
+            return messageSource.getMessage("email.api.update.failure", new Object[]{}, locale);
         }
-        return messageSource.getMessage("email.category.update.success", new Object[]{}, locale);
+        return messageSource.getMessage("email.api.update.success", new Object[]{}, locale);
     }
 }

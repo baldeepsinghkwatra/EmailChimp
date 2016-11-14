@@ -41,7 +41,7 @@ public class API implements Serializable {
 
     @OneToOne
     @JoinColumn
-    private Account user;
+    private Account account;
 
     @Column(unique = true, nullable = false)
     private String apiKey;
@@ -86,12 +86,12 @@ public class API implements Serializable {
         this.generatedTimestamp = generatedTimestamp;
     }
 
-    public Account getUser() {
-        return user;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setUser(Account user) {
-        this.user = user;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
 }
