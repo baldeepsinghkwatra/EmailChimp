@@ -22,7 +22,6 @@ EmailChimp.view('MyListGrid',
                         {
                             id: "id",
                             header: "#",
-                            template: "{common.checkbox()}",
                             width: 50
                         },{
                             id: "contact",
@@ -44,9 +43,18 @@ EmailChimp.view('MyListGrid',
                             header: "Last Name",
                             width: 200,
                             editor: "text"
-                        }, {
-                            id: "emailCategory[0].id",
+                        }, 
+                        {
+                            id: "emailCategory",
                             header: "Category",
+                            template: function(data){
+                                var category = data.emailCategory;
+                                var categoryName="";
+                                for (var i = 0; i < category.length; i++) {
+                                    categoryName += category[i].categoryName+" ";
+                                }
+                                return categoryName;
+                            },
                             width: 200,
                             editor: "text"
                         },
@@ -98,23 +106,7 @@ EmailChimp.view('MyListGrid',
                                     cols: [
                                         this.getButton('add', 'Add', 'plus-circle'),
                                         this.getButton('import', 'Import(.xls)', 'upload'),
-                                        {},
-                                        {
-                                            view: "richselect",
-                                            id: "mail_filter",
-                                            value: "all",
-                                            maxWidth: 300,
-                                            minWidth: 250,
-                                            vertical: true,
-                                            labelWidth: 110,
-                                            options: [
-                                                {id: "all", value: "All"},
-                                                {id: "1", value: "Published"},
-                                                {id: "2", value: "Not published"},
-                                                {id: "0", value: "Deleted"}
-                                            ],
-                                            label: "Filter mails"
-                                        }
+                                        {}
                                     ]
                                 },
                                 {

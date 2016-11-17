@@ -22,7 +22,6 @@ EmailChimp.view('EmailSettingsGrid',
                         {
                             id: "id",
                             header: "#",
-                            template: "{common.checkbox()}",
                             width: 50
                         }, {
                             id: "smtpHost",
@@ -91,23 +90,7 @@ EmailChimp.view('EmailSettingsGrid',
                                     height: 40,
                                     cols: [
                                         this.getButton('add', 'Add', 'plus-circle'),
-                                        {},
-                                        {
-                                            view: "richselect",
-                                            id: "mail_filter",
-                                            value: "all",
-                                            maxWidth: 300,
-                                            minWidth: 250,
-                                            vertical: true,
-                                            labelWidth: 110,
-                                            options: [
-                                                {id: "all", value: "All"},
-                                                {id: "1", value: "Published"},
-                                                {id: "2", value: "Not published"},
-                                                {id: "0", value: "Deleted"}
-                                            ],
-                                            label: "Filter mails"
-                                        }
+                                        {}
                                     ]
                                 },
                                 {

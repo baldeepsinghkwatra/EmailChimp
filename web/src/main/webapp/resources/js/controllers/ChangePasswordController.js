@@ -16,6 +16,7 @@ EmailChimp.controller('ChangePasswordController',
                                 if (xhr.status === 200) {
                                     color = 'green';
                                 }
+                                $$("responseMessage").show();
                                 $$("responseMessage").define({label: "<span style=\"color:" + color + "\">" + text + "</span>", css: "lines"});
                                 $$('responseMessage').refresh();
                             });

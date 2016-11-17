@@ -6,7 +6,6 @@ EmailChimp.view('EmailTemplateGrid',
                     id: "emailTemplateGrid",
                     view: "datatable",
                     select: true,
-                    multiselect:true,
                     editable: false,
                     columns: [
                         {
@@ -17,7 +16,7 @@ EmailChimp.view('EmailTemplateGrid',
                             id: "name",
                             header: "Name",
                             template:function htmlEncode( html ) {
-                                return EmailChimp.htmlEncode(html);
+                                return EmailChimp.htmlEncode(html.name);
                             },
                             fillspace: 1,
                         }, {

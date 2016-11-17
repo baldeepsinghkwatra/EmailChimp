@@ -28,24 +28,36 @@ EmailChimp.view('AddUser',
                             label: 'Contact :',
                             name: "contact",
                             required: true
+                        },{
+                            view: "label",
+                            label: "Select Category: ",
                         },
-                        {view: "select", id: "check",
-                            label: "Category (Select)",
-                            options: data},
-                        {view: "combo",
-                            width: 400,
-                            label: 'Category (combo)',
-                            labelWidth: 220,
-                            name: "emailCategoryId",
-                            required: true,
-                            options: data},
-                        {view: "label", height: 50, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
+                        {
+                            id: "categoryList",
+                            view:"list",
+                            height:200,
+                            select:true,
+                            multiselect: true,
+                            data: data
+                          },
+                        {view: "label", height: 50,hidden:true, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
                         {
                             view: "button",
                             value: "Add",
                             click: function () {
+                                var item = $$("categoryList").getSelectedItem(true);
+                                var id = item[0].id;
+                                for(var i=1; i<item.length; i++){
+                                    id += ","+item[i].id;
+                                }
                                 if ($$('addUser').validate()) { //validate form
-
+                                    $$('addUser').setValues({
+                                        firstName: $$("addUser").getValues().firstName,
+                                        lastName: $$("addUser").getValues().lastName,
+                                        email: $$("addUser").getValues().email,
+                                        contact: $$("addUser").getValues().contact,
+                                        emailCategoryId:id
+                                    });
                                     webix.ajax().post("add-email-list", $$('addUser').getValues(), function (text, xml, xhr) {
                                         var color = 'red';
                                         if (xhr.status === 200) {
@@ -60,6 +72,7 @@ EmailChimp.view('AddUser',
                                             grid.hideProgress();
                                         }, null, null, 50);
                                         $$('addUser').clear();
+                                        $$("responseMessage").show();
                                         $$("responseMessage").define({label: "<span style=\"color:" + color + "\">" + text + "</span>", css: "lines"});
                                         $$('responseMessage').refresh();
                                     });

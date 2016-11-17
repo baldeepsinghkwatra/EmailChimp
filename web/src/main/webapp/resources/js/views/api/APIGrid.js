@@ -22,7 +22,6 @@ EmailChimp.view('APIGrid',
                         {
                             id: "id",
                             header: "#",
-                            template: "{common.checkbox()}",
                             width: 50
                         }, {
                             id: "apiKey",

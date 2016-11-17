@@ -49,7 +49,7 @@ public class LoginAttemptsDAOImpl extends AbstractDAOImpl<Long, LoginAttempts> i
             loginAttempts.setAttempts(1);
             loginAttempts.setUsername(username);
             loginAttempts.setLastModified(new Date());
-            persist(loginAttempts);
+            save(loginAttempts);
         }
         if (loginAttempts.getAttempts() >= MAX_ATTEMPTS) {
             Account account = accountDAO.getUserByEmail(username);

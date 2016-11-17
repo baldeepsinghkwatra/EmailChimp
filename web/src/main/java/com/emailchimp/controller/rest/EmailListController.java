@@ -25,8 +25,10 @@ import com.emailchimp.core.service.EmailCategoryService;
 import com.emailchimp.core.service.EmailListService;
 import java.security.Principal;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,14 +55,19 @@ public class EmailListController {
     @PostMapping(EmailConstants.URL_ADD_EMAIL_LIST)
     public String addEmailList(EmailList emailList,String emailCategoryId, Principal principal, Locale locale) {
         try {
-            EmailCategory emailCategory=emailCategoryService.findByUniqueField("id", Long.parseLong(emailCategoryId));
-            Account account = accountService.findByUniqueField("userEmail", principal.getName());
-            emailList.setAccount(account);
-            emailList.setAddedDate(Calendar.getInstance());
-            emailList.setEmailCategory(emailCategory);
-            
+            String[] category = emailCategoryId.split(",");
+            Set<EmailCategory> emailCategories = new HashSet<EmailCategory>();
+            for(int i=0;i<category.length; i++){
+                EmailCategory emailCategory = emailCategoryService.findByUniqueField("id", Long.parseLong(category[i]));
+                emailCategories.add(emailCategory);
+            }
+                Account account = accountService.findByUniqueField("userEmail", principal.getName());
+                emailList.setAccount(account);
+                emailList.setAddedDate(Calendar.getInstance());
+                emailList.setEmailCategory(emailCategories);
 
-            emailListService.save(emailList);
+                emailListService.save(emailList);
+            
 
         } catch (Exception e) {
             e.printStackTrace();
