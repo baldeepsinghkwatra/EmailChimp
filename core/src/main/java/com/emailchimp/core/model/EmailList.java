@@ -19,12 +19,18 @@ package com.emailchimp.core.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -57,9 +63,11 @@ public class EmailList implements Serializable {
     @Column(nullable = true)
     private String contact;
     
-    @OneToOne
-    @JoinColumn
-    private EmailCategory emailCategory;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @JoinTable(name="email_list_category",
+            joinColumns = {@JoinColumn(name = "email_list_id", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "email_category_id",nullable = false, updatable = false) })
+    private Set<EmailCategory> emailCategory = new HashSet<EmailCategory>();
     
     @Column(nullable = true)
     private boolean isSubscribed;
@@ -109,16 +117,16 @@ public class EmailList implements Serializable {
         this.contact = contact;
     }
 
-    public EmailCategory getEmailCategory() {
+    public boolean isIsSubscribed() {
+        return isSubscribed;
+    }
+    
+    public Set<EmailCategory> getEmailCategory() {
         return emailCategory;
     }
 
-    public void setEmailCategory(EmailCategory emailCategory) {
+    public void setEmailCategory(Set<EmailCategory> emailCategory) {
         this.emailCategory = emailCategory;
-    }
-
-    public boolean isIsSubscribed() {
-        return isSubscribed;
     }
 
     public void setIsSubscribed(boolean isSubscribed) {

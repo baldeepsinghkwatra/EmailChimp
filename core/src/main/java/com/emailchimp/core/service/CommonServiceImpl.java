@@ -44,7 +44,7 @@ public abstract class CommonServiceImpl<T> implements CommonService<T> {
 
     @Override
     public void save(T t) {
-        this.abstractDAO.persist(t);
+        this.abstractDAO.save(t);
     }
 
     @Override
