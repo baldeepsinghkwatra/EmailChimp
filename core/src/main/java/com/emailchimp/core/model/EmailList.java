@@ -43,7 +43,7 @@ import javax.persistence.TemporalType;
 public class EmailList implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @OneToOne
