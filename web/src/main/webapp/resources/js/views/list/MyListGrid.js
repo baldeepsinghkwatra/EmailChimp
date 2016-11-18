@@ -105,6 +105,7 @@ EmailChimp.view('MyListGrid',
                                     height: 40,
                                     cols: [
                                         this.getButton('add', 'Add', 'plus-circle'),
+                                        this.getButton('edit', 'Edit', 'pencil-square-o'),
                                         this.getButton('import', 'Import(.xls)', 'upload'),
                                         {}
                                     ]

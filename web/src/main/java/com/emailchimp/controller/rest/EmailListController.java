@@ -114,14 +114,21 @@ public class EmailListController {
     
     
     @PostMapping(EmailConstants.URL_UPDATE_EMAIL_LIST)
-    public String updateEmailList(EmailList emailList, Principal principal, Locale locale) {
+    public String updateEmailList(EmailList emailList,String emailCategoryId, Principal principal, Locale locale) {
         try {
+            String[] category = emailCategoryId.split(",");
+            Set<EmailCategory> emailCategories = new HashSet<EmailCategory>();
+            for(int i=0;i<category.length; i++){
+                EmailCategory emailCategory = emailCategoryService.findByUniqueField("id", Long.parseLong(category[i]));
+                emailCategories.add(emailCategory);
+            }
             Account account = accountService.findByUniqueField("userEmail", principal.getName());
-
+            emailList.setEmailCategory(emailCategories);
             emailList.setAccount(account);
             emailListService.update(emailList);
 
         } catch (Exception e) {
+            e.printStackTrace();
             return messageSource.getMessage("email.list.update.failure", new Object[]{}, locale);
         }
         return messageSource.getMessage("email.list.update.success", new Object[]{}, locale);

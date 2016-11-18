@@ -31,6 +31,12 @@ EmailChimp.controller('MyListController',
 
                 //Event on properties
                 $$("add").define({click: this.addSettings});
+                $$("edit").define({click: this.editSettings});
+                $$("edit").disable();
+                
+                $$("myListGrid").attachEvent("onItemClick", function(id, e, node){
+                    $$("edit").enable();
+                });
             },
             deleteSettings: function (e, id, node) {
                 webix.confirm({
@@ -82,6 +88,23 @@ EmailChimp.controller('MyListController',
                         ]
                     },
                     body: addUserForm.getLayout()
+                }).show();
+            },
+            editSettings: function () {
+                webix.ui({
+                    view: "window",
+                    id: "win3",
+                    width: 500,
+                    height: 800,
+                    position: "center",
+                    modal: true,
+                    head: {
+                        view: "toolbar", cols: [
+                            {view: "label", label: "Update List"},
+                            {view: "button", label: 'X', width: 50, align: 'right', click: "$$('win3').close();"}
+                        ]
+                    },
+                    body: addUserForm.getEditLayout()
                 }).show();
             }
         }
