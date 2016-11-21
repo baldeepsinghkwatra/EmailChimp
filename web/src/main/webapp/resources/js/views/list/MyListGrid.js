@@ -6,7 +6,6 @@ EmailChimp.view('MyListGrid',
                     id: "myListGrid",
                     view: "datatable",
                     select: true,
-                    editable: true,
                     editaction: "dblclick",
                     on: {
                         onBeforeEditStop: function (data, prevent) {
