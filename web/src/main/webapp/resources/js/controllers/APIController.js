@@ -40,6 +40,7 @@ EmailChimp.controller('APIController',
             addAPI: function (e, id, node) {
                 var item = webix.$$("apiGrid").getItem(id);
                 webix.confirm({
+                    title: "API Key!!",
                     text: "The API Key will be created. <br/> Are you sure?",
                     ok: "Yes",
                     cancel: "Cancel",

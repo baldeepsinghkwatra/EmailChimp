@@ -12,7 +12,7 @@ EmailChimp.view('AddCategory',
                             name: "categoryName",
                             required: true
                         },
-                        {view: "label", height: 50, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
+                        {view: "label", height: 50, hidden: true, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
                         {
                             view: "button",
                             value: "Add",
@@ -33,6 +33,7 @@ EmailChimp.view('AddCategory',
                                             grid.hideProgress();
                                         }, null, null, 50);
                                         $$('addCategory').clear();
+                                        $$("responseMessage").show();
                                         $$("responseMessage").define({label: "<span style=\"color:" + color + "\">" + text + "</span>", css: "lines"});
                                         $$('responseMessage').refresh();
                                     });

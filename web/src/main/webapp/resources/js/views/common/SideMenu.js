@@ -81,6 +81,12 @@ EmailChimp.view('SideMenu',
                                         value: "API",
                                         icon: "key",
                                         details: "Generate API Keys"
+                                    },
+                                    {
+                                        id: "campaign",
+                                        value: "Campaign",
+                                        icon: "flag",
+                                        details: "Campaign Management"
                                     }
                                 ]
                             }

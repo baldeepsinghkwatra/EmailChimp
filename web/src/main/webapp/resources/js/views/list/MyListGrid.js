@@ -26,21 +26,33 @@ EmailChimp.view('MyListGrid',
                         },{
                             id: "contact",
                             header: "Contact",
+                            template:function htmlEncode( html ) {
+                                return EmailChimp.htmlEncode(html.contact);
+                            },
                             minWidth: 20,
                             editor: "text"
                         }, {
                             id: "email",
                             header: "Email",
+                            template:function htmlEncode( html ) {
+                                return EmailChimp.htmlEncode(html.email);
+                            },
                             width: 270,
                             editor: "text"
                         }, {
                             id: "firstName",
                             header: "First Name",
+                            template:function htmlEncode( html ) {
+                                return EmailChimp.htmlEncode(html.firstName);
+                            },
                             width: 200,
                             editor: "text"
                         }, {
                             id: "lastName",
                             header: "Last Name",
+                            template:function htmlEncode( html ) {
+                                return EmailChimp.htmlEncode(html.lastName);
+                            },
                             width: 200,
                             editor: "text"
                         }, 

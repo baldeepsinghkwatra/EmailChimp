@@ -27,7 +27,7 @@ EmailChimp.view('AddSettings',
                             name: "smtpPassword",
                             required: true
                         },
-                        {view: "label", height: 50, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
+                        {view: "label", height: 50, hidden: true, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
                         {
                             view: "button",
                             value: "Add",
@@ -48,6 +48,7 @@ EmailChimp.view('AddSettings',
                                             grid.hideProgress();
                                         }, null, null, 50);
                                         $$('addSettings').clear();
+                                        $$("responseMessage").show();
                                         $$("responseMessage").define({label: "<span style=\"color:" + color + "\">" + text + "</span>", css: "lines"});
                                         $$('responseMessage').refresh();
                                     });

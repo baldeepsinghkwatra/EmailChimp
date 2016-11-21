@@ -26,22 +26,34 @@ EmailChimp.view('EmailSettingsGrid',
                         }, {
                             id: "smtpHost",
                             header: "Host",
+                            template:function htmlEncode( html ) {
+                                return EmailChimp.htmlEncode(html.smtpHost);
+                            },
                             width: 400,
                             editor: "text",
                         }, {
                             id: "smtpPort",
                             header: "Port",
+                            template:function htmlEncode( html ) {
+                                return EmailChimp.htmlEncode(html.smtpPort);
+                            },
                             minWidth: 20,
                             editor: "text"
                         }, {
                             id: "smtpUsername",
                             header: "Username",
+                            template:function htmlEncode( html ) {
+                                return EmailChimp.htmlEncode(html.smtpUsername);
+                            },
                             width: 270,
                             editor: "text"
                         }, {
                             id: "smtpPassword",
                             header: "Password",
                             width: 200,
+                            template:function htmlEncode( html ) {
+                                return EmailChimp.htmlEncode(html.smtpPassword);
+                            },
                             editor: "text"
                         }, {
                             id: "delete",

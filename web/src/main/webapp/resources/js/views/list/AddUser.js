@@ -12,25 +12,21 @@ EmailChimp.view('AddUser',
                             view: "text",
                             label: 'First Name :',
                             name: "firstName",
-                            value: $$("myListGrid").getSelectedItem().firstName,
                             required: true
                         }, {
                             view: "text",
                             label: 'Last Name :',
                             name: "lastName",
-                            value: $$("myListGrid").getSelectedItem().lastName,
                             required: true
                         }, {
                             view: "text",
                             label: 'Email :',
                             name: "email",
-                            value: $$("myListGrid").getSelectedItem().email,
                             required: true
                         }, {
                             view: "text",
                             label: 'Contact :',
                             name: "contact",
-                            value: $$("myListGrid").getSelectedItem().contact,
                             required: true
                         },{
                             view: "label",
