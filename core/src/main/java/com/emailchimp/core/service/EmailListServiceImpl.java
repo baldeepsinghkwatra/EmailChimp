@@ -17,7 +17,9 @@
 package com.emailchimp.core.service;
 
 import com.emailchimp.core.dao.EmailListDAO;
+import com.emailchimp.core.model.EmailCategoryBean;
 import com.emailchimp.core.model.EmailList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,5 +38,10 @@ public class EmailListServiceImpl extends CommonServiceImpl<EmailList> implement
     public EmailListServiceImpl(EmailListDAO emailListDAO) {
         super(emailListDAO);
         this.emailListDAO = emailListDAO;
+    }
+
+    @Override
+    public List<EmailCategoryBean> getCategoryList() {
+        return emailListDAO.getCategoryList();
     }
 }

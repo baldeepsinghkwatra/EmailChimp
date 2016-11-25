@@ -16,12 +16,16 @@
  */
 package com.emailchimp.core.dao;
 
+import com.emailchimp.core.model.EmailCategoryBean;
 import com.emailchimp.core.model.EmailList;
+import java.util.List;
 
 /**
  *
  * @author baldeep
  */
 public interface EmailListDAO extends AbstractDAO<Long, EmailList>{
+
+    public List<EmailCategoryBean> getCategoryList();
 
 }

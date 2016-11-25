@@ -16,7 +16,14 @@
  */
 package com.emailchimp.core.dao;
 
+import com.emailchimp.core.model.EmailCategory;
+import com.emailchimp.core.model.EmailCategoryBean;
 import com.emailchimp.core.model.EmailList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -25,5 +32,19 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class EmailListDAOImpl  extends AbstractDAOImpl<Long, EmailList> implements EmailListDAO {
+
+    @Override
+    public List<EmailCategoryBean> getCategoryList() {
+        List<EmailCategoryBean> emailCategoryList = new LinkedList();
+        String sql = "select list.id,category_name,list.account_id,email_list_id,email_category_id,contact,email,first_name,is_subscribed,last_name from email_category cat JOIN email_list_category list_cat ON list_cat.email_category_id = cat.id JOIN email_list list ON list.id=list_cat.email_list_id;";
+        SQLQuery query = getSession().createSQLQuery(sql);
+        query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+        List results = query.list();
+        Iterator itr = results.iterator();
+        while(itr.hasNext()){
+            System.out.println(itr.next());
+        }
+        return results;
+    }
 
 }

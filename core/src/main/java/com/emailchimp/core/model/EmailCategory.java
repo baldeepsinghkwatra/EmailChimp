@@ -58,6 +58,18 @@ public class EmailCategory implements Serializable {
     @JsonIgnore
     private Calendar addedDate;
     
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "emailCategory")
+    private Set<EmailList> emailList = new HashSet<EmailList>();
+
+    public Set<EmailList> getEmailList() {
+        return emailList;
+    }
+
+    public void setEmailList(Set<EmailList> emailList) {
+        this.emailList = emailList;
+    }
+    
     public long getId() {
         return id;
     }

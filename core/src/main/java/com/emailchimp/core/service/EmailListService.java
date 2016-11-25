@@ -16,12 +16,16 @@
  */
 package com.emailchimp.core.service;
 
+import com.emailchimp.core.model.EmailCategoryBean;
 import com.emailchimp.core.model.EmailList;
+import java.util.List;
 
 /**
  *
  * @author baldeep
  */
 public interface EmailListService extends CommonService<EmailList> {
+
+    public List<EmailCategoryBean> getCategoryList();
 
 }
