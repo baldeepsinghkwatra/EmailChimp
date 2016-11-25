@@ -1,9 +1,9 @@
 
-EmailChimp.view('MyListGrid',
+EmailChimp.view('CampaignGrid',
         {
-            getMyListGrid: function () {
+            getCampaignGrid: function () {
                 return{
-                    id: "myListGrid",
+                    id: "campaignGrid",
                     view: "datatable",
                     select: true,
                     editaction: "dblclick",
@@ -24,48 +24,34 @@ EmailChimp.view('MyListGrid',
                             width: 50
                         },{
                             id: "contact",
-                            header: "Contact",
+                            header: "Campaign Name",
                             template:function htmlEncode( html ) {
                                 return EmailChimp.htmlEncode(html.contact);
                             },
-                            minWidth: 20,
+                            width: 200,
                             editor: "text"
                         }, {
                             id: "email",
-                            header: "Email",
+                            header: "Email Subject",
                             template:function htmlEncode( html ) {
                                 return EmailChimp.htmlEncode(html.email);
                             },
-                            fillspace: 1,
                             width: 270,
                             editor: "text"
-                        }, {
-                            id: "firstName",
-                            header: "First Name",
+                        },{
+                            id: "email",
+                            header: "Email Configurations",
                             template:function htmlEncode( html ) {
-                                return EmailChimp.htmlEncode(html.firstName);
+                                return EmailChimp.htmlEncode(html.email);
                             },
-                            width: 200,
-                            editor: "text"
-                        }, {
-                            id: "lastName",
-                            header: "Last Name",
-                            template:function htmlEncode( html ) {
-                                return EmailChimp.htmlEncode(html.lastName);
-                            },
-                            width: 200,
+                            width: 270,
                             editor: "text"
                         }, 
                         {
                             id: "emailCategory",
-                            header: "Category",
-                            template: function(data){
-                                var category = data.emailCategory;
-                                var categoryName="";
-                                for (var i = 0; i < category.length; i++) {
-                                    categoryName += category[i].categoryName+" ";
-                                }
-                                return EmailChimp.htmlEncode(categoryName);
+                            header: "Email Template",
+                            template:function htmlEncode( html ) {
+                                return EmailChimp.htmlEncode(html.email);
                             },
                             width: 200,
                             editor: "text"
@@ -108,7 +94,7 @@ EmailChimp.view('MyListGrid',
                             id: "title",
                             css: "title",
                             template: "<div class='header'>#title#</div>",
-                            data: {title: "My List"}
+                            data: {title: "Campaign"}
                         },
                         {
                             type: "space",
@@ -118,13 +104,12 @@ EmailChimp.view('MyListGrid',
                                     cols: [
                                         this.getButton('add', 'Add', 'plus-circle'),
                                         this.getButton('edit', 'Edit', 'pencil-square-o'),
-                                        this.getButton('import', 'Import(.xls)', 'upload'),
                                         {}
                                     ]
                                 },
                                 {
                                     rows: [
-                                        this.getMyListGrid(),
+                                        this.getCampaignGrid(),
                                         {
                                             view: "toolbar",
                                             css: "highlighted_header header6",

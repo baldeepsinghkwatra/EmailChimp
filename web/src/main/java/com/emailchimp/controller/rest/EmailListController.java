@@ -19,6 +19,7 @@ package com.emailchimp.controller.rest;
 import com.emailchimp.constants.EmailConstants;
 import com.emailchimp.core.model.Account;
 import com.emailchimp.core.model.EmailCategory;
+import com.emailchimp.core.model.EmailCategoryBean;
 import com.emailchimp.core.model.EmailList;
 import com.emailchimp.core.service.AccountService;
 import com.emailchimp.core.service.EmailCategoryService;
@@ -28,6 +29,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -90,7 +92,16 @@ public class EmailListController {
         return null;
     }
 
-    
+    /**
+     *
+     * @param principal
+     * @return
+     */
+    @GetMapping(EmailConstants.URL_GET_EMAIL_CATEGORY_LIST)
+    public List<EmailCategoryBean> getEmailCategoryList(Principal principal) {
+        
+        return emailListService.getCategoryList();
+    }
     
     @PostMapping(EmailConstants.URL_DELETE_EMAIL_LIST)
     public String deleteEmailList(Long id, Principal principal, Locale locale) {

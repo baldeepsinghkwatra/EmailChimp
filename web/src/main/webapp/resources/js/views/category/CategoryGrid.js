@@ -30,18 +30,17 @@ EmailChimp.view('CategoryGrid',
                                 return EmailChimp.htmlEncode(html.categoryName);
                             },
                             width: 900,
+                            fillspace: 1,
                             editor: "text",
                         }, {
                             id: "delete",
                             header: "&nbsp;",
                             width: 35,
-                            fillspace: 1,
                             template: "<span  style='cursor:pointer;' class='webix_icon fa-trash-o trash'></span>"},
                         {
                             id: "save",
                             header: "&nbsp;",
                             width: 35,
-                            fillspace: 1,
                             template: "<span  style='cursor:pointer;' class='webix_icon fa-floppy-o save'></span>"}
                     ],
                     pager: "pagerA",

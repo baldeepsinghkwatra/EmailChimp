@@ -30,6 +30,7 @@ EmailChimp.view('EmailSettingsGrid',
                                 return EmailChimp.htmlEncode(html.smtpHost);
                             },
                             width: 400,
+                            fillspace: 1,
                             editor: "text",
                         }, {
                             id: "smtpPort",

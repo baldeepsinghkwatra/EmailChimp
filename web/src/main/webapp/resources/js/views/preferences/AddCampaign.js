@@ -1,47 +1,54 @@
 changeData();
 
-EmailChimp.view('AddUser',
+EmailChimp.view('AddCampaign',
         {
             getLayout: function () {
                 return {
                     view: "form",
                     borderless: true,
-                    id: "addUser",
+                    id: "addCampaign",
                     elements: [
                         {
                             view: "text",
-                            label: 'First Name :',
-                            name: "firstName",
+                            label: 'Campaign Name :',
+                            name: "campaignName",
                             required: true
                         }, {
                             view: "text",
-                            label: 'Last Name :',
-                            name: "lastName",
+                            label: 'Email Subject :',
+                            name: "emailSubject",
                             required: true
                         }, {
                             view: "text",
-                            label: 'Email :',
-                            name: "email",
+                            label: 'Reply To Name:',
+                            name: "replyToEmail",
                             required: true
                         }, {
                             view: "text",
-                            label: 'Contact :',
-                            name: "contact",
+                            label: 'Reply To Email :',
+                            name: "replyToEmail",
+                            type: "email",
                             required: true
-                        },{
-                            view: "label",
-                            label: "Select Category: ",
                         },
                         {
-                            id: "categoryList",
-                            view:"list",
-                            template:function htmlEncode( html ) {
-                                return EmailChimp.htmlEncode(html.value);
-                            },
-                            height:200,
-                            select:true,
-                            multiselect: true,
-                            data: data
+                            view:"richselect",
+                            label: "Select Template",
+                            required: true,
+                            name: "template",
+//                            template:function htmlEncode( html ) {
+//                                return html.options;
+//                            },
+                            options: data
+                         },
+                         {
+                            view:"richselect",
+                            label: "Select Email Configuration",
+                            required: true,
+                            name: "emailConfiguration",
+//                            template:function htmlEncode( html ) {
+//                                return html.options;
+//                            },
+                            options: emailConfigData
                          },
                         {view: "label", height: 50,hidden:true, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
                         {
@@ -87,6 +94,16 @@ EmailChimp.view('AddUser',
                     elementsConfig: {
                         labelPosition: "top"
                     }
+                };
+            },
+            getTreeLayout: function() {
+                return {
+                    view:"tree",
+                    id: "categoryListTree",
+                    height: 475,
+                    select: true,
+                    activeTitle:true,
+                    data: emailCategoryListData
                 };
             },
             getEditLayout: function () {

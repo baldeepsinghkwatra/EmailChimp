@@ -27,7 +27,12 @@ EmailChimp.app('Welcome', {
             controller: 'ChangePasswordController'
         },
         {   hash: '#api',
-            controller: 'APIController'}
+            controller: 'APIController'
+        },
+        {
+            hash: "#campaign",
+            controller: 'CampaignController'
+        }
     ],
     defaultRoute: '#sentMail',
     init: function () {

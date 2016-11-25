@@ -37,6 +37,7 @@ String URL_UPDATE_EMAIL_CATEGORY="/update-email-category";
 
 String URL_ADD_EMAIL_LIST="/add-email-list";
 String URL_GET_EMAIL_LIST="/get-email-list";
+String URL_GET_EMAIL_CATEGORY_LIST = "/get-email-category-list";
 String URL_DELETE_EMAIL_LIST="/delete-email-list";
 String URL_UPDATE_EMAIL_LIST="/update-email-list";
 

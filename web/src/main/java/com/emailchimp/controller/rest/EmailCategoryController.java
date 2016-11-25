@@ -19,6 +19,7 @@ package com.emailchimp.controller.rest;
 import com.emailchimp.constants.EmailConstants;
 import com.emailchimp.core.model.Account;
 import com.emailchimp.core.model.EmailCategory;
+import com.emailchimp.core.model.EmailCategoryBean;
 import com.emailchimp.core.service.AccountService;
 import com.emailchimp.core.service.EmailCategoryService;
 import java.security.Principal;
@@ -64,12 +65,14 @@ public class EmailCategoryController {
     }
 
     @GetMapping(EmailConstants.URL_GET_EMAIL_CATEGORY)
-    public List<EmailCategory> getEmailCategory(Principal principal) {
+    public List<EmailCategoryBean> getEmailCategory(Principal principal) {
         try {
 
             Account account = accountService.findByUniqueField("userEmail", principal.getName());
-
-            return emailCategoryService.findByField("account", account);
+            
+            return emailCategoryService.getEmailCategoryBean(account);
+            
+//            return emailCategoryService.findByField("account", account);
         } catch (Exception e) {
         }
         return null;

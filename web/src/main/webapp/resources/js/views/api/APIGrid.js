@@ -29,6 +29,7 @@ EmailChimp.view('APIGrid',
                             template:function htmlEncode( html ) {
                                 return EmailChimp.htmlEncode(html.apiKey);
                             },
+                            fillspace: 1,
                             width: 1000,
                             editor: "text"
                         }, {
