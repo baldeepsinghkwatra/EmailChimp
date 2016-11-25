@@ -23,35 +23,35 @@ EmailChimp.view('CampaignGrid',
                             header: "#",
                             width: 50
                         },{
-                            id: "contact",
+                            id: "name",
                             header: "Campaign Name",
                             template:function htmlEncode( html ) {
-                                return EmailChimp.htmlEncode(html.contact);
+                                return EmailChimp.htmlEncode(html.name);
                             },
                             width: 200,
                             editor: "text"
                         }, {
-                            id: "email",
+                            id: "emailSubject",
                             header: "Email Subject",
                             template:function htmlEncode( html ) {
-                                return EmailChimp.htmlEncode(html.email);
+                                return EmailChimp.htmlEncode(html.emailSubject);
                             },
                             width: 270,
                             editor: "text"
                         },{
-                            id: "email",
+                            id: "emailConfiguration",
                             header: "Email Configurations",
                             template:function htmlEncode( html ) {
-                                return EmailChimp.htmlEncode(html.email);
+                                return EmailChimp.htmlEncode(html.emailConfiguration.smtpHost);
                             },
                             width: 270,
                             editor: "text"
                         }, 
                         {
-                            id: "emailCategory",
+                            id: "template",
                             header: "Email Template",
                             template:function htmlEncode( html ) {
-                                return EmailChimp.htmlEncode(html.email);
+                                return EmailChimp.htmlEncode(html.template.name);
                             },
                             width: 200,
                             editor: "text"
@@ -68,7 +68,7 @@ EmailChimp.view('CampaignGrid',
                             template: "<span  style='cursor:pointer;' class='webix_icon fa-floppy-o save'></span>"}
                     ],
                     pager: "pagerA",
-                    data: EmailChimp.models.MailModal.getEmailList(),
+                    data: EmailChimp.models.MailModal.getCampaign(),
                     ready: function () {
                         webix.extend(this, webix.ProgressBar);
                     }

@@ -1,6 +1,7 @@
 var data = webix.ajax().sync().get("get-email-templates");
 var emailConfigData = webix.ajax().sync().get("get-email-configuration");
 var emailCategoryListData = webix.ajax().sync().get("get-email-category");
+var list_data = "";
 
 function changeData() {
     data = JSON.parse(data.responseText);
@@ -21,7 +22,7 @@ function changeData() {
     for (var i = 0; i < emailCategoryListData.length; i++) {
         emailCategoryListData[i]["id"] = emailCategoryListData[i]["id"]; 
         emailCategoryListData[i]["value"] = EmailChimp.htmlEncode(emailCategoryListData[i]["categoryName"]); 
-        var list_data = emailCategoryListData[i]["emailListBean"];
+        list_data = emailCategoryListData[i]["emailListBean"];
         for(var j=0;j<list_data.length;j++){
             list_data[j]["value"] = list_data[j].email;
         }
@@ -63,12 +64,12 @@ EmailChimp.controller('MyListController',
                     cancel: "Cancel",
                     callback: function (res) {
                         if (res) {
-                            var item = webix.$$("myListGrid").getItem(id);
+                            var item = webix.$$("campaignGrid").getItem(id);
                             item = item.id;
-                            webix.ajax().post("delete-email-list", "id=" + item, function (text, xml, xhr) {
+                            webix.ajax().post("delete-campaign", "id=" + item, function (text, xml, xhr) {
                                 webix.alert(text);
                             }),
-                                    $$("myListGrid").remove(id);
+                                    $$("campaignGrid").remove(id);
                         }
                     }
                 });
@@ -112,8 +113,8 @@ EmailChimp.controller('MyListController',
                                 id: "tabbar", 
                                 value: "listView", 
                                 multiview: true, options: [
-                                    { value: "List", id: "addCampaign"},
-                                    { value: "Form", id: "categoryListTree"}
+                                    { value: "Campaign", id: "addCampaign"},
+                                    { value: "Category List", id: "categoryListTree"}
                                 ]
                             },
                             {

@@ -36,7 +36,7 @@ EmailChimp.model('MailModal',
             getApi: function () {
               return webix.ajax().get("get-api");
             },
-             getEmailList: function () {
+            getEmailList: function () {
               return webix.ajax().get("get-email-list");
             },
             getEmailTemplates: function () {
@@ -44,6 +44,9 @@ EmailChimp.model('MailModal',
             },
             deleteEmailTemplates: function() {
                 
+            },
+            getCampaign: function() {
+              return webix.ajax().get("get-campaign");
             }
 
         });

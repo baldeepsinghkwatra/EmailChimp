@@ -46,6 +46,10 @@ String URL_GET_EMAIL_TEMPLATE="/get-email-templates";
 String URL_UPDATE_EMAIL_TEMPLATE="/update-email-template";
 String URL_DELETE_EMAIL_TEMPLATE="/delete-email-template";
 
+String URL_ADD_CAMPAIGN = "/add-campaign";
+String URL_GET_CAMPAIGN = "/get-campaign";
+String URL_DELETE_CAMPAIGN = "/delete-campaign";
+
 String URL_ADD_API="/add-api";
 String URL_GET_API="/get-api";
 String URL_DELETE_API="/delete-api";
