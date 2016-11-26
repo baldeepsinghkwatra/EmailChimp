@@ -100,4 +100,30 @@ public class CampaignController {
         }
         return messageSource.getMessage("email.campaign.delete.success", new Object[]{}, locale);
     }
+    
+    @PostMapping(EmailConstants.URL_UPDATE_CAMPAIGN)
+    public String updateCampaign(Campaign campaign, String templateId, String emailConfigId,
+            String emailListId,Principal principal, Locale locale) {
+        try {
+            Account account = accountService.findByUniqueField("userEmail", principal.getName());
+            List<EmailList> emailList = new ArrayList<EmailList>();
+            String[] listId = emailListId.split(",");
+            for(int i=0;i<listId.length;i++){                                                   
+                emailList.add(emailListService.findByUniqueField("id", Long.parseLong(listId[i])));
+            }
+            Template template = templateService.findByUniqueField("id", Long.parseLong(templateId));
+            EmailConfiguration emailConfiguration = emailConfigService.findByUniqueField("id", Long.parseLong(emailConfigId));
+            
+            campaign.setAccount(account);
+            campaign.setTemplate(template);
+            campaign.setEmailConfiguration(emailConfiguration);
+            campaign.setEmailList(emailList);
+            campaign.setCreatedDateTime(Calendar.getInstance());
+            campaignService.update(campaign);
+        }catch(Exception e){
+            e.printStackTrace();
+            return messageSource.getMessage("email.campaign.update.failure", new Object[]{}, locale);
+        }
+        return messageSource.getMessage("email.campaign.update.success", new Object[]{}, locale);
+    }
 }

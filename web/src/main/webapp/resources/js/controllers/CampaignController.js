@@ -141,7 +141,25 @@ EmailChimp.controller('MyListController',
                             {view: "button", label: 'X', width: 50, align: 'right', click: "$$('win3').close();"}
                         ]
                     },
-                    body: addUserForm.getEditLayout()
+                    body: {
+                            rows:[
+                            {
+                                view: "tabbar", 
+                                id: "tabbar", 
+                                value: "listView", 
+                                multiview: true, options: [
+                                    { value: "Campaign", id: "editCampaign"},
+                                    { value: "Category List", id: "categoryListTree"}
+                                ]
+                            },
+                            {
+                                cells: [
+                                    addCampaign.getEditLayout(),
+                                    addCampaign.getTreeLayout()
+                                ]
+                            }
+                        ]
+                    }
                 }).show();
             }
         }

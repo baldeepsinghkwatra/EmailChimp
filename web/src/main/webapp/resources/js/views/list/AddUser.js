@@ -119,7 +119,22 @@ EmailChimp.view('AddUser',
                             name: "contact",
                             value: $$("myListGrid").getSelectedItem().contact,
                             required: true
+                        },{
+                            view: "label",
+                            label: "Select Category: ",
                         },
+                        {
+                            id: "editCategoryList",
+                            view:"list",
+                            template:function htmlEncode( html ) {
+                                return EmailChimp.htmlEncode(html.value);
+                            },
+                            height:200,
+                            select:true,
+                            multiselect: true,
+                            required: true,
+                            data: data
+                         },
                         {view: "label", height: 50,hidden:true, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
                         {
                             view: "button",
@@ -127,10 +142,14 @@ EmailChimp.view('AddUser',
                             click: function () {
                                 
                                 if ($$('editUser').validate()) { //validate form
-                                    var item = $$("myListGrid").getSelectedItem().emailCategory;
-                                    var id = "";
-                                    for(var i=0; i<item.length; i++){
-                                        id += item[i].id+",";
+                                    var item = $$("editCategoryList").getSelectedItem(true);
+                                    if(item.length == 0){
+                                        $$("responseMessage").show();
+                                        $$("responseMessage").define({label: "<span style=\"color:red\"> Please Select Category\n</span>", css: "lines"});
+                                    }
+                                    var id = item[0].id;
+                                    for(var i=1; i<item.length; i++){
+                                        id += ","+item[i].id;
                                     }
                                     $$('editUser').setValues({
                                         id: $$("myListGrid").getSelectedItem().id,
