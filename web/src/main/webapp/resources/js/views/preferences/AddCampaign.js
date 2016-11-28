@@ -75,7 +75,7 @@ EmailChimp.view('AddCampaign',
             getTreeLayout: function() {
                 return {
                     id: "categoryListTree",
-                    height:475,
+                    height:480,
                     rows:[
                         {
                             view:"tree",
