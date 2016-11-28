@@ -109,15 +109,6 @@ EmailChimp.controller('MyListController',
                     body: {
                             rows:[
                             {
-                                view: "tabbar", 
-                                id: "tabbar", 
-                                value: "listView", 
-                                multiview: true, options: [
-                                    { value: "Campaign", id: "addCampaign"},
-                                    { value: "Category List", id: "categoryListTree"}
-                                ]
-                            },
-                            {
                                 cells: [
                                     addCampaign.getLayout(),
                                     addCampaign.getTreeLayout()
