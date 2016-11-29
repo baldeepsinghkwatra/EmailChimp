@@ -19,6 +19,7 @@ package com.emailchimp.core.model;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -70,6 +71,17 @@ public class Campaign implements Serializable {
     @OneToOne
     @JoinColumn
     private Template template;
+    
+    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    private List<TrackCampaignOpens> trackCampaignOpens;
+
+    public List<TrackCampaignOpens> getTrackCampaignOpens() {
+        return trackCampaignOpens;
+    }
+
+    public void setTrackCampaignOpens(List<TrackCampaignOpens> trackCampaignOpens) {
+        this.trackCampaignOpens = trackCampaignOpens;
+    }
     
 //    @OneToMany(fetch = FetchType.EAGER)
 //    @JoinColumn
