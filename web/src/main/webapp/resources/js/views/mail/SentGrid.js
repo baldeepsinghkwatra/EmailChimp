@@ -41,7 +41,7 @@ EmailChimp.view('SentGrid',
                             template: "<span  style='cursor:pointer;' class='webix_icon fa-trash-o trash'></span>"}
                     ],
                     pager: "pagerA",
-                data: EmailChimp.models.MailModal.getAll(),
+                    data: EmailChimp.models.MailModal.getAll(),
                     ready: function () {
                         webix.extend(this, webix.ProgressBar);
                     }

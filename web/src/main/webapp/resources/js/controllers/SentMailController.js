@@ -70,10 +70,10 @@ EmailChimp.controller('SentMailController',
                     view: "window",
                     id: "win2",
                     autoheight : true,
-        			position : "center",
-        			width : 1000,
-        			head : EmailChimp.getPopupToolbar('New Mail'),
-        			modal: true,
+                    position : "center",
+                    width : 1000,
+                    head : EmailChimp.getPopupToolbar('New Mail'),
+                    modal: true,
                     body: composeForm.getLayout()
                 }).show();
 

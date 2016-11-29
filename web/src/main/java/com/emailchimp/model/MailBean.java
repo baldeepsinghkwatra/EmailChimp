@@ -1,6 +1,6 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template files, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.emailchimp.model;
@@ -14,7 +14,7 @@ public class MailBean {
     private String to;
     private String message;
     private String subject;
-    private String file;
+    private String files;
     private String cc;
     private String bcc;
     
@@ -34,12 +34,12 @@ public class MailBean {
         this.bcc = bcc;
     }
     
-    public String getFile() {
-        return file;
+    public String getFiles() {
+        return files;
     }
 
-    public void setFile(String file) {
-        this.file = file;
+    public void setFiles(String files) {
+        this.files = files;
     }
 
     public String getTo() {
