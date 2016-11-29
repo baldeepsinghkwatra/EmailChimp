@@ -11,6 +11,7 @@ import com.emailchimp.core.model.Campaign;
 import com.emailchimp.core.model.EmailConfiguration;
 import com.emailchimp.core.model.EmailList;
 import com.emailchimp.core.model.Template;
+import com.emailchimp.core.model.TrackCampaignOpens;
 import com.emailchimp.core.service.AccountService;
 import com.emailchimp.core.service.CampaignService;
 import com.emailchimp.core.service.EmailConfigurationService;
@@ -55,19 +56,22 @@ public class CampaignController {
             String emailListId,Principal principal, Locale locale) {
         try {
             Account account = accountService.findByUniqueField("userEmail", principal.getName());
-            List<EmailList> emailList = new ArrayList<EmailList>();
+            List<TrackCampaignOpens> trackCampaignList = new ArrayList<TrackCampaignOpens>();
             String[] listId = emailListId.split(",");
-            for(int i=0;i<listId.length;i++){                                                   
-                emailList.add(emailListService.findByUniqueField("id", Long.parseLong(listId[i])));
+            for(int i=0;i<listId.length;i++){
+                TrackCampaignOpens trackCampaignOpens = new TrackCampaignOpens();
+                trackCampaignOpens.setCampaign(campaign);
+                trackCampaignOpens.setEmailList(emailListService.findByUniqueField("id", Long.parseLong(listId[i])));
+                trackCampaignList.add(trackCampaignOpens);
             }
             Template template = templateService.findByUniqueField("id", Long.parseLong(templateId));
             EmailConfiguration emailConfiguration = emailConfigService.findByUniqueField("id", Long.parseLong(emailConfigId));
-            
+            campaign.setTrackCampaignOpens(trackCampaignList);
             campaign.setAccount(account);
             campaign.setTemplate(template);
             campaign.setEmailConfiguration(emailConfiguration);
-//            campaign.setEmailList(emailList);
             campaign.setCreatedDateTime(Calendar.getInstance());
+
             campaignService.save(campaign);
         }catch(Exception e){
             e.printStackTrace();

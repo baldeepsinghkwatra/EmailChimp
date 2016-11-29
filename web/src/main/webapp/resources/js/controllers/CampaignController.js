@@ -26,9 +26,9 @@ function changeData() {
         for(var j=0;j<list_data.length;j++){
             list_data[j]["value"] = list_data[j].email;
         }
-        emailCategoryListData[i]["data"] = list_data;
-        delete emailCategoryListData[i]["emailListBean"];
+        emailCategoryListData[i]["data"] = list_data; 
     }
+    console.log(emailCategoryListData);
 }
 EmailChimp.controller('CampaignController',
         {
