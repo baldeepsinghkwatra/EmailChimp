@@ -59,7 +59,7 @@ public class EmailCategory implements Serializable {
     private Calendar addedDate;
     
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "emailCategory")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "emailCategory")
     private Set<EmailList> emailList = new HashSet<EmailList>();
 
     public Set<EmailList> getEmailList() {

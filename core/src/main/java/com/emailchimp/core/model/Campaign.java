@@ -71,17 +71,17 @@ public class Campaign implements Serializable {
     @JoinColumn
     private Template template;
     
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn
-    private List<EmailList> emailList;
-
-    public List<EmailList> getEmailList() {
-        return emailList;
-    }
-
-    public void setEmailList(List<EmailList> emailList) {
-        this.emailList = emailList;
-    }
+//    @OneToMany(fetch = FetchType.EAGER)
+//    @JoinColumn
+//    private List<EmailList> emailList;
+//
+//    public List<EmailList> getEmailList() {
+//        return emailList;
+//    }
+//
+//    public void setEmailList(List<EmailList> emailList) {
+//        this.emailList = emailList;
+//    }
 
     public long getId() {
         return id;

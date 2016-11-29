@@ -63,7 +63,7 @@ public class EmailList implements Serializable {
     @Column(nullable = true)
     private String contact;
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name="email_list_category",
             joinColumns = {@JoinColumn(name = "email_list_id", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "email_category_id",nullable = false, updatable = false) })

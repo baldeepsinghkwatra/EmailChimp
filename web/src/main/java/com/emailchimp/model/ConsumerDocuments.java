@@ -36,7 +36,7 @@ import javax.persistence.TemporalType;
 @Entity
 public class ConsumerDocuments implements Serializable {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 

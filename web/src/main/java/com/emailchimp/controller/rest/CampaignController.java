@@ -66,7 +66,7 @@ public class CampaignController {
             campaign.setAccount(account);
             campaign.setTemplate(template);
             campaign.setEmailConfiguration(emailConfiguration);
-            campaign.setEmailList(emailList);
+//            campaign.setEmailList(emailList);
             campaign.setCreatedDateTime(Calendar.getInstance());
             campaignService.save(campaign);
         }catch(Exception e){
@@ -117,7 +117,7 @@ public class CampaignController {
             campaign.setAccount(account);
             campaign.setTemplate(template);
             campaign.setEmailConfiguration(emailConfiguration);
-            campaign.setEmailList(emailList);
+//            campaign.setEmailList(emailList);
             campaign.setCreatedDateTime(Calendar.getInstance());
             campaignService.update(campaign);
         }catch(Exception e){

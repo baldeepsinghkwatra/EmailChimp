@@ -29,7 +29,7 @@ function changeData() {
         emailCategoryListData[i]["data"] = list_data;
     }
 }
-EmailChimp.controller('MyListController',
+EmailChimp.controller('CampaignController',
         {
             component: ['views/preferences/CampaignGrid', 'views/preferences/AddCampaign', 'models/MailModal'],
             init: function () {

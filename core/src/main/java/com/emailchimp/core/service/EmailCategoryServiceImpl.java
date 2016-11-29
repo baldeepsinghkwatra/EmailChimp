@@ -50,12 +50,18 @@ public class EmailCategoryServiceImpl extends CommonServiceImpl<EmailCategory> i
 
     @Override
     public List<EmailCategoryBean> getEmailCategoryBean(Account account) {
-        List<EmailCategory> emailCategory = emailCategoryDAO.findByField("account", account);
-        List<EmailCategoryBean> emailCategoryBean = new ArrayList();
-        Iterator<EmailCategory> itr = emailCategory.iterator();
-        while(itr.hasNext()){
+        
+    	List<EmailCategory> emailCategory = emailCategoryDAO.findByField("account", account);
+        
+    	List<EmailCategoryBean> emailCategoryBean = new ArrayList();
+        
+    	Iterator<EmailCategory> itr = emailCategory.iterator();
+        
+    	while(itr.hasNext()){
+    		
             EmailCategoryBean cat_bean = new EmailCategoryBean();
             EmailCategory list_cat = itr.next();
+            
             Set<EmailList> list_email = list_cat.getEmailList();
             Iterator<EmailList> itr_email_list = list_email.iterator();
             Set<EmailListBean> list_email_bean = new HashSet<EmailListBean>();
@@ -73,6 +79,7 @@ public class EmailCategoryServiceImpl extends CommonServiceImpl<EmailCategory> i
             cat_bean.setCategoryName(list_cat.getCategoryName());
             cat_bean.setId(list_cat.getId());
             cat_bean.setEmailListBean(list_email_bean);
+            
             emailCategoryBean.add(cat_bean);
         }
         System.out.println("list: "+emailCategoryBean.size());

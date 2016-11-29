@@ -4,7 +4,7 @@ EmailChimp.view('MainToolbar', {
         elements: [
             {height: 46, view: "label", label: "EMAIL CHIMP", width: 200},
             {},
-            {view:"icon", icon:"user", popup:EmailChimp.account}
+            { margin: 10,view:"icon", icon:"user", popup:EmailChimp.account}
         ]
     }
 });
