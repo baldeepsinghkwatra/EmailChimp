@@ -55,7 +55,6 @@ EmailChimp.view('AddCampaign',
                              view:"button",
                              value:"Next",
                              click: function(){
-                                 $$("categoryListTree").show();
                                 if ($$('addCampaign').validate()){
                                     $$("categoryListTree").show();
                                 }else {

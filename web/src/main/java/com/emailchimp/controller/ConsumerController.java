@@ -40,7 +40,16 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.emailchimp.core.service.AccountService;
+import com.emailchimp.model.AttachmentBean;
+import com.emailchimp.model.AttachmentBeanWrapper;
+import java.io.File;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -120,11 +129,13 @@ public class ConsumerController {
 	}
 
 	@PostMapping(ConsumerConstants.URL_SEND_MAIL)
-	public String sendMailController(MailBean record) {
+	public String sendMailController(MailBean record,@RequestBody List<AttachmentBean> attachments) {
 		try {
-			email.sendMail(record.getTo(), record.getSubject(), record.getMessage());
+                    System.out.println("HI "+attachments.size()+attachments);
+//			email.sendMail(record.getTo(), record.getSubject(), record.getMessage());
 			return "Sent";
 		} catch (Exception ex) {
+                        ex.printStackTrace();
 			return "Not Sent";
 		}
 	}

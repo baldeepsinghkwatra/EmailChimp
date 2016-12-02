@@ -24,6 +24,7 @@ function changeData() {
         emailCategoryListData[i]["value"] = EmailChimp.htmlEncode(emailCategoryListData[i]["categoryName"]); 
         list_data = emailCategoryListData[i]["emailListBean"];
         for(var j=0;j<list_data.length;j++){
+            list_data[j]["id"] = emailCategoryListData[j]["id"]+"."+list_data[j].id;
             list_data[j]["value"] = list_data[j].email;
         }
         emailCategoryListData[i]["data"] = list_data; 

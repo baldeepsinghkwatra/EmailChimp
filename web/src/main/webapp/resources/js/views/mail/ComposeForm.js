@@ -26,32 +26,62 @@ EmailChimp.view('ComposeForm',
                             required: true
                         },
                         {
-                            view: "uploader", upload: "php/upload.php",
+                            view: "uploader", upload: "upload",
                             id: "upl1", name: "files",
                             value: "Add documents",
-                            link: "doclist", autosend: false
+                            link: "doclist"
                         },
-                        {view: "list", scroll: true, id: "doclist", type: "uploader", height: 80},
+                        {view: "list", scroll: true, id: "doclist", type: "uploader", autoheight: true},
                         {view: "label", height: 50,hidden:true, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
                         {
                             view: "button",
                             value: "Send",
-                            click: function () {
-                                if (this.getParentView().validate()) { //validate form
+                            click: function() {
+//                                //send files to server side
+                                var formValues = this.getParentView().getValues();
+                                
+                                var attachmentList = new Array();
+                                var order = $$("upl1").files.data.order;
+                                console.log(order);
+                                for (var i=0; i<order.length; i++){
+                                    attachmentList[i] = $$("upl1").files.getItem(order[i]);
+                                    delete attachmentList[i]["file"];
+                                    delete attachmentList[i]["percent"];
+                                    delete attachmentList[i]["progress"];
+                                    delete attachmentList[i]["size"];
+                                    delete attachmentList[i]["sizetext"];
+                                    delete attachmentList[i]["status"];
+                                    delete attachmentList[i]["type"];
+                                    delete attachmentList[i]["id"];
+                                }
+                                console.log(JSON.parse(JSON.stringify(attachmentList)));
+                                if($$("composeMail").validate()){
+                                    $$("composeMail").setValues({
+                                        to: formValues.to,
+                                        subject: formValues.subject,
+                                        files: formValues.files,
+                                        attachments: JSON.parse(JSON.stringify(attachmentList))
+                                    });
                                     webix.ajax().post("sendMail", $$('composeMail').getValues(), function (text, xml, xhr) {
                                         var color = 'red';
                                         if (xhr.status === 200) {
                                             color = 'green';
                                         }
+                                        var grid = $$("sentMailGrid");
+                                        grid.clearAll();
+                                        grid.showProgress();
+                                        $$("win2").close();
                                         webix.delay(function () {
-                                            grid.parse(EmailChimp.models.MailModal.getCampaign());
+                                            grid.parse(EmailChimp.models.MailModal.getAll());
                                             grid.hideProgress();
                                         }, null, null, 50);
+                                        $$('composeMail').clear();
                                         $$("responseMessage").show();
                                         $$("responseMessage").setHTML("<span style=\"color:" + color + "\">" + text + "</span>");
-                                    })
-                                } else
-                                    webix.message({type: "error", text: "Form data is invalid"});
+                                        $$('responseMessage').refresh();
+                                    });
+
+                                }
                             }
                         }
                     ],

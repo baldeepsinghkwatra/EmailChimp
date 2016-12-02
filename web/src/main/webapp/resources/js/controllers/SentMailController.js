@@ -6,7 +6,7 @@ EmailChimp.controller('SentMailController',
                 sentGrid = EmailChimp.views.SentGrid;
                 mailModal = EmailChimp.models.MailModal;
                 composeForm = EmailChimp.views.ComposeForm;
-
+                
                 // Change main layout
                 $$("content").removeView('main');
                 $$("content").addView(sentGrid.getlayout(), 1);
@@ -25,9 +25,9 @@ EmailChimp.controller('SentMailController',
                 //Event on properties
                 $$("compose").define({click: this.composeMail});
                 $$("refresh").define({click: this.refreshMail});
+                
             },
             bindComposeMailEvents: function () {
-
             },
             filterMails: function () {
 
@@ -65,7 +65,7 @@ EmailChimp.controller('SentMailController',
                 }, null, null, 300);
             },
             composeMail: function () {
-
+                
                 webix.ui({
                     view: "window",
                     id: "win2",
@@ -99,10 +99,11 @@ EmailChimp.controller('SentMailController',
 
                     //after that send form
                     webix.ajax().post(
-                            "php/saveform.php",
-                            $$("myform").getValues(),
+                            "sendMail",
+                            $$("composeMail").getValues(),
                             function (text) {
                                 //show server side response
+                                console.log(text);
                                 webix.message(text);
                             }
                     );

@@ -112,8 +112,9 @@ public class CampaignController {
             Account account = accountService.findByUniqueField("userEmail", principal.getName());
             List<EmailList> emailList = new ArrayList<EmailList>();
             String[] listId = emailListId.split(",");
-            for(int i=0;i<listId.length;i++){                                                   
-                emailList.add(emailListService.findByUniqueField("id", Long.parseLong(listId[i])));
+            for(int i=0;i<listId.length;i++){      
+                String[] cat_list_id = listId[i].split("\\.");
+                emailList.add(emailListService.findByUniqueField("id", Long.parseLong(cat_list_id[1])));
             }
             Template template = templateService.findByUniqueField("id", Long.parseLong(templateId));
             EmailConfiguration emailConfiguration = emailConfigService.findByUniqueField("id", Long.parseLong(emailConfigId));
