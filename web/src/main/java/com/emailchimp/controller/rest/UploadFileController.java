@@ -6,12 +6,17 @@
 package com.emailchimp.controller.rest;
 
 import com.emailchimp.constants.ConsumerConstants;
+import com.emailchimp.model.AttachmentBean;
 import com.emailchimp.model.FileUploadBean;
+import com.emailchimp.model.MailBean;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Date;
+import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -59,6 +64,18 @@ public class UploadFileController {
                 return fileUploadBean;
             }
             return fileUploadBean;
+	}
+        
+        @PostMapping(ConsumerConstants.URL_SEND_MAIL)
+	public String sendMailController(MailBean record,@RequestParam List<AttachmentBean> attachments) {
+		try {
+                    System.out.println("HI "+attachments.size()+attachments+record.getMessage());
+//			email.sendMail(record.getTo(), record.getSubject(), record.getMessage());
+			return "Sent";
+		} catch (Exception ex) {
+                        ex.printStackTrace();
+			return "Not Sent";
+		}
 	}
         
 }

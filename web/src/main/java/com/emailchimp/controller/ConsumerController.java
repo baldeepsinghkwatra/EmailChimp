@@ -128,16 +128,5 @@ public class ConsumerController {
 		return ConsumerConstants.PATH_UPLOAD_LIST;
 	}
 
-	@PostMapping(ConsumerConstants.URL_SEND_MAIL)
-	public String sendMailController(MailBean record,@RequestBody List<AttachmentBean> attachments) {
-		try {
-                    System.out.println("HI "+attachments.size()+attachments);
-//			email.sendMail(record.getTo(), record.getSubject(), record.getMessage());
-			return "Sent";
-		} catch (Exception ex) {
-                        ex.printStackTrace();
-			return "Not Sent";
-		}
-	}
 
 }

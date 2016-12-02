@@ -73,7 +73,7 @@ EmailChimp.controller('MyListController',
                     });
                 }
             },
-            addSettings: function () {
+            addSettings: function () {    
                 webix.ui({
                     view: "window",
                     id: "win2",
@@ -91,6 +91,7 @@ EmailChimp.controller('MyListController',
                 }).show();
             },
             editSettings: function () {
+                
                 webix.ui({
                     view: "window",
                     id: "win3",
@@ -106,6 +107,13 @@ EmailChimp.controller('MyListController',
                     },
                     body: addUserForm.getEditLayout()
                 }).show();
+                var cat_id = $$("myListGrid").getSelectedItem().emailCategory;
+                var id = [];
+                for(var i=0;i<cat_id.length;i++){
+                    id[i] = cat_id[i].id;
+                }
+                $$("editCategoryList").select(id);
+                
             }
         }
 );
