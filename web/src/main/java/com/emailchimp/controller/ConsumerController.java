@@ -43,6 +43,7 @@ import com.emailchimp.core.service.AccountService;
 import com.emailchimp.model.AttachmentBean;
 import com.emailchimp.model.AttachmentBeanWrapper;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -127,6 +128,17 @@ public class ConsumerController {
 	public String uploadListPage() {
 		return ConsumerConstants.PATH_UPLOAD_LIST;
 	}
-
+        
+        @PostMapping(ConsumerConstants.URL_SEND_MAIL)
+	public String sendMailController(MailBean record,ArrayList<AttachmentBean> attachments) {
+		try {
+                    System.out.println("HI "+attachments.size()+record.getMessage());
+//			email.sendMail(record.getTo(), record.getSubject(), record.getMessage());
+			return "Sent";
+		} catch (Exception ex) {
+                        ex.printStackTrace();
+			return "Not Sent";
+		}
+	}
 
 }

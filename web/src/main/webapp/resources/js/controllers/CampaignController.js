@@ -57,6 +57,7 @@ EmailChimp.controller('CampaignController',
                 
                 $$("campaignGrid").attachEvent("onItemClick", function(id, e, node){
                     $$("edit").enable();
+                    console.log($$("campaignGrid").getSelectedItem().template);
                 });
             },
             deleteSettings: function (e, id, node) {
@@ -137,23 +138,16 @@ EmailChimp.controller('CampaignController',
                     body: {
                             rows:[
                             {
-                                view: "tabbar", 
-                                id: "tabbar", 
-                                value: "listView", 
-                                multiview: true, options: [
-                                    { value: "Campaign", id: "editCampaign"},
-                                    { value: "Category List", id: "categoryListTree"}
-                                ]
-                            },
-                            {
                                 cells: [
                                     addCampaign.getEditLayout(),
-                                    addCampaign.getTreeLayout()
+                                    addCampaign.getEditTreeLayout()
                                 ]
                             }
                         ]
                     }
                 }).show();
+                $$("templateCombo").setValue($$("campaignGrid").getSelectedItem().template.id);
+                $$("configCombo").setValue($$("campaignGrid").getSelectedItem().emailConfiguration.id);
             }
         }
 );

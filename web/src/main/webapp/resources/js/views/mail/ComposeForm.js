@@ -40,7 +40,7 @@ EmailChimp.view('ComposeForm',
 //                                //send files to server side
                                 var formValues = this.getParentView().getValues();
                                 
-                                var attachmentList = new Object();
+                                var attachmentList = new Array();
                                 var order = $$("upl1").files.data.order;
                                 for (var i=0; i<order.length; i++){
                                     attachmentList[i] = $$("upl1").files.getItem(order[i]);
@@ -59,7 +59,7 @@ EmailChimp.view('ComposeForm',
                                         to: formValues.to,
                                         subject: formValues.subject,
                                         files: formValues.files,
-                                        attachments: attachmentList
+                                        attachments: JSON.parse(JSON.stringify(attachmentList))
                                     });
                                     webix.ajax().post("sendMail", $$('composeMail').getValues(), function (text, xml, xhr) {
                                         var color = 'red';

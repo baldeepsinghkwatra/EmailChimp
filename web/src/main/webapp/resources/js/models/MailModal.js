@@ -28,10 +28,10 @@ EmailChimp.model('MailModal',
                 return data;
             },
             getEmailConfiguration: function () {
-              return webix.ajax().get("get-email-configuration");
+              return webix.ajax().sync().get("get-email-configuration");
             },
             getEmailCategory: function () {
-              return webix.ajax().get("get-email-category");
+              return webix.ajax().sync().get("get-email-category");
             },
             getApi: function () {
               return webix.ajax().get("get-api");
@@ -40,7 +40,7 @@ EmailChimp.model('MailModal',
               return webix.ajax().get("get-email-list");
             },
             getEmailTemplates: function () {
-              return webix.ajax().get("get-email-templates");
+              return webix.ajax().sync().get("get-email-templates");
             },
             deleteEmailTemplates: function() {
                 

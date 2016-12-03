@@ -14,6 +14,10 @@ import java.util.List;
 public class AttachmentBeanWrapper {
     
     private List<AttachmentBean> attachmentBeanList;
+    
+    public AttachmentBeanWrapper(){
+        
+    }
 
     public List<AttachmentBean> getAttachmentBeanList() {
         return attachmentBeanList;
