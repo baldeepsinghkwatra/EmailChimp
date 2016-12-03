@@ -20,6 +20,9 @@ package com.emailchimp.core.service;
  *
  * @author baldeep
  */
+import com.emailchimp.core.model.AttachmentBean;
+import java.io.File;
+import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +65,26 @@ public class Email {
             helper.setTo(to);
             helper.setText(msg, true);
             mailSender.send(message);
+        } catch (MessagingException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void sendMail(String to, String subject, String message, List<AttachmentBean> attachments) {
+        try {
+            MimeMessage messageAttach = mailSender.createMimeMessage();
+            messageAttach.setSubject(subject);
+            messageAttach.setHeader("Content-Type", "text/plain; charset=UTF-8");
+            MimeMessageHelper helper;
+            helper = new MimeMessageHelper(messageAttach, true);
+            helper.setFrom(FROM);
+            helper.setTo(to);
+            helper.setText(message, true);
+            for(int i=0;i<attachments.size();i++){
+                AttachmentBean attachment = attachments.get(i);
+                helper.addAttachment(attachment.getName(), new File("/home/anshul/tmpFiles/"+attachment.getsName()));
+            }
+            mailSender.send(messageAttach);
         } catch (MessagingException ex) {
             ex.printStackTrace();
         }
