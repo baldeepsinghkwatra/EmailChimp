@@ -62,7 +62,13 @@ EmailChimp.view('ComposeForm',
                                         files: formValues.files,
                                         attachments: JSON.parse(JSON.stringify(attachmentList))
                                     });
-                                    webix.ajax().post("sendMail", $$('composeMail').getValues(), function (text, xml, xhr) {
+                                    webix.ajax()
+                                    .headers({
+                                        "Content-type":"application/json"
+                                    })
+                                    .post("sendMail",
+                                    		$$('composeMail').getValues(), 
+                                    		function (text, xml, xhr) {
                                         var color = 'red';
                                         if (xhr.status === 200) {
                                             color = 'green';

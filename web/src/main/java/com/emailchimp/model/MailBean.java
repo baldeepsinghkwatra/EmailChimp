@@ -5,6 +5,9 @@
  */
 package com.emailchimp.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author anshul
@@ -17,8 +20,17 @@ public class MailBean {
     private String files;
     private String cc;
     private String bcc;
+    private List<AttachmentBean> attachments;
     
-    public String getCc() {
+    public List<AttachmentBean> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List<AttachmentBean> attachments) {
+		this.attachments = attachments;
+	}
+
+	public String getCc() {
         return cc;
     }
 

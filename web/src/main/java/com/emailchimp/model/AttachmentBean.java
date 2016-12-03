@@ -14,10 +14,10 @@ public class AttachmentBean {
     private String name;
     private String sName;
 
-    public AttachmentBean(String name, String sName) {
-        this.name = name;
-        this.sName = sName;
-    }
+//    public AttachmentBean(String name, String sName) {
+//        this.name = name;
+//        this.sName = sName;
+//    }
 
     public String getName() {
         return name;
@@ -34,5 +34,11 @@ public class AttachmentBean {
     public void setsName(String sName) {
         this.sName = sName;
     }
+
+	@Override
+	public String toString() {
+		return "AttachmentBean [name=" + name + ", sName=" + sName + "]";
+	}
+    
     
 }
