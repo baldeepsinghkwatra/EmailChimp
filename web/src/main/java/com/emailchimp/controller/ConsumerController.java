@@ -40,7 +40,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.emailchimp.core.service.AccountService;
-import com.emailchimp.model.AttachmentBean;
+import com.emailchimp.core.model.AttachmentBean;
 import com.emailchimp.model.AttachmentBeanWrapper;
 import java.io.File;
 import java.util.ArrayList;
@@ -130,11 +130,10 @@ public class ConsumerController {
 	}
 
 	@PostMapping(ConsumerConstants.URL_SEND_MAIL)
-	public String sendMailController(@RequestBody MailBean record) {
+	public @ResponseBody String sendMailController(@RequestBody MailBean record) {
 
 		try {
-                    System.out.println("HI "+record+	 record.getAttachments());
-//			email.sendMail(record.getTo(), record.getSubject(), record.getMessage());
+			email.sendMail(record.getTo(), record.getSubject(), record.getMessage(), record.getAttachments());
 			return "Sent";
 		} catch (Exception ex) {
                         ex.printStackTrace();

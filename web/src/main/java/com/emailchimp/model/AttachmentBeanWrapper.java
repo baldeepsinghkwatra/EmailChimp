@@ -5,6 +5,7 @@
  */
 package com.emailchimp.model;
 
+import com.emailchimp.core.model.AttachmentBean;
 import java.util.List;
 
 /**
