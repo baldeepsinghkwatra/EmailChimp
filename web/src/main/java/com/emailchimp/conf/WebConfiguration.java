@@ -78,7 +78,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/");
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:///home/anshul/temp/");
+                .addResourceLocations("file:///Users/jaspreetsingh/Documents/temp/");
     }
 
     /**

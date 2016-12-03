@@ -42,7 +42,6 @@ EmailChimp.view('ComposeForm',
                                 
                                 var attachmentList = new Array();
                                 var order = $$("upl1").files.data.order;
-                                console.log(order);
                                 for (var i=0; i<order.length; i++){
                                     attachmentList[i] = $$("upl1").files.getItem(order[i]);
                                     delete attachmentList[i]["file"];

@@ -131,6 +131,7 @@ public class ConsumerController {
 
 	@PostMapping(ConsumerConstants.URL_SEND_MAIL)
 	public String sendMailController(@RequestBody MailBean record) {
+
 		try {
                     System.out.println("HI "+record+	 record.getAttachments());
 //			email.sendMail(record.getTo(), record.getSubject(), record.getMessage());

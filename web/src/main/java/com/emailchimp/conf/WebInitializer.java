@@ -52,7 +52,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
         return multipartConfigElement;
     }
  
-    private static final String LOCATION = "/home/anshul/temp/"; // Temporary location where files will be stored
+    private static final String LOCATION = "/Users/jaspreetsingh/Documents/temp/"; // Temporary location where files will be stored
  
     private static final long MAX_FILE_SIZE = 15242880; // 15MB : Max file size.
                                                         // Beyond that size spring will throw exception.

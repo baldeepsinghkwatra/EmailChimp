@@ -31,7 +31,7 @@ EmailChimp.view('AddCampaign',
                             required: true
                         },
                         {
-                            view:"richselect",
+                            view: "richselect",
                             name: "templateId",
                             label: "Select Template",
                             required: true,
@@ -39,9 +39,9 @@ EmailChimp.view('AddCampaign',
 //                                return html.options;
 //                            },
                             options: data
-                         },
-                         {
-                            view:"richselect",
+                        },
+                        {
+                            view: "richselect",
                             label: "Select Email Configuration",
                             required: true,
                             name: "emailConfigId",
@@ -49,20 +49,20 @@ EmailChimp.view('AddCampaign',
 //                                return html.options;
 //                            },
                             options: emailConfigData
-                         },
-                         {view: "label", height: 50,hidden:true, id: 'response', align: "center"},
-                         {
-                             view:"button",
-                             value:"Next",
-                             click: function(){
-                                if ($$('addCampaign').validate()){
+                        },
+                        {view: "label", height: 50, hidden: true, id: 'response', align: "center"},
+                        {
+                            view: "button",
+                            value: "Next",
+                            click: function () {
+                                if ($$('addCampaign').validate()) {
                                     $$("categoryListTree").show();
-                                }else {
+                                } else {
                                     $$("response").show();
                                     $$("response").setHTML("<span style=\"color:red\">*Please fill form properly</span>");
                                 }
-                             }
-                         }
+                            }
+                        }
                     ],
                     rules: {
                         "replyToEmail": webix.rules.isEmail
@@ -72,24 +72,24 @@ EmailChimp.view('AddCampaign',
                     }
                 };
             },
-            getTreeLayout: function() {
+            getTreeLayout: function () {
                 return {
                     id: "categoryListTree",
-                    height:480,
-                    rows:[
+                    height: 480,
+                    rows: [
                         {
-                            view:"tree",
-                            id:"categoryTree",
+                            view: "tree",
+                            id: "categoryTree",
                             select: true,
-                            activeTitle:true,
+                            activeTitle: true,
                             data: emailCategoryListData
                         },
-                        {view: "label", height: 50,hidden:true, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
+                        {view: "label", height: 50, hidden: true, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
                         {
                             cols: [{
-                                    view:"button",
-                                    value:"Previous",
-                                    click: function() {
+                                    view: "button",
+                                    value: "Previous",
+                                    click: function () {
                                         $$("addCampaign").show();
                                     }
                                 },
@@ -99,14 +99,13 @@ EmailChimp.view('AddCampaign',
                                     click: function () {
                                         var cat_list_id = "";
                                         var arr_cat_list = ($$("categoryTree").getSelectedItem(true));
-                                        for(var i=0;i<arr_cat_list.length;i++){
-                                            cat_list_id += arr_cat_list[i].id+",";
+                                        for (var i = 0; i < arr_cat_list.length; i++) {
+                                            cat_list_id += arr_cat_list[i].id + ",";
                                         }
-                                        if(arr_cat_list.length == 0){
+                                        if (arr_cat_list.length == 0) {
                                             $$("responseMessage").show();
                                             $$("responseMessage").setHTML("<span style=\"color:red\">*Please Select Category</span>");
-                                        }
-                                        else if ($$('addCampaign').validate()) { //validate form
+                                        } else if ($$('addCampaign').validate()) { //validate form
                                             $$('addCampaign').setValues({
                                                 name: $$("addCampaign").getValues().campaignName,
                                                 emailSubject: $$("addCampaign").getValues().emailSubject,
@@ -114,7 +113,7 @@ EmailChimp.view('AddCampaign',
                                                 replyToName: $$("addCampaign").getValues().replyToName,
                                                 templateId: $$("addCampaign").getValues().templateId,
                                                 emailConfigId: $$("addCampaign").getValues().emailConfigId,
-                                                emailListId: cat_list_id 
+                                                emailListId: cat_list_id
                                             });
                                             webix.ajax().post("add-campaign", $$('addCampaign').getValues(), function (text, xml, xhr) {
                                                 var color = 'red';
@@ -138,11 +137,80 @@ EmailChimp.view('AddCampaign',
                                         }
                                     }
                                 },
-                                
                             ]
                         }
                     ]
-                         
+
+                };
+            },
+            getEditTreeLayout: function () {
+                return {
+                    id: "editCategoryListTree",
+                    height: 480,
+                    rows: [
+                        {
+                            view: "tree",
+                            id: "categoryTree",
+                            select: true,
+                            activeTitle: true,
+                            data: emailCategoryListData
+                        },
+                        {view: "label", height: 50, hidden: true, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
+                        {
+                            cols: [{
+                                    view: "button",
+                                    value: "Previous",
+                                    click: function () {
+                                        $$("editCampaign").show();
+                                    }
+                                },
+                                {
+                                    view: "button",
+                                    value: "Update",
+                                    click: function () {
+                                        var cat_list_id = "";
+                                        var arr_cat_list = ($$("categoryTree").getSelectedItem(true));
+                                        for (var i = 0; i < arr_cat_list.length; i++) {
+                                            cat_list_id += arr_cat_list[i].id + ",";
+                                        }
+                                        console.log(cat_list_id);
+                                        if ($$('editCampaign').validate()) { //validate form
+                                            $$('editCampaign').setValues({
+                                                id: $$("campaignGrid").getSelectedItem().id,
+                                                name: $$("editCampaign").getValues().campaignName,
+                                                emailSubject: $$("editCampaign").getValues().emailSubject,
+                                                replyToEmail: $$("editCampaign").getValues().replyToEmail,
+                                                replyToName: $$("editCampaign").getValues().replyToName,
+                                                templateId: $$("editCampaign").getValues().templateId,
+                                                emailConfigId: $$("editCampaign").getValues().emailConfigId,
+                                                emailListId: cat_list_id
+                                            });
+                                            webix.ajax().post("update-campaign", $$('editCampaign').getValues(), function (text, xml, xhr) {
+                                                var color = 'red';
+                                                if (xhr.status === 200) {
+                                                    color = 'green';
+                                                }
+                                                var grid = $$("campaignGrid");
+                                                grid.clearAll();
+                                                grid.showProgress();
+                                                $$("win3").close();
+                                                webix.delay(function () {
+                                                    grid.parse(EmailChimp.models.MailModal.getCampaign());
+                                                    grid.hideProgress();
+                                                }, null, null, 50);
+                                                $$('editCampaign').clear();
+                                                $$("responseMessage").show();
+                                                $$("responseMessage").define({label: "<span style=\"color:" + color + "\">" + text + "</span>", css: "lines"});
+                                                $$('responseMessage').refresh();
+                                            });
+
+                                        }
+                                    }
+                                },
+                            ]
+                        }
+                    ]
+
                 };
             },
             getEditLayout: function () {
@@ -178,17 +246,19 @@ EmailChimp.view('AddCampaign',
                             required: true
                         },
                         {
-                            view:"richselect",
+                            view: "richselect",
                             name: "templateId",
                             label: "Select Template",
+                            id: "templateCombo",
                             required: true,
 //                            template:function htmlEncode( html ) {
 //                                return html.options;
 //                            },
                             options: data
-                         },
-                         {
-                            view:"richselect",
+                        },
+                        {
+                            view: "richselect",
+                            id: "configCombo",
                             label: "Select Email Configuration",
                             required: true,
                             name: "emailConfigId",
@@ -196,48 +266,17 @@ EmailChimp.view('AddCampaign',
 //                                return html.options;
 //                            },
                             options: emailConfigData
-                         },
-                        {view: "label", height: 50,hidden:true, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
+                        },
+                        {view: "label", height: 50, hidden: true, id: 'response', align: "center"},
                         {
                             view: "button",
-                            value: "Update",
+                            value: "Next",
                             click: function () {
-                                var cat_list_id = "";
-                                var arr_cat_list = ($$("categoryListTree").getSelectedItem(true));
-                                for(var i=0;i<arr_cat_list.length;i++){
-                                    cat_list_id += arr_cat_list[i].id+",";
-                                }
-                                console.log(cat_list_id);
-                                if ($$('editCampaign').validate()) { //validate form
-                                    $$('editCampaign').setValues({
-                                        id: $$("campaignGrid").getSelectedItem().id,
-                                        name: $$("editCampaign").getValues().campaignName,
-                                        emailSubject: $$("editCampaign").getValues().emailSubject,
-                                        replyToEmail: $$("editCampaign").getValues().replyToEmail,
-                                        replyToName: $$("editCampaign").getValues().replyToName,
-                                        templateId: $$("editCampaign").getValues().templateId,
-                                        emailConfigId: $$("editCampaign").getValues().emailConfigId,
-                                        emailListId: cat_list_id 
-                                    });
-                                    webix.ajax().post("update-campaign", $$('editCampaign').getValues(), function (text, xml, xhr) {
-                                        var color = 'red';
-                                        if (xhr.status === 200) {
-                                            color = 'green';
-                                        }
-                                        var grid = $$("campaignGrid");
-                                        grid.clearAll();
-                                        grid.showProgress();
-                                        $$("win3").close();
-                                        webix.delay(function () {
-                                            grid.parse(EmailChimp.models.MailModal.getCampaign());
-                                            grid.hideProgress();
-                                        }, null, null, 50);
-                                        $$('editCampaign').clear();
-                                        $$("responseMessage").show();
-                                        $$("responseMessage").define({label: "<span style=\"color:" + color + "\">" + text + "</span>", css: "lines"});
-                                        $$('responseMessage').refresh();
-                                    });
-
+                                if ($$('editCampaign').validate()) {
+                                    $$("editCategoryListTree").show();
+                                } else {
+                                    $$("response").show();
+                                    $$("response").setHTML("<span style=\"color:red\">*Please fill form properly</span>");
                                 }
                             }
                         }

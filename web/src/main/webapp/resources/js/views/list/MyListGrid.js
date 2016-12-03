@@ -75,11 +75,6 @@ EmailChimp.view('MyListGrid',
                             header: "&nbsp;",
                             width: 35,
                             template: "<span  style='cursor:pointer;' class='webix_icon fa-trash-o trash'></span>"},
-                        {
-                            id: "save",
-                            header: "&nbsp;",
-                            width: 35,
-                            template: "<span  style='cursor:pointer;' class='webix_icon fa-floppy-o save'></span>"}
                     ],
                     pager: "pagerA",
                     data: EmailChimp.models.MailModal.getEmailList(),

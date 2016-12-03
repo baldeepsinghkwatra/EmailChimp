@@ -5,11 +5,15 @@
  */
 package com.emailchimp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
+
 /**
  *
  * @author anshul
  */
-public class AttachmentBean {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class AttachmentBean implements Serializable{
     
     private String name;
     private String sName;
