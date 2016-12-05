@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
  * @author anshul
  */
 @Entity
-public class TrackCampaignOpens implements Serializable{
+public class CampaignList implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

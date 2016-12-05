@@ -73,14 +73,14 @@ public class Campaign implements Serializable {
     private Template template;
     
     @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-    private List<TrackCampaignOpens> trackCampaignOpens;
+    private List<CampaignList> campaignList;
 
-    public List<TrackCampaignOpens> getTrackCampaignOpens() {
-        return trackCampaignOpens;
+    public List<CampaignList> getCampaignList() {
+        return campaignList;
     }
 
-    public void setTrackCampaignOpens(List<TrackCampaignOpens> trackCampaignOpens) {
-        this.trackCampaignOpens = trackCampaignOpens;
+    public void setCampaignList(List<CampaignList> campaignList) {
+        this.campaignList = campaignList;
     }
     
 //    @OneToMany(fetch = FetchType.EAGER)
