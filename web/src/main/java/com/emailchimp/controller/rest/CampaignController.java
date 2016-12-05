@@ -11,7 +11,7 @@ import com.emailchimp.core.model.Campaign;
 import com.emailchimp.core.model.EmailConfiguration;
 import com.emailchimp.core.model.EmailList;
 import com.emailchimp.core.model.Template;
-import com.emailchimp.core.model.TrackCampaignOpens;
+import com.emailchimp.core.model.CampaignList;
 import com.emailchimp.core.service.AccountService;
 import com.emailchimp.core.service.CampaignService;
 import com.emailchimp.core.service.EmailConfigurationService;
@@ -56,17 +56,18 @@ public class CampaignController {
             String emailListId,Principal principal, Locale locale) {
         try {
             Account account = accountService.findByUniqueField("userEmail", principal.getName());
-            List<TrackCampaignOpens> trackCampaignList = new ArrayList<TrackCampaignOpens>();
+            List<CampaignList> trackCampaignList = new ArrayList<CampaignList>();
             String[] listId = emailListId.split(",");
             for(int i=0;i<listId.length;i++){
-                TrackCampaignOpens trackCampaignOpens = new TrackCampaignOpens();
+                String[] list_cat_id = listId[i].split("\\.");
+                CampaignList trackCampaignOpens = new CampaignList();
                 trackCampaignOpens.setCampaign(campaign);
-                trackCampaignOpens.setEmailList(emailListService.findByUniqueField("id", Long.parseLong(listId[i])));
+                trackCampaignOpens.setEmailList(emailListService.findByUniqueField("id", Long.parseLong(list_cat_id[1])));
                 trackCampaignList.add(trackCampaignOpens);
             }
             Template template = templateService.findByUniqueField("id", Long.parseLong(templateId));
             EmailConfiguration emailConfiguration = emailConfigService.findByUniqueField("id", Long.parseLong(emailConfigId));
-            campaign.setTrackCampaignOpens(trackCampaignList);
+            campaign.setCampaignList(trackCampaignList);
             campaign.setAccount(account);
             campaign.setTemplate(template);
             campaign.setEmailConfiguration(emailConfiguration);

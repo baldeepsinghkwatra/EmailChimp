@@ -33,7 +33,7 @@ EmailChimp.view('AddCampaign',
                         {
                             view: "richselect",
                             name: "templateId",
-                            label: "Select Template",
+                            label: "Template",
                             required: true,
 //                            template:function htmlEncode( html ) {
 //                                return html.options;
@@ -42,7 +42,7 @@ EmailChimp.view('AddCampaign',
                         },
                         {
                             view: "richselect",
-                            label: "Select Email Configuration",
+                            label: "Email Configuration",
                             required: true,
                             name: "emailConfigId",
 //                            template:function htmlEncode( html ) {
@@ -248,7 +248,7 @@ EmailChimp.view('AddCampaign',
                         {
                             view: "richselect",
                             name: "templateId",
-                            label: "Select Template",
+                            label: "Template",
                             id: "templateCombo",
                             required: true,
 //                            template:function htmlEncode( html ) {
@@ -259,7 +259,7 @@ EmailChimp.view('AddCampaign',
                         {
                             view: "richselect",
                             id: "configCombo",
-                            label: "Select Email Configuration",
+                            label: "Email Configuration",
                             required: true,
                             name: "emailConfigId",
 //                            template:function htmlEncode( html ) {

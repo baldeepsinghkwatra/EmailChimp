@@ -49,11 +49,12 @@ EmailChimp.view('AddUser',
                             value: "Add",
                             click: function () {
                                 var item = $$("categoryList").getSelectedItem(true);
-                                var id = item[0].id;
-                                for(var i=1; i<item.length; i++){
-                                    id += ","+item[i].id;
-                                }
-                                if ($$('addUser').validate()) { //validate form
+                                
+                                if ($$('addUser').validate() && item.length != 0) { //validate form
+                                    var id = item[0].id;
+                                    for(var i=1; i<item.length; i++){
+                                        id += ","+item[i].id;
+                                    }
                                     $$('addUser').setValues({
                                         firstName: $$("addUser").getValues().firstName,
                                         lastName: $$("addUser").getValues().lastName,
@@ -80,6 +81,9 @@ EmailChimp.view('AddUser',
                                         $$('responseMessage').refresh();
                                     });
 
+                                }else {
+                                    $$("responseMessage").show();
+                                    $$("responseMessage").setHTML("<span style=\"color:red\"> Please Fill all the details. </span>");
                                 }
                             }
                         }

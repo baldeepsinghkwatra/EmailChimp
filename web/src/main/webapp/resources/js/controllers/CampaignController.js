@@ -15,16 +15,15 @@ function changeData() {
     }
     for (var i = 0; i < emailConfigData.length; i++) {
         if (emailConfigData[i].hasOwnProperty("smtpHost")) {
-            emailConfigData[i]["value"] = EmailChimp.htmlEncode(emailConfigData[i]["id"]+": "+emailConfigData[i]["smtpHost"]);
+            emailConfigData[i]["value"] = EmailChimp.htmlEncode(emailConfigData[i]["smtpHost"]);
             delete emailConfigData[i]["smtpHost"];
         }
     }
     for (var i = 0; i < emailCategoryListData.length; i++) {
-        emailCategoryListData[i]["id"] = emailCategoryListData[i]["id"]; 
         emailCategoryListData[i]["value"] = EmailChimp.htmlEncode(emailCategoryListData[i]["categoryName"]); 
         list_data = emailCategoryListData[i]["emailListBean"];
         for(var j=0;j<list_data.length;j++){
-            list_data[j]["id"] = emailCategoryListData[j]["id"]+"."+list_data[j].id;
+            list_data[j]["id"] = emailCategoryListData[i]["id"]+"."+list_data[j].id;
             list_data[j]["value"] = list_data[j].email;
         }
         emailCategoryListData[i]["data"] = list_data; 
