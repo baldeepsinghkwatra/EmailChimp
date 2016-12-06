@@ -81,6 +81,7 @@ EmailChimp.view('AddCampaign',
                             view: "tree",
                             id: "categoryTree",
                             select: true,
+                            multiselect:"level",
                             activeTitle: true,
                             data: emailCategoryListData
                         },
@@ -151,7 +152,7 @@ EmailChimp.view('AddCampaign',
                         {
                             view: "tree",
                             id: "categoryTree",
-                            select: true,
+                            select: "multiselect",
                             activeTitle: true,
                             data: emailCategoryListData
                         },

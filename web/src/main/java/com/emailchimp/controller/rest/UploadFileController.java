@@ -8,7 +8,7 @@ package com.emailchimp.controller.rest;
 import com.emailchimp.constants.ConsumerConstants;
 import com.emailchimp.core.model.AttachmentBean;
 import com.emailchimp.model.FileUploadBean;
-import com.emailchimp.model.MailBean;
+import com.emailchimp.core.model.MailBean;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;

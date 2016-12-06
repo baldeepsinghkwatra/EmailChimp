@@ -56,7 +56,7 @@ EmailChimp.view('ComposeForm',
                                 console.log(JSON.parse(JSON.stringify(attachmentList)));
                                 if($$("composeMail").validate()){
                                     $$("composeMail").setValues({
-                                        to: formValues.to,
+                                        recepients: formValues.to,
                                         subject: formValues.subject,
                                         files: formValues.files,
                                         attachments: JSON.parse(JSON.stringify(attachmentList))

@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.emailchimp.core.service.Email;
-import com.emailchimp.model.MailBean;
+import com.emailchimp.core.model.MailBean;
 import com.emailchimp.model.ResponseModel;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,8 +41,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.emailchimp.core.service.AccountService;
 import com.emailchimp.core.model.AttachmentBean;
+import com.emailchimp.core.model.AttachmentList;
+import com.emailchimp.core.model.EmailTracks;
+import com.emailchimp.core.service.EmailTrackService;
+import com.emailchimp.core.service.MailThread;
 import com.emailchimp.model.AttachmentBeanWrapper;
 import java.io.File;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -65,6 +70,8 @@ public class ConsumerController {
 	@Autowired
 	AccountService accountService;
 
+        @Autowired
+        EmailTrackService emailTrackService;
 	@Autowired
 	Email email;
 
@@ -130,15 +137,28 @@ public class ConsumerController {
 	}
 
 	@PostMapping(ConsumerConstants.URL_SEND_MAIL)
-	public @ResponseBody String sendMailController(@RequestBody MailBean record) {
+	public @ResponseBody String sendMailController(@RequestBody EmailTracks record, 
+                Principal principal) {
 
 		try {
-			email.sendMail(record.getTo(), record.getSubject(), record.getMessage(), record.getAttachments());
-			return "Sent";
+                    record.setAccount(accountService.findByUniqueField("userEmail", principal.getName()));
+                    record.setStatus("pending");
+                    emailTrackService.save(record);
+                    Thread t = new Thread(new MailThread(record, email));
+                    t.start();
+                    t.join();
+                    updateStatus(record,"delivered");
+                    return "Sent";
 		} catch (Exception ex) {
                         ex.printStackTrace();
+                        updateStatus(record,"connection error");
 			return "Not Sent";
 		}
 	}
+
+    private void updateStatus(EmailTracks record,String status) {
+        record.setStatus(status);
+        emailTrackService.update(record);
+    }
 
 }
