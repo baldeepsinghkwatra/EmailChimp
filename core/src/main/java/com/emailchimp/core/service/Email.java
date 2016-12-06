@@ -21,6 +21,7 @@ package com.emailchimp.core.service;
  * @author baldeep
  */
 import com.emailchimp.core.model.AttachmentBean;
+import com.emailchimp.core.model.AttachmentList;
 import java.io.File;
 import java.util.List;
 import javax.mail.MessagingException;
@@ -70,7 +71,7 @@ public class Email {
         }
     }
 
-    public void sendMail(String to, String subject, String message, List<AttachmentBean> attachments) {
+    public void sendMail(String to, String subject, String message, List<AttachmentList> attachments) {
         try {
             MimeMessage messageAttach = mailSender.createMimeMessage();
             messageAttach.setSubject(subject);
@@ -81,7 +82,7 @@ public class Email {
             helper.setTo(to);
             helper.setText(message, true);
             for(int i=0;i<attachments.size();i++){
-                AttachmentBean attachment = attachments.get(i);
+                AttachmentList attachment = attachments.get(i);
                 helper.addAttachment(attachment.getName(), new File("/home/anshul/tmpFiles/"+attachment.getsName()));
             }
             mailSender.send(messageAttach);
