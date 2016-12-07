@@ -21,6 +21,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -49,6 +51,7 @@ public class EmailTracks implements Serializable{
     private Calendar openDateTime;
     
     @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<AttachmentList> attachments;
     
     @Column(nullable = false)
