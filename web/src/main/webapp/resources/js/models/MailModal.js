@@ -47,6 +47,9 @@ EmailChimp.model('MailModal',
             },
             getCampaign: function() {
               return webix.ajax().get("get-campaign");
+            },
+            getEmailTracks: function() {
+              return webix.ajax().get("get-email-tracks");
             }
 
         });

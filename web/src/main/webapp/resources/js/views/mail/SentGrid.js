@@ -1,4 +1,4 @@
-
+changeData();
 EmailChimp.view('SentGrid',
         {
             getSentMailGrid: function () {
@@ -10,38 +10,28 @@ EmailChimp.view('SentGrid',
                     columns: [
                         {
                             id: "id",
-                            header: "#",
-                            template: "{common.checkbox()}",
+                            header: "id",
                             width: 50
                         }, {
-                            id: "code",
+                            id: "recepients",
                             header: "To",
                             minWidth: 80
                         }, {
-                            id: "name",
+                            id: "subject",
                             header: "Subject",
                             minWidth: 120,
                             fillspace: 2,
                             editor: "text"
                         }, {
-                            id: "statusName",
+                            id: "status",
                             header: ["Status"],
                             minWidth: 75,
                             sort: "string",
-                            template: "<span class='status status#status#'>#statusName#</span>"
-                        }, {
-                            id: "sentdate",
-                            header: "Date",
-                            minWidth: 120,
-                            format: webix.Date.dateToStr("%m/%d/%Y")
-                        }, {
-                            id: "delete",
-                            header: "&nbsp;",
-                            width: 35,
-                            template: "<span  style='cursor:pointer;' class='webix_icon fa-trash-o trash'></span>"}
+                            template: "<span class='status status#statusNo#'>#status#</span>"
+                        }
                     ],
                     pager: "pagerA",
-                    data: EmailChimp.models.MailModal.getAll(),
+                    data: data,
                     ready: function () {
                         webix.extend(this, webix.ProgressBar);
                     }

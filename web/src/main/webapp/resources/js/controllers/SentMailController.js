@@ -1,3 +1,16 @@
+var data = webix.ajax().sync().get("get-email-tracks");
+function changeData() {
+    data = JSON.parse(data.responseText);
+    for (var i = 0; i < data.length; i++) {
+        if(data[i]["status"] == "pending")
+            data[i]["statusNo"] = 0;
+        else if(data[i]["status"] == "delivered")
+            data[i]["statusNo"] = 1;
+        else if(data[i]["status"] == "read")
+            data[i]["statusNo"] = 2;
+    }
+    console.log(data);
+}
 EmailChimp.controller('SentMailController',
         {
             component: ['views/mail/SentGrid', 'views/mail/ComposeForm', 'models/MailModal'],

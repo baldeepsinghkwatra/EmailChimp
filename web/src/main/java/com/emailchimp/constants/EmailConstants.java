@@ -56,4 +56,6 @@ String URL_GET_API="/get-api";
 String URL_DELETE_API="/delete-api";
 String URL_UPDATE_API="/update-api";
 
+String URL_GET_EMAIL_TRACKS= "/get-email-tracks";
+
 }
