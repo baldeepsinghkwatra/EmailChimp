@@ -47,17 +47,14 @@ EmailChimp.view('SideMenu',
                                     }
                                 ]
                             },
+                            
+                           
                             {
                                 id: "preferences",
-                                value: "Preferences",
-                                open: false,
+                                value: "Contact",
+                                open: true,
                                 data: [
-                                    {
-                                        id: "emailSettings",
-                                        value: "Email Configuration",
-                                        icon: "wrench",
-                                        details: "Email Settings"
-                                    },
+                                   
                                     {
                                         id: "myCategory",
                                         value: "My Category",
@@ -69,25 +66,43 @@ EmailChimp.view('SideMenu',
                                         value: "My List",
                                         icon: "navicon",
                                         details: "List of Users"
-                                    },
-                                    {
-                                        id: "emailTemplate",
-                                        value: "Email Templates",
-                                        icon: "file-text",
-                                        details: "Email Templates"
-                                    },
-                                    {
-                                        id: "api",
-                                        value: "API",
-                                        icon: "key",
-                                        details: "Generate API Keys"
-                                    },
-                                    {
-                                        id: "campaign",
-                                        value: "Campaign",
-                                        icon: "flag",
-                                        details: "Campaign Management"
                                     }
+                                ]
+                            } ,{
+                                id: "emailSchedule",
+                                value: "Schedule",
+                                open: true,
+                                data: [ 	
+                                        {
+                                    id: "emailTemplate",
+                                    value: "Email Templates",
+                                    icon: "file-text",
+                                    details: "Email Templates"
+                                },
+                                
+                                {
+                                    id: "campaign",
+                                    value: "Campaign",
+                                    icon: "flag",
+                                    details: "Campaign Management"
+                                }
+                                        ]
+                            },{
+                                id: "emailsetting",
+                                value: "Setting",
+                                open: true,
+                                data: [ {
+                                    id: "emailSettings",
+                                    value: "Email Configuration",
+                                    icon: "wrench",
+                                    details: "Email Settings"
+                                },
+                                {
+                                    id: "api",
+                                    value: "API",
+                                    icon: "key",
+                                    details: "Generate API Keys"
+                                }
                                 ]
                             }
                         ]
