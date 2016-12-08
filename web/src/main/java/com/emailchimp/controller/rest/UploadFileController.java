@@ -15,6 +15,8 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +29,10 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 public class UploadFileController {
- 
+        
+        @Value("${upload.file.path}")
+        private String fileUploadPath;
+        
         @PostMapping(ConsumerConstants.UPLOAD)
 	public FileUploadBean uploadController(MultipartFile upload) {
             FileUploadBean fileUploadBean = new FileUploadBean();
@@ -37,7 +42,7 @@ public class UploadFileController {
                     byte[] bytes = upload.getBytes();
 
                     // Creating the directory to store file
-                    String rootPath = "/home/anshul";
+                    String rootPath = fileUploadPath;
                     File dir = new File(rootPath + File.separator + "tmpFiles");
                     if (!dir.exists())
                             dir.mkdirs();
