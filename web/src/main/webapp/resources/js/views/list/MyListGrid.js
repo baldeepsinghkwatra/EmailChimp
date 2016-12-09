@@ -6,6 +6,10 @@ EmailChimp.view('MyListGrid',
                     id: "myListGrid",
                     view: "datatable",
                     select: true,
+                    fixedRowHeight:false,
+                    resizeColumn:true,
+                    rowLineHeight:25, 
+                    rowHeight:25,
                     editaction: "dblclick",
                     on: {
                         onBeforeEditStop: function (data, prevent) {
@@ -15,7 +19,18 @@ EmailChimp.view('MyListGrid',
                                 webix.alert("Please make sure you enter valid details");
                                 return false;
                             }
+                        }, 
+                        onAfterLoad: function () {
+                            webix.delay(function () {
+                                this.adjustRowHeight("title", true);
+                                this.render();
+                            }, this);
+                        },
+                        onColumnResize: function () {
+                            this.adjustRowHeight("title", true);
+                            this.render();
                         }
+
                     },
                     columns: [
                         {
