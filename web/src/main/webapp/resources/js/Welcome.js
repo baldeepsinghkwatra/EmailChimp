@@ -32,6 +32,10 @@ EmailChimp.app('Welcome', {
         {
             hash: "#campaign",
             controller: 'CampaignController'
+        },
+        {
+            hash: '#scheduler',
+            controller: 'SchedulerController'
         }
     ],
     defaultRoute: '#sentMail',

@@ -58,4 +58,7 @@ String URL_UPDATE_API="/update-api";
 
 String URL_GET_EMAIL_TRACKS= "/get-email-tracks";
 
+String URL_ADD_SCHEDULE= "/add-schedule";
+String URL_GET_SCHEDULER= "/get-scheduler";
+
 }

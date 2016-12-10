@@ -85,6 +85,13 @@ EmailChimp.view('SideMenu',
                                     value: "Campaign",
                                     icon: "flag",
                                     details: "Campaign Management"
+                                },
+                                
+                                {
+                                    id: "scheduler",
+                                    value: "Scheduler",
+                                    icon: "flag",
+                                    details: "Scheduler"
                                 }
                                         ]
                             },{
