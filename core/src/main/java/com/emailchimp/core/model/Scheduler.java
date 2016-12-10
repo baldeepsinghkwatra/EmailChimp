@@ -52,7 +52,7 @@ public class Scheduler implements Serializable {
     private String taskType;
     
     @Column(unique = false, nullable = true)
-    private String taskName;
+    private String name;
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
@@ -75,6 +75,69 @@ public class Scheduler implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Calendar addedDateTime;
+    
+    @Column(unique = false, nullable = true)
+    private Long year;
+    
+    @Column(unique = false, nullable = true)
+    private Long month;
+
+    @Column(unique = false, nullable = true)
+    private Long date;
+
+    @Column(unique = false, nullable = true)
+    private Long hour;
+    
+    @Column(unique = false, nullable = true)
+    private Long minutes;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getYear() {
+        return year;
+    }
+
+    public void setYear(Long year) {
+        this.year = year;
+    }
+
+    public Long getMonth() {
+        return month;
+    }
+
+    public void setMonth(Long month) {
+        this.month = month;
+    }
+
+    public Long getDate() {
+        return date;
+    }
+
+    public void setDate(Long date) {
+        this.date = date;
+    }
+
+    public Long getHour() {
+        return hour;
+    }
+
+    public void setHour(Long hour) {
+        this.hour = hour;
+    }
+
+    public Long getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(Long minutes) {
+        this.minutes = minutes;
+    }
 
     public long getId() {
         return id;
@@ -101,11 +164,11 @@ public class Scheduler implements Serializable {
     }
 
     public String getTaskName() {
-        return taskName;
+        return name;
     }
 
     public void setTaskName(String taskName) {
-        this.taskName = taskName;
+        this.name = taskName;
     }
 
     public Calendar getScheduledTime() {
