@@ -3,16 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var data = webix.ajax().sync().get("get-campaign");
+var data = JSON.parse(webix.ajax().sync().get("get-scheduler").responseText);
 
 function changeData() {
-    data = JSON.parse(data.responseText);
-    for (var i = 0; i < data.length; i++) {
-        if (data[i].hasOwnProperty("name")) {
-            data[i]["value"] = EmailChimp.htmlEncode(data[i]["name"]);
-            delete data[i]["name"];
-        }
-    }
     console.log(data);
 }
 

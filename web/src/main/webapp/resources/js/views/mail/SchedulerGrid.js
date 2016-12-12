@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+changeData();
 EmailChimp.view('SchedulerGrid',
         {
             getButton: function (id, text, icon) {
@@ -28,29 +29,32 @@ EmailChimp.view('SchedulerGrid',
                             header: "id",
                             width: 50
                         }, {
-                            id: "name",
+                            id: "taskName",
                             header: "Name",
                             minWidth: 80
                         }, {
                             id: "campaign",
                             header: "Campaign",
                             minWidth: 120,
-                            fillspace: 2,
+                            template: "#campaign.name#",
                             editor: "text"
                         }, {
                             id: "status",
-                            header: ["Status"],
-                            minWidth: 75,
-                            sort: "string",
-                            template: "<span class='status status#statusNo#'>#status#</span>"
+                            header: "Status",
+                            template: "#status#",
+                            minWidth: 75
                         },  {
                             id: "schedule",
                             header: "Schedule",
-                            minWidth: 75,
+                            template: function(html){
+                                return EmailChimp.htmlEncode(html.year+", "+html.month+","+html.date+","+html.hour+","+html.minutes)
+                            },
+                            fillspace: 1,
+                            minWidth: 75
                         }
                     ],
                     pager: "pagerA",
-//                    data: data,
+                    data: data,
                     ready: function () {
                         webix.extend(this, webix.ProgressBar);
                     }
