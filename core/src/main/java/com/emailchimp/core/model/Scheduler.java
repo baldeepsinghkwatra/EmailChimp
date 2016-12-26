@@ -63,10 +63,6 @@ public class Scheduler implements Serializable {
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
-    private Calendar startTime;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(updatable = false)
     private Calendar endTime;
     
     @Column(unique = false, nullable = true)
@@ -185,14 +181,6 @@ public class Scheduler implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Calendar getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Calendar startTime) {
-        this.startTime = startTime;
     }
 
     public Calendar getEndTime() {
