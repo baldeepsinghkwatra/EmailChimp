@@ -4,9 +4,15 @@
  * and open the template in the editor.
  */
 var data = JSON.parse(webix.ajax().sync().get("get-scheduler").responseText);
-
+var campaignData = JSON.parse(webix.ajax().sync().get("get-campaign").responseText);
 function changeData() {
-    console.log(data);
+    for(var i=0;i<campaignData.length;i++){
+        if (campaignData[i].hasOwnProperty("name")) {
+            campaignData[i]["value"] = EmailChimp.htmlEncode(campaignData[i]["name"]);
+            delete campaignData[i]["name"];
+        }
+    }
+    console.log(campaignData);
 }
 
 EmailChimp.controller('SchedulerController',

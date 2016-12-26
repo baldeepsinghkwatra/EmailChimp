@@ -50,6 +50,9 @@ EmailChimp.model('MailModal',
             },
             getEmailTracks: function() {
               return webix.ajax().get("get-email-tracks");
+            },
+            getSchedule: function() {
+                return webix.ajax().get("get-scheduler");
             }
 
         });

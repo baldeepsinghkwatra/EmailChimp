@@ -72,7 +72,8 @@ public class ConsumerController {
 
         @Autowired
         EmailTrackService emailTrackService;
-	@Autowired
+	
+        @Autowired
 	Email email;
 
 	@Autowired

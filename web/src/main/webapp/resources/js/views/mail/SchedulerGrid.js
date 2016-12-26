@@ -47,7 +47,7 @@ EmailChimp.view('SchedulerGrid',
                             id: "schedule",
                             header: "Schedule",
                             template: function(html){
-                                return EmailChimp.htmlEncode(html.year+", "+html.month+","+html.date+","+html.hour+","+html.minutes)
+                                return EmailChimp.htmlEncode(html.date+"/"+html.month+"/"+html.year+", "+html.hour+":"+html.minutes)
                             },
                             fillspace: 1,
                             minWidth: 75
