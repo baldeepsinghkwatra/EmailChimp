@@ -32,6 +32,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -72,7 +73,8 @@ public class Campaign implements Serializable {
     @JoinColumn
     private Template template;
     
-    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private List<CampaignList> campaignList;
 
     public List<CampaignList> getCampaignList() {

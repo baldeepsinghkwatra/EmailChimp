@@ -18,6 +18,7 @@ package com.emailchimp.core.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -86,6 +87,18 @@ public class Scheduler implements Serializable {
     
     @Column(unique = false, nullable = true)
     private Long minutes;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private EmailTracks emailTracks;
+
+    public EmailTracks getEmailTracks() {
+        return emailTracks;
+    }
+
+    public void setEmailTracks(EmailTracks emailTracks) {
+        this.emailTracks = emailTracks;
+    }
 
     public String getName() {
         return name;

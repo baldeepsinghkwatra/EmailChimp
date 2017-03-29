@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -59,7 +60,7 @@ public class EmailCategory implements Serializable {
     private Calendar addedDate;
     
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "emailCategory")
+    @ManyToMany(cascade= {CascadeType.ALL}, fetch=FetchType.EAGER, mappedBy = "emailCategory")
     private Set<EmailList> emailList = new HashSet<EmailList>();
 
     public Set<EmailList> getEmailList() {

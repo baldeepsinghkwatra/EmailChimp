@@ -43,7 +43,7 @@ public class HibernateConfiguration {
     @Autowired
     CustomNamingStrategy customNamingStrategy;
 
-  @Autowired
+    @Autowired
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();

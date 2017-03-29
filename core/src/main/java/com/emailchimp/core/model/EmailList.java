@@ -18,8 +18,10 @@ package com.emailchimp.core.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,9 +33,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -63,7 +69,7 @@ public class EmailList implements Serializable {
     @Column(nullable = true)
     private String contact;
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @ManyToMany(cascade= {CascadeType.ALL}, fetch=FetchType.EAGER)
     @JoinTable(name="email_list_category",
             joinColumns = {@JoinColumn(name = "email_list_id", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "email_category_id",nullable = false, updatable = false) })
@@ -76,6 +82,12 @@ public class EmailList implements Serializable {
     @Column(updatable = false)
     @JsonIgnore
     private Calendar addedDate;
+
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+    @JsonIgnore
+    @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
+    @Fetch(FetchMode.SUBSELECT)
+    private List<CampaignList> campaignList;
 
     public long getId() {
         return id;

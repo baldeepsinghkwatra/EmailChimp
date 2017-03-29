@@ -40,12 +40,12 @@
             <artifactId>exec-maven-plugin</artifactId>
             <version>1.2.1</version>
         </dependency>
-<!-- https://mvnrepository.com/artifact/org.springframework.javaconfig/spring-javaconfig -->
-<dependency>
-    <groupId>org.springframework.javaconfig</groupId>
-    <artifactId>spring-javaconfig</artifactId>
-    <version>1.0.0.m3</version>
-</dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.javaconfig/spring-javaconfig -->
+        <dependency>
+            <groupId>org.springframework.javaconfig</groupId>
+            <artifactId>spring-javaconfig</artifactId>
+            <version>1.0.0.m3</version>
+        </dependency>
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
