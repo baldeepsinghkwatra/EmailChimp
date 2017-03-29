@@ -90,7 +90,7 @@ EmailChimp.view('SideMenu',
                                 {
                                     id: "scheduler",
                                     value: "Scheduler",
-                                    icon: "flag",
+                                    icon: "clock-o",
                                     details: "Scheduler"
                                 }
                                         ]

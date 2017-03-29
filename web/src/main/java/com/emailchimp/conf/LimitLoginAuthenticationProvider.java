@@ -56,6 +56,7 @@ public class LimitLoginAuthenticationProvider extends DaoAuthenticationProvider 
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
         try {
+            System.out.println(authentication);
 
             Authentication auth = super.authenticate(authentication);
             //if reach here, means login success, else an exception will be thrown

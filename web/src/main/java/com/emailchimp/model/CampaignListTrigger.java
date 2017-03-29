@@ -46,8 +46,9 @@ public class CampaignListTrigger implements Runnable{
             Campaign campaign = scheduler.getCampaign();
             Template template = campaign.getTemplate();
             try {
+                String content = "<img src=\"http://a5176112.ngrok.io/EmailChimp/resources/images/menu.png\">"+template.getTemplateContent();
                 System.out.println("Sending the email.");
-                email.sendMail(campaign.getReplyToEmail(), campaign.getEmailSubject(), template.getTemplateContent());
+                email.sendMail("anshulgupta231193@gmail.com", campaign.getEmailSubject(), content);
                 System.out.println("Email Sent.");
             } catch (Exception ex) {
                 System.out.println("HI");

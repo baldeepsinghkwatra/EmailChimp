@@ -55,15 +55,17 @@ EmailChimp.controller('SchedulerController',
             deleteSchedule: function (e,id,node) {
 
                 webix.confirm({
-                    text: "The mail will be deleted. <br/> Are you sure?",
+                    text: "The schedule will be deleted. <br/> Are you sure?",
                     ok: "Yes",
                     cancel: "Cancel",
                     callback: function (res) {
                         if (res) {
-                            var item = webix.$$("sentMailGrid").getItem(id);
-                            item.status = "0";
-                            item.statusName = "Deleted";
-                            webix.$$("sentMailGrid").refresh(id);
+                            var item = webix.$$("schedulerGrid").getItem(id);
+                            item = item.id;
+                            webix.ajax().post("delete-schedule", "id=" + item, function (text, xml, xhr) {
+                                webix.alert(text);
+                            }),
+                            $$("schedulerGrid").remove(id);
                         }
                     }
                 });

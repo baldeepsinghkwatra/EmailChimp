@@ -75,6 +75,28 @@ var EmailChimp = {
     htmlEncode : function ( html ) {
         return document.createElement( 'a' ).appendChild( 
             document.createTextNode( html ) ).parentNode.innerHTML;
-    }
+    },
+    checkDate: function (str) {
+                var matches = str.match(/(\d{1,2})[- \/](\d{1,2})[- \/](\d{4})/);
+                if (!matches)
+                    return;
+
+                // parse each piece and see if it makes a valid date object
+                var month = parseInt(matches[1], 10);
+                var day = parseInt(matches[2], 10);
+                var year = parseInt(matches[3], 10);
+                var date = new Date(year, month - 1, day);
+                if (!date || !date.getTime())
+                    return;
+
+                // make sure we have no funny rollovers that the date object sometimes accepts
+                // month > 12, day > what's allowed for the month
+                if (date.getMonth() + 1 != month ||
+                        date.getFullYear() != year ||
+                        date.getDate() != day) {
+                    return;
+                }
+                return(date);
+            }
 
 };

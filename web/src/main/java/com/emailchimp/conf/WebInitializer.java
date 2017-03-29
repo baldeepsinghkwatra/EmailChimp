@@ -20,12 +20,18 @@ package com.emailchimp.conf;
  *
  * @author baldeep
  */
+import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
     public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[] { new CorsFilter() };
+    }
+    
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return null;

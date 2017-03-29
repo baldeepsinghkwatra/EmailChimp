@@ -13,11 +13,11 @@ EmailChimp.view('ScheduleForm',
                             label: 'Scheduler Name :',
                             name: "name",
                             required: true
-                        }, { 
-                            view:"radio", 
-                            name:"status", 
-                            label:"Status: ", 
-                            options:["activate", "deactivate"] ,
+                        }, {
+                            view: "radio",
+                            name: "status",
+                            label: "Status: ",
+                            options: ["activate", "deactivate"],
                             required: true
                         }, {
                             view: "richselect",
@@ -25,61 +25,65 @@ EmailChimp.view('ScheduleForm',
                             name: "year",
                             yCount: 2,
                             options: [
-                                {id:1, value: 2016},
-                                {id:2, value: 2017}
+                                {id: 2016, value: 2016},
+                                {id: 2017, value: 2017}
                             ],
-                            type: "number"
+                            type: "number",
+                            required: true
                         }, {
                             view: "richselect",
                             label: 'Month :',
                             name: "month",
                             yCount: 12,
                             options: [
-                                {id:1, value: 1},
-                                {id:2, value: 2},
-                                {id:3, value: 3},
-                                {id:4, value: 4},
-                                {id:5, value: 5},
-                                {id:6, value: 6},
-                                {id:7, value: 7},
-                                {id:8, value: 8},
-                                {id:9, value: 9},
-                                {id:10, value: 10},
-                                {id:11, value: 11},
-                                {id:12, value: 12}
+                                {id: 1, value: 1},
+                                {id: 2, value: 2},
+                                {id: 3, value: 3},
+                                {id: 4, value: 4},
+                                {id: 5, value: 5},
+                                {id: 6, value: 6},
+                                {id: 7, value: 7},
+                                {id: 8, value: 8},
+                                {id: 9, value: 9},
+                                {id: 10, value: 10},
+                                {id: 11, value: 11},
+                                {id: 12, value: 12}
                             ],
-                            type: "number"
+                            type: "number",
+                            required: true
                         }, {
                             view: "text",
                             label: 'Date :',
                             name: "date",
                             value: 0,
                             attributes: {
-                                min:0,
-                                max:31
+                                min: 0,
+                                max: 31
                             },
-                            type: "number"
+                            type: "number",
+                            required: true
                         }, {
                             view: "text",
                             label: 'Hour :',
                             name: "hour",
                             value: 0,
                             attributes: {
-                                min:0,
-                                max:23
+                                min: 0,
+                                max: 23
                             },
-                            type: "number"
+                            type: "number",
+                            required: true
                         }, {
                             view: "text",
                             label: 'Minutes :',
                             name: "minutes",
                             value: 0,
                             attributes: {
-                                min:0,
-                                max:60
+                                min: 0,
+                                max: 60
                             },
                             type: "number"
-                        },{
+                        }, {
                             view: "richselect",
                             label: "Campaign",
                             name: "campaignId",
@@ -88,13 +92,16 @@ EmailChimp.view('ScheduleForm',
 //                            },
                             options: campaignData
                         },
-                        {view: "label", height: 50,hidden:true, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
+                        {view: "label", height: 50, hidden: true, id: 'responseMessage', label: '<span style=color:red><c:out value="${messageDefault}"/></span>', align: "center"},
                         {
                             view: "button",
                             value: "Add",
                             click: function () {
-                                
-                                if ($$('addSchedule').validate()) { //validate form
+                                var values = $$('addSchedule').getValues();
+                                if(!EmailChimp.checkDate(values.month + "/" + values.date + "/" + values.year)){
+                                    $$("responseMessage").show();
+                                    $$("responseMessage").setHTML("<span style=\"color:red\"> Please Fill Correct Date. </span>");
+                                }else if ($$('addSchedule').validate()) { //validate form
                                     webix.ajax().post("add-schedule", $$('addSchedule').getValues(), function (text, xml, xhr) {
                                         var color = 'red';
                                         if (xhr.status === 200) {
@@ -114,7 +121,7 @@ EmailChimp.view('ScheduleForm',
                                         $$('responseMessage').refresh();
                                     });
 
-                                }else {
+                                } else {
                                     $$("responseMessage").show();
                                     $$("responseMessage").setHTML("<span style=\"color:red\"> Please Fill all the details. </span>");
                                 }
@@ -126,4 +133,5 @@ EmailChimp.view('ScheduleForm',
                     }
                 };
             }
+
         });

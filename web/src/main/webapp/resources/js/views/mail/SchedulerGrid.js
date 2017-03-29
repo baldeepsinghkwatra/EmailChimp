@@ -51,6 +51,11 @@ EmailChimp.view('SchedulerGrid',
                             },
                             fillspace: 1,
                             minWidth: 75
+                        }, {
+                            id: "delete",
+                            header: "&nbsp;",
+                            width: 35,
+                            template: "<span  style='cursor:pointer;' class='webix_icon fa-trash-o trash'></span>"
                         }
                     ],
                     pager: "pagerA",

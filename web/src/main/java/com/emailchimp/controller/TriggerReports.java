@@ -67,7 +67,6 @@ public class TriggerReports {
         List<Scheduler> schedulerList = schedulerService.list();
         List<Scheduler> threadScheduledList = findSchdeuledCampaigns(schedulerList);
         Future future = executorService.submit(new CampaignListTrigger(threadScheduledList,email));
-        System.out.println("Executed");
     }
 
     private List<Scheduler> findSchdeuledCampaigns(List<Scheduler> schedulerList) {
